@@ -72,10 +72,7 @@ pd_darwin: obj1.pd_darwin obj2.pd_darwin \
      obj3.pd_darwin obj4.pd_darwin obj5.pd_darwin dspobj~.pd_darwin
 
 dspobj : dspobj~.pd_darwin
-samplorpd : samplorpd~.pd_darwin linkedlist.o
-samplor: samplor~.pd_darwin linkedlist.o
-samplor2: samplor2n~.pd_darwin
-
+samplorpd : linkedlist.o samplorpd~.pd_darwin
 
 .SUFFIXES: .pd_darwin
 
@@ -90,5 +87,5 @@ linkedlist.o:
 	cc -bundle -undefined suppress -flat_namespace -o $*.pd_darwin $*.o linkedlist.o
 	rm -f $*.o
 
-
-
+install:
+	cp samplorpd~.pd_darwin /Applications/Pd-0.48-1.app/Contents/Resources/extra

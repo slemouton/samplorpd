@@ -1,6 +1,7 @@
 #define DEBUG 0
 #define DEFAULT_SRATE 44100		/* default sampling rate for initialization */
 #define MAX_VOICES 256			/* max # of voices */
+#define DEFAULT_MAXVOICES 12
 #define WAITINGNOTES 10			/* max waiting notes (voice stealing) */
 #define DEFAULT_VOICES 12		/* default number of voices */
 #define WIND_SIZE 512			/* taille des fenetres */

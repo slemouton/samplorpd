@@ -7,11 +7,9 @@
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #endif
-#define VERSION "samplor~: version for pd without flext v0.011 "
+#define VERSION "samplor~: version for pd without flext v0.015 "
 
 /* ------------------------ samplorpd~ ----------------------------- */
-
-/* tilde object to take absolute value. */
 
 static t_class *samplorpd_class;
 
@@ -28,14 +26,17 @@ typedef struct _samplorpd
     long count;
 } t_samplorpd;
 
-    /* this is the actual performance routine which acts on the samples.
-    It's called with a single pointer "w" which is our location in the
-    DSP call list.  We return a new "w" which will point to the next item
-    after us.  Meanwhile, w[0] is just a pointer to dsp-perform itself
-    (no use to us), w[1] and w[2] are the input and output vector locations,
-    and w[3] is the number of points to calculate. */
-
 /* ------------------------ METHODS ----------------------------- */
+
+void samplor_int(t_samplorpd *x,long d)
+{
+}
+
+void samplor_debug(t_samplorpd *x,long d)
+{
+    x->ctlp->debug = d;
+    post("debug %d",d);
+}
 
 /*
  * samplor_maxvoices sets the maximum number of voices
@@ -72,15 +73,13 @@ static t_int *samplorpd_perform(t_int *w)
     return (w+4);
 }
 
-    /* called to start DSP.  Here we call Pd back to add our perform
-    routine to a linear callback list which Pd in turn calls to grind
-    out the samples. */
+
 static void samplorpd_dsp(t_samplorpd *x, t_signal **sp)
 {
     dsp_add(samplorpd_perform, 3, sp[0]->s_vec, sp[1]->s_vec, sp[0]->s_n);
 }
 
-static void *samplorpd_new(void)
+static void *samplorpd_new0(void)
 {
     t_samplorpd *x = (t_samplorpd *)pd_new(samplorpd_class);
     outlet_new(&x->x_obj, gensym("signal"));
@@ -88,8 +87,26 @@ static void *samplorpd_new(void)
     return (x);
 }
 
+static void *samplorpd_new(t_symbol *s, long ac, t_atom *av)
+{
+   long n,i;
+    long numoutputs;
+    long maxvoices = DEFAULT_MAXVOICES;
+    t_samplorpd *x = NULL;
+
+    x = (t_samplorpd *)pd_new(samplorpd_class);
+       outlet_new(&x->x_obj, gensym("signal"));
+    if (x)
+    {
+
+    }
+    return(x);
+
+}
+
+
 /* 
- * class setup 
+ * class setup
  */
 void samplorpd_tilde_setup(void)
 {
@@ -101,10 +118,12 @@ void samplorpd_tilde_setup(void)
     class_addmethod(samplorpd_class, (t_method)samplorpd_dsp, gensym("dsp"), 0);
     post("%s",VERSION);
     post("compiled %s %s",__DATE__, __TIME__);
-   class_addmethod(samplorpd_class, (t_method)samplor_maxvoices, gensym("maxvoices"), 0);
-/*   class_addint(c, samplor_int);
-    class_addmethod(c, (t_method)samplor_set, gensym("set"), 0);
-    class_addmethod(c, (t_method)samplor_debug, gensym("debug"), 0);
+    
+    class_addmethod(samplorpd_class, (t_method)samplor_maxvoices, gensym("maxvoices"), 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_int, gensym("int"),0);
+    class_addmethod(samplorpd_class, (t_method)samplor_debug, gensym("debug"), 0);
+
+  /* class_addmethod(c, (t_method)samplor_set, gensym("set"), 0);
     class_addmethod(c, (t_method)samplor_manual_init, gensym("init"), 0);
     class_addmethod(c, (t_method)samplor_interpol, gensym("interpol"), 0);
     class_addmethod(c, (t_method)samplor_manual_init, gensym("xfade"), 0);
@@ -120,5 +139,4 @@ void samplorpd_tilde_setup(void)
     class_addmethod(c, (t_method)samplor_manual_init, gensym("get_buffer_loop"), 0);
     class_addmethod(c, (t_method)samplor_bang, gensym("bang"), 0);
     */
-
 }

@@ -6461,6 +6461,7 @@
 #X msg 174 104 read sinus-440.aif sample1;
 #X msg 219 365 debug 1;
 #X obj 36 435 samplorpd~ 1;
+#X msg 104 319 1;
 #X connect 3 0 2 0;
 #X connect 5 0 6 0;
 #X connect 6 0 12 0;
@@ -6471,3 +6472,4 @@
 #X connect 11 0 12 0;
 #X connect 12 0 4 0;
 #X connect 12 0 4 1;
+#X connect 13 0 12 0;
