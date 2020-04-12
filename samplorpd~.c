@@ -7,7 +7,7 @@
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #endif
-#define VERSION "samplor~: version for pd without flext v0.01 "
+#define VERSION "samplor~: version for pd without flext v0.011 "
 
 /* ------------------------ samplorpd~ ----------------------------- */
 
@@ -35,8 +35,8 @@ typedef struct _samplorpd
     (no use to us), w[1] and w[2] are the input and output vector locations,
     and w[3] is the number of points to calculate. */
 
+/* ------------------------ METHODS ----------------------------- */
 
-/* METHODS */
 /*
  * samplor_maxvoices sets the maximum number of voices
 */
@@ -56,12 +56,8 @@ void samplor_maxvoices(t_samplorpd *x, long v)
     x->ctlp->polyphony = v;
    samplist_init(&(x->ctlp->list));
     
-    x->ctlp->active_voices = 0;
-   
-   
+    x->ctlp->active_voices = 0;  
 }
-
-
 
 static t_int *samplorpd_perform(t_int *w)
 {
@@ -92,20 +88,37 @@ static void *samplorpd_new(void)
     return (x);
 }
 
-    /* this routine, which must have exactly this name (with the "~" replaced
-    by "_tilde) is called when the code is first loaded, and tells Pd how
-    to build the "class". */
+/* 
+ * class setup 
+ */
 void samplorpd_tilde_setup(void)
 {
     samplorpd_class = class_new(gensym("samplorpd~"), (t_newmethod)samplorpd_new, 0,
     	sizeof(t_samplorpd), 0, A_DEFFLOAT, 0);
-	    /* this is magic to declare that the leftmost, "main" inlet
-	    takes signals; other signal inlets are done differently... */
+
     CLASS_MAINSIGNALIN(samplorpd_class, t_samplorpd, x_f);
-    	/* here we tell Pd about the "dsp" method, which is called back
-	when DSP is turned on. */
+ 
     class_addmethod(samplorpd_class, (t_method)samplorpd_dsp, gensym("dsp"), 0);
     post("%s",VERSION);
     post("compiled %s %s",__DATE__, __TIME__);
    class_addmethod(samplorpd_class, (t_method)samplor_maxvoices, gensym("maxvoices"), 0);
+/*   class_addint(c, samplor_int);
+    class_addmethod(c, (t_method)samplor_set, gensym("set"), 0);
+    class_addmethod(c, (t_method)samplor_debug, gensym("debug"), 0);
+    class_addmethod(c, (t_method)samplor_manual_init, gensym("init"), 0);
+    class_addmethod(c, (t_method)samplor_interpol, gensym("interpol"), 0);
+    class_addmethod(c, (t_method)samplor_manual_init, gensym("xfade"), 0);
+    class_addmethod(c, (t_method)samplor_manual_init, gensym("voice_stealing"), 0);
+    class_addmethod(c, (t_method)samplor_manual_init, gensym("list"), 0);    
+    class_addmethod(c, (t_method)samplor_manual_init, gensym("window"), 0);
+    class_addmethod(c, (t_method)samplor_manual_init, gensym("adsr"), 0);
+    class_addmethod(c, (t_method)samplor_manual_init, gensym("stop"), 0);
+    class_addmethod(c, (t_method)samplor_manual_init, gensym("stop2"), 0);
+    class_addmethod(c, (t_method)samplor_manual_init, gensym("stopall"), 0);
+    class_addmethod(c, (t_method)samplor_manual_init, gensym("loop"), 0);
+    class_addmethod(c, (t_method)samplor_manual_init, gensym("buffer_loop"), 0);
+    class_addmethod(c, (t_method)samplor_manual_init, gensym("get_buffer_loop"), 0);
+    class_addmethod(c, (t_method)samplor_bang, gensym("bang"), 0);
+    */
+
 }
