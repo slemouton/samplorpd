@@ -1,41 +1,86 @@
 #include <stdlib.h>
 #include "m_pd.h"
 #include "samplor2.h"
-
+#include "slm1.h"
 
 #ifdef NT
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #endif
-#define VERSION "samplor~: version for pd without flext v0.015 "
+#define VERSION "samplor~: version for pd without flext v0.0.7 "
 
 /* ------------------------ samplorpd~ ----------------------------- */
 
 static t_class *samplorpd_class;
 
-typedef struct _samplorpd
-{
-    t_object x_obj; 	/* obligatory header */
-    t_float x_f;    	/* place to hold inlet's value if it's set by message */
-    t_samplor *ctlp;
-    t_samplor ctl;
-    long num_outputs;           /* nombre de sorties (1,2 ou 3) */
-    long stereo_mode;
-    t_sample *vectors[SAMPLOR_MAX_OUTCOUNT+1]; 
-    long time;
-    long count;
-} t_samplorpd;
 
 /* ------------------------ METHODS ----------------------------- */
+
+/*
+ * samplor_init sets up the inputs and params structure with default values
+ */
+
+void samplor_init(t_samplor *x)
+{
+    x->inputs.offset = 0;
+    x->inputs.dur = 0;
+    x->inputs.attack = 2;
+    x->inputs.decay = 2;
+    x->inputs.sustain = 100;
+    x->inputs.release = 2;
+    x->inputs.susloopstart = 0;
+    x->inputs.susloopend = 0;
+    x->inputs.release_curve = 1.;
+    x->inputs.transp = 1.;
+    x->inputs.amp = 1.;
+    x->inputs.pan = 0.5;
+    x->inputs.rev = 1.;
+    x->inputs.env = 1;        /* window type */
+    x->inputs.buf_name = 0;
+ //   x->inputs.buf = 0;
+ //   x->inputs.buf_ref = 0;
+    x->inputs.samplor_buf = 0;
+    x->params.sr = DEFAULT_SRATE;
+    x->params.sp = 1 / x->params.sr;
+    #if 1
+    samplor_windows(x);
+    list_init(&x->waiting_notes);
+    x->interpol = 1;        /* default : linear interpolation */
+    x->voice_stealing = 0;    /* default : no voice stealing */
+    x->loop_xfade = 0;    /* default : no loop crossfade */
+    x->debug = 0;
+    x->active_voices = 0;
+    x->modwheel = 1.;
+    x->n_sf = 1;
+ //   x->buf_tab = (t_hashtab *)hashtab_new(0);//hashtable initialisation :
+ #endif
+}
+
+/*
+ * make windows
+ */
+
+void samplor_windows(t_samplor *x)
+{
+    int size = WIND_SIZE;
+  
+    triangular_window(x->windows[1],size);
+    rectangular_window(x->windows[2],size);
+    cresc_window(x->windows[3],size);
+    decresc_window(x->windows[4],size);
+    hamming_window(x->windows[5],size);
+    hamming32_window(x->windows[6],size);
+}
+
 
 void samplor_int(t_samplorpd *x,long d)
 {
 }
 
-void samplor_debug(t_samplorpd *x,long d)
+void samplor_debug(t_samplorpd *x,t_floatarg d)
 {
-    x->ctlp->debug = d;
-    post("debug %d",d);
+    x->ctlp->debug = (long) d;
+    post("debug %d",(long) d);
 }
 
 /*
@@ -60,6 +105,7 @@ void samplor_maxvoices(t_samplorpd *x, long v)
     x->ctlp->active_voices = 0;  
 }
 
+
 static t_int *samplorpd_perform(t_int *w)
 {
     t_float *in = (t_float *)(w[1]);
@@ -79,17 +125,9 @@ static void samplorpd_dsp(t_samplorpd *x, t_signal **sp)
     dsp_add(samplorpd_perform, 3, sp[0]->s_vec, sp[1]->s_vec, sp[0]->s_n);
 }
 
-static void *samplorpd_new0(void)
+static void *samplorpd_new(t_symbol *s, int argc, t_atom *argv)
 {
-    t_samplorpd *x = (t_samplorpd *)pd_new(samplorpd_class);
-    outlet_new(&x->x_obj, gensym("signal"));
-    x->x_f = 0;
-    return (x);
-}
-
-static void *samplorpd_new(t_symbol *s, long ac, t_atom *av)
-{
-   long n,i;
+    long n,i;
     long numoutputs;
     long maxvoices = DEFAULT_MAXVOICES;
     t_samplorpd *x = NULL;
@@ -98,10 +136,76 @@ static void *samplorpd_new(t_symbol *s, long ac, t_atom *av)
        outlet_new(&x->x_obj, gensym("signal"));
     if (x)
     {
+           //process the arguments :
+        if ((argc >= 1) && (argv[0].a_type==A_FLOAT))
+        {       
+            post("float: %f", argv[0].a_w.w_float);
+            numoutputs = (long)argv[0].a_w.w_float;
+        }
+        else
+            numoutputs = DEFAULT_NOUTPUTS;
+ 
+        if ((argc >= 2) && (argv[1].a_type==A_FLOAT))
+            maxvoices = (long)argv[1].a_w.w_float;
+        else
+            maxvoices = DEFAULT_MAXVOICES;
 
+  
+        //process numoutputs
+        if (numoutputs < -2)  // stereo buffer and multipan
+        {
+            x->stereo_mode = 1;
+            numoutputs = abs((int)numoutputs);
+        }
+        else if (numoutputs == -2)
+        {
+            x->stereo_mode = 1;
+            numoutputs = 2;
+        }
+        else
+            x->stereo_mode = 0;
+ 
+
+           numoutputs = min(numoutputs,MAX_OUTPUTS);
+
+        n = max(numoutputs,1);
+        x->num_outputs = max(numoutputs,0);
+        #if 0  
+
+        /* INLETS */
+      if (x->num_outputs == 3)
+            floatin(x,7);
+        if (x->num_outputs >= 2)
+            floatin(x,6);
+        floatin(x,5);
+        floatin(x,4);
+        intin(x,3);
+        intin(x,2);
+        intin(x,1);
+        #endif        
+        /* OUTLETS */
+        x->right_outlet = outlet_new(&x->x_obj,NULL); //to report the number of active voices and the loop points
+        while(n--)
+            outlet_new(&x->x_obj,gensym("signal"));
+        
+        /* object initialisation */
+       #if 1
+        x->ctlp = &(x->ctl);
+        samplor_init(x->ctlp);
+     //   x->ctlp->list.samplors = (t_samplor_entry *)sysmem_newptr(maxvoices * sizeof(t_samplor_entry));
+        samplor_maxvoices(x,maxvoices);
+        x->time = 0;    
+        x->count = 0;
+        x->dtd = 0;
+        x->thread_safe_mode = 0;
+        x->local_double_buffer = 1;
+
+        for (i=0;i<=x->num_outputs;i++)
+            x->vectors[i] = NULL;
+
+     #endif
     }
     return(x);
-
 }
 
 
@@ -111,7 +215,7 @@ static void *samplorpd_new(t_symbol *s, long ac, t_atom *av)
 void samplorpd_tilde_setup(void)
 {
     samplorpd_class = class_new(gensym("samplorpd~"), (t_newmethod)samplorpd_new, 0,
-    	sizeof(t_samplorpd), 0, A_DEFFLOAT, 0);
+    	sizeof(t_samplorpd), 0, A_GIMME, 0);
 
     CLASS_MAINSIGNALIN(samplorpd_class, t_samplorpd, x_f);
  
@@ -121,7 +225,7 @@ void samplorpd_tilde_setup(void)
     
     class_addmethod(samplorpd_class, (t_method)samplor_maxvoices, gensym("maxvoices"), 0);
     class_addmethod(samplorpd_class, (t_method)samplor_int, gensym("int"),0);
-    class_addmethod(samplorpd_class, (t_method)samplor_debug, gensym("debug"), 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_debug, gensym("debug"), A_FLOAT, 0);
 
   /* class_addmethod(c, (t_method)samplor_set, gensym("set"), 0);
     class_addmethod(c, (t_method)samplor_manual_init, gensym("init"), 0);

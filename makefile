@@ -72,7 +72,7 @@ pd_darwin: obj1.pd_darwin obj2.pd_darwin \
      obj3.pd_darwin obj4.pd_darwin obj5.pd_darwin dspobj~.pd_darwin
 
 dspobj : dspobj~.pd_darwin
-samplorpd : linkedlist.o samplorpd~.pd_darwin
+samplorpd : slm1.o linkedlist.o samplorpd~.pd_darwin
 
 .SUFFIXES: .pd_darwin
 
@@ -81,10 +81,12 @@ DARWINCFLAGS = -DPD -O2 -Wall -W -Wshadow -Wstrict-prototypes \
 
 linkedlist.o:
 	cc $(DARWINCFLAGS) $(LINUXINCLUDE) -o linkedlist.o -c linkedlist.c
+slm1.o:
+	cc $(DARWINCFLAGS) $(LINUXINCLUDE) -o slm1.o -c slm1.c
 
 .c.pd_darwin:
 	cc $(DARWINCFLAGS) $(LINUXINCLUDE) -o $*.o -c $*.c
-	cc -bundle -undefined suppress -flat_namespace -o $*.pd_darwin $*.o linkedlist.o
+	cc -bundle -undefined suppress -flat_namespace -o $*.pd_darwin $*.o linkedlist.o slm1.o
 	rm -f $*.o
 
 install:
