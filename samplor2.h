@@ -202,7 +202,7 @@ void samplor_bang(t_samplorpd *x);
 void samplor_int(t_samplorpd *x,long d);
 void samplor_debug(t_samplorpd *x,t_floatarg d);
 void samplor_maxvoices(t_samplorpd *x, long v);
-void samplor_interpol(t_samplorpd *x, int interpol);
+void samplor_interpol(t_samplorpd *x, t_floatarg d);
 void samplor_loopxfade(t_samplorpd *x, int loop_xfade);
 void samplor_buf(t_samplorpd *x, int buf);
 void samplor_bufname(t_samplorpd *x, char *name);

@@ -7,7 +7,7 @@
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #endif
-#define VERSION "samplor~: version for pd without flext v0.0.7 "
+#define VERSION "samplor~: version for pd without flext v0.0.8 "
 
 /* ------------------------ samplorpd~ ----------------------------- */
 
@@ -72,7 +72,6 @@ void samplor_windows(t_samplor *x)
     hamming32_window(x->windows[6],size);
 }
 
-
 void samplor_int(t_samplorpd *x,long d)
 {
 }
@@ -105,6 +104,26 @@ void samplor_maxvoices(t_samplorpd *x, long v)
     x->ctlp->active_voices = 0;  
 }
 
+void samplor_interpol(t_samplorpd *x, t_floatarg f)
+{
+  
+int interpol = (int)f;
+    post("interpol %d",interpol);
+#if 1
+    x->ctlp->interpol = interpol;
+    if (x->ctlp->debug)
+        switch(interpol)
+    {
+        case CLOSEST : post("no interpolation"); break;
+        case LINEAR : post("interpolation lineaire"); break;
+        case SQUARE : post("square interpolation"); break;
+        case CUBIC : post("cubic interpolation"); break;
+        case CUBIC2 : post("constant power crossfade for uncorrelated loops"); break;
+        case UPSAMPLING2 : post("%d times oversampling ",UPSAMPLING); break;
+        default : post("unknown interpolation mode\n");
+    }
+#endif
+}
 
 static t_int *samplorpd_perform(t_int *w)
 {
@@ -118,7 +137,6 @@ static t_int *samplorpd_perform(t_int *w)
     }
     return (w+4);
 }
-
 
 static void samplorpd_dsp(t_samplorpd *x, t_signal **sp)
 {
@@ -192,7 +210,8 @@ static void *samplorpd_new(t_symbol *s, int argc, t_atom *argv)
        #if 1
         x->ctlp = &(x->ctl);
         samplor_init(x->ctlp);
-     //   x->ctlp->list.samplors = (t_samplor_entry *)sysmem_newptr(maxvoices * sizeof(t_samplor_entry));
+     //  x->ctlp->list.samplors = (t_samplor_entry *)sysmem_newptr(maxvoices * sizeof(t_samplor_entry));
+         x->ctlp->list.samplors = (t_samplor_entry *)malloc(maxvoices * sizeof(t_samplor_entry));
         samplor_maxvoices(x,maxvoices);
         x->time = 0;    
         x->count = 0;
@@ -207,7 +226,6 @@ static void *samplorpd_new(t_symbol *s, int argc, t_atom *argv)
     }
     return(x);
 }
-
 
 /* 
  * class setup
@@ -226,21 +244,22 @@ void samplorpd_tilde_setup(void)
     class_addmethod(samplorpd_class, (t_method)samplor_maxvoices, gensym("maxvoices"), 0);
     class_addmethod(samplorpd_class, (t_method)samplor_int, gensym("int"),0);
     class_addmethod(samplorpd_class, (t_method)samplor_debug, gensym("debug"), A_FLOAT, 0);
-
-  /* class_addmethod(c, (t_method)samplor_set, gensym("set"), 0);
-    class_addmethod(c, (t_method)samplor_manual_init, gensym("init"), 0);
-    class_addmethod(c, (t_method)samplor_interpol, gensym("interpol"), 0);
-    class_addmethod(c, (t_method)samplor_manual_init, gensym("xfade"), 0);
-    class_addmethod(c, (t_method)samplor_manual_init, gensym("voice_stealing"), 0);
-    class_addmethod(c, (t_method)samplor_manual_init, gensym("list"), 0);    
-    class_addmethod(c, (t_method)samplor_manual_init, gensym("window"), 0);
-    class_addmethod(c, (t_method)samplor_manual_init, gensym("adsr"), 0);
-    class_addmethod(c, (t_method)samplor_manual_init, gensym("stop"), 0);
-    class_addmethod(c, (t_method)samplor_manual_init, gensym("stop2"), 0);
-    class_addmethod(c, (t_method)samplor_manual_init, gensym("stopall"), 0);
-    class_addmethod(c, (t_method)samplor_manual_init, gensym("loop"), 0);
-    class_addmethod(c, (t_method)samplor_manual_init, gensym("buffer_loop"), 0);
-    class_addmethod(c, (t_method)samplor_manual_init, gensym("get_buffer_loop"), 0);
-    class_addmethod(c, (t_method)samplor_bang, gensym("bang"), 0);
-    */
+   // class_addmethod(samplorpd_class, (t_method)samplor_manual_init, gensym("init"), 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_interpol, gensym("interpol"), A_FLOAT,0);
+     #if 0 
+    class_addmethod(samplorpd_class, (t_method)samplor_set, gensym("set"), 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_manual_init, gensym("xfade"), 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_manual_init, gensym("voice_stealing"), 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_manual_init, gensym("list"), 0);    
+    class_addmethod(samplorpd_class, (t_method)samplor_manual_init, gensym("window"), 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_manual_init, gensym("adsr"), 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_manual_init, gensym("stop"), 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_manual_init, gensym("stop2"), 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_manual_init, gensym("stopall"), 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_manual_init, gensym("loop"), 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_manual_init, gensym("buffer_loop"), 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_manual_init, gensym("get_buffer_loop"), 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_bang, gensym("bang"), 0);
+    #endif
 }
+

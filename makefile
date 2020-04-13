@@ -77,7 +77,7 @@ samplorpd : slm1.o linkedlist.o samplorpd~.pd_darwin
 .SUFFIXES: .pd_darwin
 
 DARWINCFLAGS = -DPD -O2 -Wall -W -Wshadow -Wstrict-prototypes \
-    -Wno-unused -Wno-parentheses -Wno-switch
+    -Wno-unused -Wno-unused-parameter -Wno-visibility
 
 linkedlist.o:
 	cc $(DARWINCFLAGS) $(LINUXINCLUDE) -o linkedlist.o -c linkedlist.c
