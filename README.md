@@ -1,26 +1,24 @@
-# Samplor EXTERNAL OBJECTS in Pd.
+# Samplor in Pd - Serge Lemouton - 2020
+# version without flext
 
-## pd external example
-example Here are the sources for three simple external objects in Pd.
-To compile, type "make pd_linux", "nmake pd_nt", "make pd_irix5" or "make
-pd_irix6".
+## to build and test samplor external for pd :
 
-The objects "foo1" and "foo2" are intended as very simple control objects, and
-"dspobj" is a tilde object.
-
-## to build and test samplor pd version without flext :
+### command line
 cd /Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/
 make samplorpd
 cp samplorpd~.pd_darwin /Applications/Pd-0.48-1.app/Contents/Resources/extra
 open -a Pd-0.48-1.app test-samplorpd~.pd
 
-## Build with Sublime Text
+### Build with Sublime Text
 /Users/lemouton/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/pd.sublime-build
+
+### Xcode
+todo xcode allow debuging
 
 ## todo
 ###array access
 cf /Users/lemouton/Projets/PureData/iem16-externals
+
 ###hashtable in C
+
 ###free method
-###dev
-run puredata in a debugger (xcode ?) !
