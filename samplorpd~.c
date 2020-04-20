@@ -83,6 +83,47 @@ void samplor_debug(t_samplorpd *x,t_floatarg d)
 }
 
 /*
+ * don't use
+ */
+void
+samplor_manual_init(t_samplorpd *x,long d)
+{
+    int i;
+    post("init level %d",d);
+    if (d == -2)
+        samplor_init(x->ctlp);
+    if (d>=4)
+        x->ctlp = &(x->ctl);
+    if(d>=3)
+        samplor_init(x->ctlp);
+    if(d>=2)
+        samplor_maxvoices(x,12);
+    if (d>=1)
+    {
+        x->time = 0;
+        x->count = 0;
+      }
+    for (i=0;i<=x->num_outputs;i++)
+        x->vectors[i] = NULL;
+}
+
+void samplor_count_active_voices(t_samplorpd *x,long d)
+{
+    int count;
+    /*   samplist_display(&(x->ctlp->list)); */
+    //post active voices to rightmost inlet
+    if (d == 0)
+        outlet_float(x->right_outlet,x->ctlp->active_voices);
+    else if (d == 1){
+        count = samplist_count(&(x->ctlp->list));
+        outlet_float(x->right_outlet,count);}
+    else if (d == 2){
+        count = samplist_count(&(x->ctlp->list));
+        post("active %d %d",count,x->ctlp->active_voices);
+         outlet_float((t_object *)x->right_outlet,x->ctlp->active_voices);}
+}
+
+/*
  * samplor_maxvoices sets the maximum number of voices
 */
 void samplor_maxvoices(t_samplorpd *x, long v)
@@ -1146,46 +1187,43 @@ void samplorpd_tilde_setup(void)
     class_addmethod(samplorpd_class, (t_method)samplor_maxvoices, gensym("maxvoices"), 0);
     class_addmethod(samplorpd_class, (t_method)samplor_int, gensym("int"),0);
     class_addmethod(samplorpd_class, (t_method)samplor_debug, gensym("debug"), A_FLOAT, 0);
-   // class_addmethod(samplorpd_class, (t_method)samplor_manual_init, gensym("init"), 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_manual_init, gensym("init"), 0);
     class_addmethod(samplorpd_class, (t_method)samplor_interpol, gensym("interpol"), A_FLOAT,0);
- 
     class_addmethod(samplorpd_class, (t_method)samplor_set, gensym("set"), 0);
     class_addmethod(samplorpd_class, (t_method)samplor_list, gensym("list"), A_GIMME,0);
     class_addmethod(samplorpd_class, (t_method)samplor_bang, gensym("bang"), 0);
-    
-#if 0
-  //  class_addmethod(samplorpd_class, (t_method)samplor_manual_init, gensym("window"), 0);
-    
     class_addmethod(samplorpd_class,(t_method)samplor_play,"play",A_GIMME,0);
     class_addmethod(samplorpd_class,(t_method)samplor_stop_play,"stop_play",A_GIMME,0);
     class_addmethod(samplorpd_class,(t_method)samplor_adsr, "adsr", A_GIMME,0);
     class_addmethod(samplorpd_class,(t_method)samplor_adsr_ratio, "adsr%", A_GIMME,0);
     class_addmethod(samplorpd_class,(t_method)samplor_stop, "stop", A_GIMME,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_stop2, "stop2", A_DEFLONG, 0);
-    class_addmethod(samplorpd_class,(t_method)samplor_stopall, "stopall", A_DEFLONG, 0);
+    class_addmethod(samplorpd_class,(t_method)samplor_stop2, "stop2", A_DEFFLOAT, 0);
+    class_addmethod(samplorpd_class,(t_method)samplor_stopall, "stopall", A_DEFFLOAT, 0);
     class_addmethod(samplorpd_class,(t_method)samplor_loop, "loop", A_GIMME,0);
     class_addmethod(samplorpd_class,(t_method)samplor_start,"float",A_FLOAT,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_buf,"in1",A_LONG,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_offset,"in2");
-    class_addmethod(samplorpd_class,(t_method)samplor_dur, "in3");
-    class_addmethod(samplorpd_class,(t_method)samplor_transp, "ft4");
-    class_addmethod(samplorpd_class,(t_method)samplor_amp, "ft5");
-    class_addmethod(samplorpd_class,(t_method)samplor_pan, "ft6");
-    class_addmethod(samplorpd_class,(t_method)samplor_rev, "ft7");
-    class_addmethod(samplorpd_class,(t_method)samplor_set_buffer_loop,    "buffer_loop",    A_SYM,A_LONG,A_LONG,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_get_buffer_loop,    "get_buffer_loop",    A_SYM,0);
+    class_addmethod(samplorpd_class,(t_method)samplor_count_active_voices, "count", A_DEFFLOAT, 0);
+
+    //  class_addmethod(samplorpd_class,(t_method)samplor_buf,"in1",A_LONG,0);
+  //  class_addmethod(samplorpd_class,(t_method)samplor_offset,"in2");
+  //  class_addmethod(samplorpd_class,(t_method)samplor_dur, "in3");
+  //  class_addmethod(samplorpd_class,(t_method)samplor_transp, "ft4");
+  //  class_addmethod(samplorpd_class,(t_method)samplor_amp, "ft5");
+  //  class_addmethod(samplorpd_class,(t_method)samplor_pan, "ft6");
+  //  class_addmethod(samplorpd_class,(t_method)samplor_rev, "ft7");
+    
+    class_addmethod(samplorpd_class,(t_method)samplor_set_buffer_loop,    "buffer_loop",    A_SYMBOL,A_FLOAT,A_FLOAT,0);
+    class_addmethod(samplorpd_class,(t_method)samplor_get_buffer_loop,    "get_buffer_loop",    A_SYMBOL,0);
     class_addmethod(samplorpd_class,(t_method)samplor_modwheel,    "modwheel",    A_FLOAT,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_addsoundfile,    "addsf",A_DEFSYM,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_listsoundfiles, "listsf",0);
-    class_addmethod(samplorpd_class,(t_method)samplor_getsoundfile, "info",A_DEFSYM,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_getmmap, "mmapinfo",A_DEFSYM,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_getmmap_sample, "mmapval",A_DEFSYM,A_LONG,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_clearsoundfile, "clearsf",A_DEFSYM,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_count_active_voices, "count", A_DEFLONG, 0);
-    class_addmethod(samplorpd_class,(t_method)samplor_clearsoundfiles, "clearallsf",0);
+  
+    //  class_addmethod(samplorpd_class,(t_method)samplor_addsoundfile,    "addsf",A_DEFSYMBOL,0);
+  //  class_addmethod(samplorpd_class,(t_method)samplor_listsoundfiles, "listsf",0);
+   // class_addmethod(samplorpd_class,(t_method)samplor_getsoundfile, "info",A_DEFSYMBOL,0);
+   // class_addmethod(samplorpd_class,(t_method)samplor_getmmap, "mmapinfo",A_DEFSYMBOLOL,0);
+   // class_addmethod(samplorpd_class,(t_method)samplor_getmmap_sample, "mmapval",A_DEFSYMBOL,A_FLOAT,0);
+   // class_addmethod(samplorpd_class,(t_method)samplor_clearsoundfile, "clearsf",A_DEFSYMBOL,0);
+  //   class_addmethod(samplorpd_class,(t_method)samplor_clearsoundfiles, "clearallsf",0);
+    
  //   class_addmethod(samplorpd_class,(t_method)samplor_dsp64, "dsp64",    A_CANT, 0);
   //  class_addmethod(samplorpd_class,(t_method)samplor_assist, "assist",    A_CANT,0);
-    
-    #endif
 }
 
