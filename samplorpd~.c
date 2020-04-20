@@ -7,7 +7,7 @@
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #endif
-#define VERSION "samplor~: version for pd without flext v0.0.81 "
+#define VERSION "samplor~: version for pd without flext v0.0.82"
 
 /* ------------------------ samplorpd~ ----------------------------- */
 

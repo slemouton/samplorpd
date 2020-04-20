@@ -12,7 +12,7 @@
 #define midi_to_freq(x) (440.0 * exp(0.057762265047 * ((x) - 69.0)))
 #define dB_to_linear(x) (exp(0.11512925465 * (x)))
 
-inline uint16_t _af_byteswap_int16 (uint16_t x)
+static inline uint16_t _af_byteswap_int16 (uint16_t x)
 {
     return (x >> 8) | (x << 8);
 }

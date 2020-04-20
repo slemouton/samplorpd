@@ -62,8 +62,8 @@ t_samplor_entry
 {
       long attack_dur,decay_dur,release_dur;
       long dur;
-    long b_msr;
-    long long b_frames;
+    long b_msr = 44.1;
+    long long b_frames = 0;
     t_samplor_entry *new = x->free;
     
     if(new == LIST_END) return ((void*) 0);
@@ -198,7 +198,7 @@ t_samplor_entry
         new->release_ratio = new->sustain/(float)release_dur;
         new->release_ratio2 = new->release_ratio / new->increment;
        
-#if DEBUG
+#if 0
         post ("msr frames size %f %d %d %d",b_msr,b_frames,inputs.buf->b_frames,new->buf->b_size);
          post ("win st dur %d %d %d",new->win,new->start,new->dur);
          post ("pos inc amp count %f %f %f %d",new->fposition,new->increment,new->amplitude,new->count);

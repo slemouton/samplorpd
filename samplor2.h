@@ -1,5 +1,5 @@
 #include "max_types.h"
-#define DEBUG 0
+
 #define MULTIPAN 1
 #define DELAY_ACTIVE 0
 #define WINAR 0                     /* Window + ADSR */
