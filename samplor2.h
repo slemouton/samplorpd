@@ -177,6 +177,7 @@ typedef struct _samplorpd
     char thread_safe_mode; // attribut
     char local_double_buffer;  // attribut : plus gourmand en memoire mais moins en CPU
     char dtd;  // attribut : experimental streaming mode
+    t_sample *(x_outvec[MAX_OUTPUTS]);
 } t_samplorpd;
 
 
@@ -239,7 +240,8 @@ t_int *samplor_perform2(t_int *w);
 t_int *samplor_perform1(t_int *w);
 t_int *samplor_perform0(t_int *w);
 void samplor_perform64_0(t_samplorpd *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam);
-void samplor_perform64_1(t_samplorpd *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam);
+//void samplor_perform64_1(t_samplorpd *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam);
+static t_int *samplor_perform64_1(t_int *w);
 void samplor_perform64_2(t_samplorpd *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam);
 void samplor_perform64_3(t_samplorpd *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam);
 void samplor_perform64N(t_samplorpd *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam);

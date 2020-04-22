@@ -1,6 +1,9 @@
 # Samplor in Pd - Serge Lemouton - 2020
 # version without flext
 
+## dependencies
+puredata (0.49 built from sources)
+
 ## to build and test samplor external for pd :
 
 ### command line
@@ -22,3 +25,9 @@ cf /Users/lemouton/Projets/PureData/iem16-externals
 ###hashtable in C
 
 ###free method
+
+## thanks to 
+- miller puckette
+- iem16-externals
+- Pd Objects - Xcode project for Pd object developement - Created by Cooper Baker
+

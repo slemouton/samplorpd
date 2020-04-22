@@ -13,8 +13,135 @@
 
 static t_class *samplorpd_class;
 
+/* ------------------------ DSP METHODS ----------------------------- */
 
-/* ------------------------ METHODS ----------------------------- */
+int samplor_run_one_lite64(t_samplor_entry *x, t_double **out, int n,long interpol)
+{
+    t_double *out1 = out[0];
+    t_float sample = 0.;
+    float *tab,*tab_up,w_f_index,amp_scale;
+    double f;
+    long index, frames, nc;
+#if 0
+    //internal buffer :
+
+    if (x->samplor_buf)
+    {
+        tab = x->samplor_buf->f_samples ;
+        tab_up = x->samplor_buf->f_upsamples ;
+        frames = x->samplor_buf->b_frames;
+        nc = x->samplor_buf->b_nchans;
+    }
+    else if ((tab = buffer_locksamples(x->buf_obj)))
+    {
+        frames = buffer_getframecount(x->buf_obj);
+        nc = buffer_getchannelcount(x->buf_obj);
+    }
+    else goto zero;
+    
+    if (x->count > 0)
+    {
+        long m = min(n, x->count);
+        
+        x->count -= m;
+        while (m--)
+        {
+            f = x->fposition;
+            index = (long)f;
+            x->fposition += x->increment ;
+            {
+                if (f < 0)
+                    f = 0;
+                else if (f >= frames)
+                    f = frames - 1;
+                if (nc > 1)
+                    f *=  nc ;
+                {
+                    if(interpol == 1)
+                        sample = linear_interpol_f(tab,f);
+                    else if(interpol == 2)
+                        sample = linear_interpol_f(tab,f);
+                    else if(interpol == 3)
+                        sample = cubic_interpol_f (tab,f);
+                    else if(interpol == 5)
+                        sample = tab_up[(long)(f  *  UPSAMPLING)];
+                    else
+                        sample = tab[index];
+                }
+            }
+            /* attack-release stuff */
+            if (index < x->attack)
+            {
+                w_f_index = (float)(index - x->begin) * x->attack_ratio;
+            }
+            else if (index > x->release)
+            {
+                w_f_index = (float)( x->end - index)* x->release_ratio;
+            }
+            else if (index < x->decay)
+            {
+                w_f_index = 1. + (float)(index - x->attack) * x->decay_ratio;
+            }
+            else
+                w_f_index = x->sustain;
+            sample *= x->amplitude * w_f_index;
+            if(x->fade_out_time) //for clean voice_stealing
+            {
+                if(!x->fade_out_end)
+                    x->fade_out_end = (index + x->fade_out_time);
+                
+                amp_scale = (float)(x->fade_out_end - index) / (float) x->fade_out_time;
+                
+                //amp_scale = MAX(0.,amp_scale);
+                // or (to instantly free the voice )
+                if (amp_scale < 0)
+                    goto zero;
+                sample *= amp_scale;
+            }
+            *out1++ += sample;
+        }
+        return (1);
+    }
+    else
+        zero:
+ #endif
+        return (0);
+
+}
+
+
+/* lite version : mono, no delay, no windows */
+void samplor_run_all_lite64(t_samplor *x, t_double **outs, int n,long num_outputs)
+{
+    t_samplor_entry *prev = x->list.used;
+    t_samplor_entry *curr = prev;
+    
+    while (curr != LIST_END)
+    {
+        if (samplor_run_one_lite64(curr, outs, n, x->interpol))
+        { /* next voice */
+            prev = curr;
+            curr = curr->next;
+        }
+        else
+        {/* "removing one" */
+            x->active_voices--;
+            if(curr == prev)/*for the first time */
+            {/* "in front" */
+                x->list.used = curr->next;
+                curr->next = x->list.free;
+                x->list.free = curr;
+                prev = curr = x->list.used;
+            }
+            else
+            {
+                curr = samplist_free_voice(&x->list,prev,curr);
+            }
+        }
+    }
+}
+
+/* ------------------------ CTL METHODS ----------------------------- */
 
 /*
  * samplor_init sets up the inputs and params structure with default values
@@ -1075,15 +1202,105 @@ static t_int *samplorpd_perform(t_int *w)
     int n = (int)(w[3]);
     while (n--)
     {
-    	float f = *(in++);
+    float f = *(in++);
 	*out++ = (f > 0 ? f : -f);
     }
     return (w+4);
 }
 
+//void samplor_perform64_1(t_sigsamplor *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam)
+
+ static t_int *samplor_perform64_1(t_int *w)
+{
+    t_samplorpd *x = (t_samplorpd *)(w[1]);
+    t_samplor *x_ctl = x->ctlp;
+    t_double *samplor_outs[1];
+
+ 
+    //    void (*fun_ptr)(t_samplor *, t_double **, long ,long ) = userparam;
+    long n = sys_getblksize();
+    long i = n;
+    t_double *o = x->x_outvec[0];
+    samplor_outs[0] = x->x_outvec[0];
+    while(i--)
+        *o++ = 0.;
+    samplor_run_all_lite64(x_ctl, samplor_outs, n, 1);
+    return(w+2);
+}
+
+
+//------------------------------------------------------------------------------
+// samplorpd_dsp - installs this object's dsp function in pd's callback list
+//------------------------------------------------------------------------------
 static void samplorpd_dsp(t_samplorpd *x, t_signal **sp)
 {
+
+    x->ctlp->params.sr = sys_getsr();
+    x->ctlp->params.vs = sys_getblksize();
+    //   for (i = 0; i < noutlets; i++)
+    //      x->x_outvec[i] = sp[i]->s_vec;
+    x->x_outvec[0] = sp[0]->s_vec;
     dsp_add(samplorpd_perform, 3, sp[0]->s_vec, sp[1]->s_vec, sp[0]->s_n);
+    dsp_add(samplor_perform64_1,1,x);
+}
+
+void samplorpd_dsp_full(t_samplorpd *x, t_signal **sp)
+{
+#if 0
+    x->ctlp->params.sr = 44100;
+    x->ctlp->params.vs = 64;
+    if (x->num_outputs > 3)
+   {
+        if(x->stereo_mode == 1)
+            object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64N, 0, samplor_run_all_stereo64);
+        else
+        {
+            if (x->dtd)
+                object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64N, 0, samplor_run_all64_mmap_int);
+            else if (x->local_double_buffer == 1)
+                object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64N, 0, samplor_run_all64);
+            else
+                object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64N, 0, samplor_run_all64_int);
+        }
+    }
+    else if (x->num_outputs == 3)
+        object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_3, 0, NULL);
+    else if (x->num_outputs == 2)
+    {
+        if (x->stereo_mode == 1)
+            if (x->dtd)
+                object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_2, 0, samplor_run_all_stereo64_mmap);
+            else
+                object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_2, 0, samplor_run_all_stereo64);
+            else
+            {
+                if (x->dtd)
+                    object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_2, 0, samplor_run_all64_mmap_int);
+                else if (x->local_double_buffer == 1)
+                    object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_2, 0, samplor_run_all64);
+                else
+                    object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_2, 0, samplor_run_all64_int);
+            }
+    }
+    else if (x->num_outputs == 1)
+    {
+        if (x->dtd)
+            object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_1, 0, samplor_run_all64_mmap_int);
+        else if (x->local_double_buffer == 1)
+            object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_1, 0, samplor_run_all64);
+        else
+            object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_1, 0, samplor_run_all64_int);
+    }
+    else
+    {
+        if (x->dtd)
+            object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_1, 1, samplor_run_all_lite64_mmap_int);
+        else if (x->local_double_buffer == 1)
+            object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_1, 1, samplor_run_all_lite64);
+        else
+            object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_1, 2, samplor_run_all_lite64_int);
+    }
+#endif
 }
 
 static void *samplorpd_new(t_symbol *s, int argc, t_atom *argv)
@@ -1092,26 +1309,25 @@ static void *samplorpd_new(t_symbol *s, int argc, t_atom *argv)
     long numoutputs;
     long maxvoices = DEFAULT_MAXVOICES;
     t_samplorpd *x = NULL;
-
+    
     x = (t_samplorpd *)pd_new(samplorpd_class);
-       outlet_new(&x->x_obj, gensym("signal"));
+    outlet_new(&x->x_obj, gensym("signal"));
     if (x)
     {
-           //process the arguments :
+        //process the arguments :
         if ((argc >= 1) && (argv[0].a_type==A_FLOAT))
-        {       
+        {
             post("float: %f", argv[0].a_w.w_float);
             numoutputs = (long)argv[0].a_w.w_float;
         }
         else
             numoutputs = DEFAULT_NOUTPUTS;
- 
+        
         if ((argc >= 2) && (argv[1].a_type==A_FLOAT))
             maxvoices = (long)argv[1].a_w.w_float;
         else
             maxvoices = DEFAULT_MAXVOICES;
 
-  
         //process numoutputs
         if (numoutputs < -2)  // stereo buffer and multipan
         {
@@ -1125,16 +1341,12 @@ static void *samplorpd_new(t_symbol *s, int argc, t_atom *argv)
         }
         else
             x->stereo_mode = 0;
- 
-
-           numoutputs = min(numoutputs,MAX_OUTPUTS);
-
+        numoutputs = min(numoutputs,MAX_OUTPUTS);
         n = max(numoutputs,1);
         x->num_outputs = max(numoutputs,0);
-        #if 0  
-
+#if 0
         /* INLETS */
-      if (x->num_outputs == 3)
+        if (x->num_outputs == 3)
             floatin(x,7);
         if (x->num_outputs >= 2)
             floatin(x,6);
@@ -1143,29 +1355,29 @@ static void *samplorpd_new(t_symbol *s, int argc, t_atom *argv)
         intin(x,3);
         intin(x,2);
         intin(x,1);
-        #endif        
+#endif
         /* OUTLETS */
         x->right_outlet = outlet_new(&x->x_obj,NULL); //to report the number of active voices and the loop points
         while(n--)
             outlet_new(&x->x_obj,gensym("signal"));
         
         /* object initialisation */
-       #if 1
+#if 1
         x->ctlp = &(x->ctl);
         samplor_init(x->ctlp);
-     //  x->ctlp->list.samplors = (t_samplor_entry *)sysmem_newptr(maxvoices * sizeof(t_samplor_entry));
-         x->ctlp->list.samplors = (t_samplor_entry *)malloc(maxvoices * sizeof(t_samplor_entry));
+        //  x->ctlp->list.samplors = (t_samplor_entry *)sysmem_newptr(maxvoices * sizeof(t_samplor_entry));
+        x->ctlp->list.samplors = (t_samplor_entry *)malloc(maxvoices * sizeof(t_samplor_entry));
         samplor_maxvoices(x,maxvoices);
-        x->time = 0;    
+        x->time = 0;
         x->count = 0;
         x->dtd = 0;
         x->thread_safe_mode = 0;
         x->local_double_buffer = 1;
-
+        
         for (i=0;i<=x->num_outputs;i++)
             x->vectors[i] = NULL;
-
-     #endif
+        
+#endif
     }
     return(x);
 }
@@ -1175,15 +1387,11 @@ static void *samplorpd_new(t_symbol *s, int argc, t_atom *argv)
  */
 void samplorpd_tilde_setup(void)
 {
-    samplorpd_class = class_new(gensym("samplorpd~"), (t_newmethod)samplorpd_new, 0,
-    	sizeof(t_samplorpd), 0, A_GIMME, 0);
+    samplorpd_class = class_new(gensym("samplorpd~"), (t_newmethod)samplorpd_new, 0, sizeof(t_samplorpd), 0, A_GIMME, 0);
 
+     // declares leftmost inlet as a signal inlet
     CLASS_MAINSIGNALIN(samplorpd_class, t_samplorpd, x_f);
- 
-    class_addmethod(samplorpd_class, (t_method)samplorpd_dsp, gensym("dsp"), 0);
-    post("%s",VERSION);
-    post("compiled %s %s",__DATE__, __TIME__);
-    
+
     class_addmethod(samplorpd_class, (t_method)samplor_maxvoices, gensym("maxvoices"), 0);
     class_addmethod(samplorpd_class, (t_method)samplor_int, gensym("int"),0);
     class_addmethod(samplorpd_class, (t_method)samplor_debug, gensym("debug"), A_FLOAT, 0);
@@ -1192,38 +1400,40 @@ void samplorpd_tilde_setup(void)
     class_addmethod(samplorpd_class, (t_method)samplor_set, gensym("set"), 0);
     class_addmethod(samplorpd_class, (t_method)samplor_list, gensym("list"), A_GIMME,0);
     class_addmethod(samplorpd_class, (t_method)samplor_bang, gensym("bang"), 0);
-    class_addmethod(samplorpd_class,(t_method)samplor_play,"play",A_GIMME,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_stop_play,"stop_play",A_GIMME,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_adsr, "adsr", A_GIMME,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_adsr_ratio, "adsr%", A_GIMME,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_stop, "stop", A_GIMME,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_stop2, "stop2", A_DEFFLOAT, 0);
-    class_addmethod(samplorpd_class,(t_method)samplor_stopall, "stopall", A_DEFFLOAT, 0);
-    class_addmethod(samplorpd_class,(t_method)samplor_loop, "loop", A_GIMME,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_start,"float",A_FLOAT,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_count_active_voices, "count", A_DEFFLOAT, 0);
+    class_addmethod(samplorpd_class,(t_method)samplor_play,gensym("play"),A_GIMME,0);
+    class_addmethod(samplorpd_class,(t_method)samplor_stop_play,gensym("stop_play"),A_GIMME,0);
+    class_addmethod(samplorpd_class,(t_method)samplor_adsr,gensym("adsr"), A_GIMME,0);
+    class_addmethod(samplorpd_class,(t_method)samplor_adsr_ratio,gensym("adsr%"), A_GIMME,0);
+    class_addmethod(samplorpd_class,(t_method)samplor_stop,gensym("stop"), A_GIMME,0);
+    class_addmethod(samplorpd_class,(t_method)samplor_stop2,gensym("stop2"), A_DEFFLOAT, 0);
+    class_addmethod(samplorpd_class,(t_method)samplor_stopall,gensym("stopall"), A_DEFFLOAT, 0);
+    class_addmethod(samplorpd_class,(t_method)samplor_loop,gensym("loop"), A_GIMME,0);
+    class_addmethod(samplorpd_class,(t_method)samplor_start,gensym("float"),A_FLOAT,0);
+    class_addmethod(samplorpd_class,(t_method)samplor_count_active_voices,gensym("count"), A_DEFFLOAT, 0);
 
     //  class_addmethod(samplorpd_class,(t_method)samplor_buf,"in1",A_LONG,0);
-  //  class_addmethod(samplorpd_class,(t_method)samplor_offset,"in2");
-  //  class_addmethod(samplorpd_class,(t_method)samplor_dur, "in3");
-  //  class_addmethod(samplorpd_class,(t_method)samplor_transp, "ft4");
-  //  class_addmethod(samplorpd_class,(t_method)samplor_amp, "ft5");
-  //  class_addmethod(samplorpd_class,(t_method)samplor_pan, "ft6");
-  //  class_addmethod(samplorpd_class,(t_method)samplor_rev, "ft7");
+    //  class_addmethod(samplorpd_class,(t_method)samplor_offset,"in2");
+    //  class_addmethod(samplorpd_class,(t_method)samplor_dur, "in3");
+    //  class_addmethod(samplorpd_class,(t_method)samplor_transp, "ft4");
+    //  class_addmethod(samplorpd_class,(t_method)samplor_amp, "ft5");
+    //  class_addmethod(samplorpd_class,(t_method)samplor_pan, "ft6");
+    //  class_addmethod(samplorpd_class,(t_method)samplor_rev, "ft7");
     
-    class_addmethod(samplorpd_class,(t_method)samplor_set_buffer_loop,    "buffer_loop",    A_SYMBOL,A_FLOAT,A_FLOAT,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_get_buffer_loop,    "get_buffer_loop",    A_SYMBOL,0);
-    class_addmethod(samplorpd_class,(t_method)samplor_modwheel,    "modwheel",    A_FLOAT,0);
+    class_addmethod(samplorpd_class,(t_method)samplor_set_buffer_loop, gensym("buffer_loop"),    A_SYMBOL,A_FLOAT,A_FLOAT,0);
+    class_addmethod(samplorpd_class,(t_method)samplor_get_buffer_loop,  gensym("get_buffer_loop"),    A_SYMBOL,0);
+    class_addmethod(samplorpd_class,(t_method)samplor_modwheel, gensym("modwheel"),    A_FLOAT,0);
   
-    //  class_addmethod(samplorpd_class,(t_method)samplor_addsoundfile,    "addsf",A_DEFSYMBOL,0);
-  //  class_addmethod(samplorpd_class,(t_method)samplor_listsoundfiles, "listsf",0);
-   // class_addmethod(samplorpd_class,(t_method)samplor_getsoundfile, "info",A_DEFSYMBOL,0);
-   // class_addmethod(samplorpd_class,(t_method)samplor_getmmap, "mmapinfo",A_DEFSYMBOLOL,0);
-   // class_addmethod(samplorpd_class,(t_method)samplor_getmmap_sample, "mmapval",A_DEFSYMBOL,A_FLOAT,0);
-   // class_addmethod(samplorpd_class,(t_method)samplor_clearsoundfile, "clearsf",A_DEFSYMBOL,0);
-  //   class_addmethod(samplorpd_class,(t_method)samplor_clearsoundfiles, "clearallsf",0);
+    // class_addmethod(samplorpd_class,(t_method)samplor_addsoundfile,gensym("addsf"),A_DEFSYMBOL,0);
+    // class_addmethod(samplorpd_class,(t_method)samplor_listsoundfiles,gensym("listsf"),0);
+    // class_addmethod(samplorpd_class,(t_method)samplor_getsoundfile,gensym("info"),A_DEFSYMBOL,0);
+    // class_addmethod(samplorpd_class,(t_method)samplor_getmmap,gensym("mmapinfo"),A_DEFSYMBOLOL,0);
+    // class_addmethod(samplorpd_class,(t_method)samplor_getmmap_sample,gensym("mmapval"),A_DEFSYMBOL,A_FLOAT,0);
+    // class_addmethod(samplorpd_class,(t_method)samplor_clearsoundfile,gensym("clearsf"),A_DEFSYMBOL,0);
+    // class_addmethod(samplorpd_class,(t_method)samplor_clearsoundfiles,gensym("clearallsf"),0);
+
+    class_addmethod(samplorpd_class, (t_method)samplorpd_dsp, gensym("dsp"), 0);
+    post("%s",VERSION);
+    post("compiled %s %s",__DATE__, __TIME__);
     
- //   class_addmethod(samplorpd_class,(t_method)samplor_dsp64, "dsp64",    A_CANT, 0);
-  //  class_addmethod(samplorpd_class,(t_method)samplor_assist, "assist",    A_CANT,0);
 }
 
