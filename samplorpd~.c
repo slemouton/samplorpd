@@ -1032,8 +1032,7 @@ void samplor_list(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
     if (ac > 1)
     {
         if ((av + 1)->a_type == A_SYMBOL )
-            // samplor_bufname(x, (av + 1)->a_w.w_sym->s_name);
-            samplor_bufname(x, atom_getsymbol(av + 1));
+            samplor_bufname(x, atom_getsymbol(av + 1)->s_name);
         else
             samplor_buf(x, atom_getfloat(av + 1));
     }
@@ -1067,7 +1066,7 @@ void samplor_list(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
     }
     else
 #endif
-        post ("starting %s %f",atom_getsymbol(av + 1),atom_getfloat(av + 2));
+        post ("starting %s %f",atom_getsymbol(av + 1)->s_name, atom_getfloat(av + 2));
         samplor_start(x, atom_getfloat(av));
 }
 
@@ -1075,6 +1074,52 @@ void samplor_list(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
  * samplor_set set the sound buffer
  */
 void samplor_set(t_samplorpd *x, t_symbol *s)
+{
+
+ //   t_buffer *b;
+      t_garray *a=0;
+    int npoints;
+    t_float *vec=(0), *src=(0);
+    t_samplorbuffer *samplor_buffer;
+  //  t_hashtab *buf_tab = x->ctlp->buf_tab;
+    
+    x->ctlp->inputs.buf_name = s;
+    x->ctlp->inputs.buf = NULL;
+    
+    if (!(a = (t_garray *)pd_findbyclass(s, garray_class))){
+        error("%s: no such array", s->s_name);
+        x->ctlp->inputs.buf = NULL;
+        return;
+    } else
+        if (!garray_getfloatwords(a, &npoints, &vec)){
+            error("%s: bad template for tabread4", s->s_name);
+            x->ctlp->inputs.buf = NULL;
+            return;
+        }
+    x->ctlp->inputs.buf = a;
+    for(int j = 0;j<8;j++)
+    {post ("%d %f",j,vec[j]);}
+    
+    x->ctlp->inputs.samplor_mmap = NULL;
+    x->ctlp->inputs.samplor_buf = NULL;
+#if 0
+    if (!hashtab_lookup(buf_tab, s,(t_object **) &samplor_buffer))
+    {
+        if (x->dtd) // streaming mode
+        {
+            x->ctlp->inputs.samplor_mmap = samplor_buffer;
+        }
+        else     //internal buffer
+        {
+            x->ctlp->inputs.samplor_buf = samplor_buffer;
+        }
+    }
+#endif
+    if (!(x->ctlp->inputs.buf)&&!(x->ctlp->inputs.samplor_buf)&&!(x->ctlp->inputs.samplor_mmap))
+        error("samplor~: no buf %s ", s->s_name);
+}
+
+void samplor_set_mac(t_samplorpd *x, t_symbol *s)
 {
 #if 0
     t_buffer *b;

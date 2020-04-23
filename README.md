@@ -26,6 +26,8 @@ cf /Users/lemouton/Projets/PureData/iem16-externals
 
 ###free method
 
+###pthread_mutex_lock
+
 ## thanks to 
 - miller puckette
 - iem16-externals
