@@ -71,13 +71,13 @@ t_samplor_entry
     {
         x->free = new->next;    
         
-        //new->buf = inputs.buf;
+        new->buf = inputs.buf;
         new->samplenumber = inputs.samplenumber;
         new->buf_name = inputs.buf_name;
        // new->buf_obj = buffer_ref_getobject(inputs.buf_ref);
         new->start = start;
-   //     b_msr = buffer_getmillisamplerate(new->buf_obj);
-     //   b_frames = buffer_getframecount(new->buf_obj);
+        b_msr = 44.1;
+        b_frames = garray_npoints(new->buf);
         if (inputs.samplor_mmap)
         {
             new->mmap_buf = inputs.samplor_mmap;
@@ -198,8 +198,8 @@ t_samplor_entry
         new->release_ratio = new->sustain/(float)release_dur;
         new->release_ratio2 = new->release_ratio / new->increment;
        
-#if 0
-        post ("msr frames size %f %d %d %d",b_msr,b_frames,inputs.buf->b_frames,new->buf->b_size);
+#if 1
+        post ("msr frames size %f %d %d",b_msr,b_frames,garray_npoints(inputs.buf));
          post ("win st dur %d %d %d",new->win,new->start,new->dur);
          post ("pos inc amp count %f %f %f %d",new->fposition,new->increment,new->amplitude,new->count);
          post ("pan attack decay sustain dur     release %f %d %d %f %d %d",new->pan,new->attack,new->decay,new->sustain,new->dur,new->release);

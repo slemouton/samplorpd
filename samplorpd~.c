@@ -22,7 +22,7 @@ int samplor_run_one_lite64(t_samplor_entry *x, t_double **out, int n,long interp
     float *tab,*tab_up,w_f_index,amp_scale;
     double f;
     long index, frames, nc;
-#if 0
+#if 1
     //internal buffer :
 
     if (x->samplor_buf)
@@ -32,10 +32,10 @@ int samplor_run_one_lite64(t_samplor_entry *x, t_double **out, int n,long interp
         frames = x->samplor_buf->b_frames;
         nc = x->samplor_buf->b_nchans;
     }
-    else if ((tab = buffer_locksamples(x->buf_obj)))
+    else if (tab = garray_vec(x->buf))
     {
-        frames = buffer_getframecount(x->buf_obj);
-        nc = buffer_getchannelcount(x->buf_obj);
+        frames = garray_npoints(x->buf);
+        nc = 1;
     }
     else goto zero;
     
@@ -293,10 +293,10 @@ int interpol = (int)f;
 
 void samplor_start(t_samplorpd *x, float p)
 {
-#if 0
     long start;
     t_samplor *ctlp = x->ctlp;
-    t_buffer_obj *buf = buffer_ref_getobject(ctlp->inputs.buf_ref);
+ //   t_buffer_obj *buf = buffer_ref_getobject(ctlp->inputs.buf_ref);
+    t_garray *buf = ctlp->inputs.buf;
     
     start = p * 0.001 * ctlp->params.sr;
     if (ctlp->inputs.samplor_mmap)
@@ -318,7 +318,7 @@ void samplor_start(t_samplorpd *x, float p)
                 }
                 else
                 {
-                    object_warn((t_object *) x,"too much voices : cancelling voice_stealing");
+                    pd_error((t_object *) x,"too much voices : cancelling voice_stealing");
                     ctlp->voice_stealing = 0;
                 }
             }
@@ -343,17 +343,18 @@ void samplor_start(t_samplorpd *x, float p)
                 }
                 else
                 {
-                    object_warn((t_object *) x,"too much voices : cancelling voice_stealing");
+                    pd_error((t_object *) x,"too much voices : cancelling voice_stealing");
                     ctlp->voice_stealing = 0;
                 }
             }
         }
     }
-    else if(buffer_ref_exists(ctlp->inputs.buf_ref))
+    else if (buf)
     {      /* n'alloue pas de voix si offset > duree du son */
-        if (buffer_getmillisamplerate(buf) * ctlp->inputs.offset < buffer_getframecount(buf))
+        post ("offset %d framecount %d", ctlp->inputs.offset,garray_npoints(buf));
+       // if (buffer_getmillisamplerate(buf) * ctlp->inputs.offset < buffer_getframecount(buf))
         {
-            ctlp->inputs.transp *= buffer_getsamplerate(buf) / ctlp->params.sr;
+            ctlp->inputs.transp *= 44100 / ctlp->params.sr;
             if (ctlp->active_voices < x->ctlp->polyphony)
             {
                 samplist_insert(&(x->ctlp->list),start,ctlp->inputs);
@@ -370,13 +371,12 @@ void samplor_start(t_samplorpd *x, float p)
                 }
                 else
                 {
-                    object_warn((t_object *)x,"too much voices : cancelling voice_stealing");
+                    pd_error((t_object *)x,"too much voices : cancelling voice_stealing");
                     ctlp->voice_stealing = 0;
                 }
             }
         }
     }
-#endif
 }
 
 /*
