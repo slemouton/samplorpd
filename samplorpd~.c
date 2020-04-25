@@ -15,11 +15,13 @@ static t_class *samplorpd_class;
 
 /* ------------------------ DSP METHODS ----------------------------- */
 
-int samplor_run_one_lite64(t_samplor_entry *x, t_double **out, int n,long interpol)
+int samplor_run_one_lite64(t_samplor_entry *x, t_sample **out, int n,long interpol)
 {
-    t_double *out1 = out[0];
+    t_sample *out1 = out[0];
     t_float sample = 0.;
-    float *tab,*tab_up,w_f_index,amp_scale;
+    int npoints;
+    float *tab_up,w_f_index,amp_scale;
+    t_word *tab;
     double f;
     long index, frames, nc;
 #if 1
@@ -32,9 +34,8 @@ int samplor_run_one_lite64(t_samplor_entry *x, t_double **out, int n,long interp
         frames = x->samplor_buf->b_frames;
         nc = x->samplor_buf->b_nchans;
     }
-    else if (tab = garray_vec(x->buf))
+    else if (garray_getfloatwords(x->buf, &frames, &tab))
     {
-        frames = garray_npoints(x->buf);
         nc = 1;
     }
     else goto zero;
@@ -66,7 +67,7 @@ int samplor_run_one_lite64(t_samplor_entry *x, t_double **out, int n,long interp
                     else if(interpol == 5)
                         sample = tab_up[(long)(f  *  UPSAMPLING)];
                     else
-                        sample = tab[index];
+                        sample = tab[index].w_float;
                 }
             }
             /* attack-release stuff */
@@ -111,7 +112,7 @@ int samplor_run_one_lite64(t_samplor_entry *x, t_double **out, int n,long interp
 
 
 /* lite version : mono, no delay, no windows */
-void samplor_run_all_lite64(t_samplor *x, t_double **outs, int n,long num_outputs)
+void samplor_run_all_lite64(t_samplor *x, t_sample **outs, int n,long num_outputs)
 {
     t_samplor_entry *prev = x->list.used;
     t_samplor_entry *curr = prev;
@@ -1077,9 +1078,10 @@ void samplor_set(t_samplorpd *x, t_symbol *s)
 {
 
  //   t_buffer *b;
-      t_garray *a=0;
+    t_garray *a=0;
     int npoints;
-    t_float *vec=(0), *src=(0);
+    t_float *src=(0);
+    t_word *vec = 0;
     t_samplorbuffer *samplor_buffer;
   //  t_hashtab *buf_tab = x->ctlp->buf_tab;
     
@@ -1098,7 +1100,7 @@ void samplor_set(t_samplorpd *x, t_symbol *s)
         }
     x->ctlp->inputs.buf = a;
     for(int j = 0;j<8;j++)
-    {post ("%d %f",j,vec[j]);}
+    {post ("%d %f",j,vec[j].w_float);}
     
     x->ctlp->inputs.samplor_mmap = NULL;
     x->ctlp->inputs.samplor_buf = NULL;
@@ -1259,13 +1261,13 @@ static t_int *samplorpd_perform(t_int *w)
 {
     t_samplorpd *x = (t_samplorpd *)(w[1]);
     t_samplor *x_ctl = x->ctlp;
-    t_double *samplor_outs[1];
+    t_sample *samplor_outs[1];
 
  
     //    void (*fun_ptr)(t_samplor *, t_double **, long ,long ) = userparam;
     long n = sys_getblksize();
     long i = n;
-    t_double *o = x->x_outvec[0];
+    t_sample *o = x->x_outvec[0];
     samplor_outs[0] = x->x_outvec[0];
     while(i--)
         *o++ = 0.;
@@ -1285,7 +1287,7 @@ static void samplorpd_dsp(t_samplorpd *x, t_signal **sp)
     //   for (i = 0; i < noutlets; i++)
     //      x->x_outvec[i] = sp[i]->s_vec;
     x->x_outvec[0] = sp[0]->s_vec;
-    dsp_add(samplorpd_perform, 3, sp[0]->s_vec, sp[1]->s_vec, sp[0]->s_n);
+//    dsp_add(samplorpd_perform, 3, sp[0]->s_vec, sp[1]->s_vec, sp[0]->s_n);
     dsp_add(samplor_perform64_1,1,x);
 }
 
