@@ -109,11 +109,11 @@ inline t_sample linear_interpol (t_sample *buf, float alpha) /*NEWTON*/
     return(beta0 + diff1 * npoly1);
 }
 
-inline t_float linear_interpol_f (t_float *buf, float alpha) /*NEWTON*/
+inline t_sample linear_interpol_f (t_word *buf, float alpha) /*NEWTON*/
 {
     int alpha0 = (int)alpha;
-    t_float beta0 = *(buf + alpha0);
-    t_float diff1 = buf[alpha0 + 1] - beta0;
+    t_float beta0 = buf[alpha0].w_float;
+    t_float diff1 = buf[alpha0 + 1].w_float - beta0;
     float npoly1 = alpha - alpha0;
     return(beta0 + diff1 * npoly1);
 }
@@ -210,12 +210,12 @@ inline t_sample square_interpol (t_sample *buf, float alpha) /*NEWTON - GREGORY*
     return(beta0 + diff1 * npoly1 + diff2 * npoly2);
 }
 
-inline t_float square_interpol_f (t_float *buf, float alpha) /*NEWTON - GREGORY*/
+inline t_sample square_interpol_f (t_word *buf, float alpha) /*NEWTON - GREGORY*/
 {
     int alpha0 = (int)alpha;
-    t_float beta0 = buf[alpha0];
-    t_float beta1 = buf[alpha0 + 1];
-    t_float beta2 = buf[alpha0 + 2];
+    t_float beta0 = buf[alpha0].w_float;
+    t_float beta1 = buf[alpha0 + 1].w_float;
+    t_float beta2 = buf[alpha0 + 2].w_float;
     t_float diff1 = beta1 - beta0;
     float npoly1 = alpha - alpha0;
     t_float diff2i = beta2 - beta1 ;
@@ -268,18 +268,18 @@ inline t_sample cubic_interpol (t_sample *buf, float alpha) /*NEWTON - GREGORY*/
     return(beta0 + diff1 * npoly1 + diff2 * npoly2 + diff3 * npoly3);
 }
 
-inline t_float cubic_interpol_f (t_float *buf, float alpha) /*NEWTON - GREGORY*/
+inline t_sample cubic_interpol_f (t_word *buf, float alpha) /*NEWTON - GREGORY*/
 {
     int alpha0 = (int)alpha - 1;   /* translation */
-    t_float beta0 = buf[alpha0];
-    t_float beta1 = buf[alpha0 + 1];
-    t_float beta2 = buf[alpha0 + 2];
+    t_float beta0 = buf[alpha0].w_float;
+    t_float beta1 = buf[alpha0 + 1].w_float;
+    t_float beta2 = buf[alpha0 + 2].w_float;
     t_float diff1 = beta1 - beta0;
     float npoly1 = alpha - alpha0 + 1;
     t_float diff2i = beta2 - beta1 ;
     t_float diff2 = diff2i - diff1;
     float npoly2 = 0.5 * npoly1 * (npoly1 - 1.) ;  /* 2! */
-    t_float diff3 = buf[alpha0 + 3] - beta2 - diff2i - diff2;
+    t_float diff3 = buf[alpha0 + 3].w_float - beta2 - diff2i - diff2;
     float npoly3 = npoly2 * (npoly1 - 2.) / 6.;    /* 3! */
     return(beta0 + diff1 * npoly1 + diff2 * npoly2 + diff3 * npoly3);
 }

@@ -19,14 +19,12 @@ int samplor_run_one_lite64(t_samplor_entry *x, t_sample **out, int n,long interp
 {
     t_sample *out1 = out[0];
     t_float sample = 0.;
-    int npoints;
-    float *tab_up,w_f_index,amp_scale;
+    t_float *tab_up = 0,w_f_index,amp_scale;
     t_word *tab;
-    double f;
-    long index, frames, nc;
-#if 1
-    //internal buffer :
+    t_float f;
+    int index, frames, nc;
 
+    //internal buffer :
     if (x->samplor_buf)
     {
         tab = x->samplor_buf->f_samples ;
@@ -105,11 +103,8 @@ int samplor_run_one_lite64(t_samplor_entry *x, t_sample **out, int n,long interp
     }
     else
         zero:
- #endif
         return (0);
-
 }
-
 
 /* lite version : mono, no delay, no windows */
 void samplor_run_all_lite64(t_samplor *x, t_sample **outs, int n,long num_outputs)

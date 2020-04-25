@@ -42,7 +42,6 @@ void (thisType::*v_##NAME)(int n,t_sample *const *invecs,t_sample *const *outvec
 inline void NAME(int n,double *const *in,double *const *out) { (this->*v_##NAME)(n,in,out); } \
 void (thisType::*v_##NAME)(int n,double *const *invecs,double *const *outvecs)
 
-
 //std::pair<long,long> get_buffer_loop (const char * buf_name);
 
 typedef double t_samplor_real;	/* samplor calculation has to be in double */
