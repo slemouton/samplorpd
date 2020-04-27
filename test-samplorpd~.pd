@@ -1,4 +1,4 @@
-#N canvas 1308 23 367 751 10;
+#N canvas 1293 23 385 892 10;
 #X msg 30 14 \; pd dsp 1;
 #N canvas 0 23 1029 327 (subpatch) 0;
 #X array sample1 44100 float 3;
@@ -6468,7 +6468,6 @@
 #X obj 213 452 print~;
 #X obj 214 203 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 12 359 sig~ 1;
 #N canvas 0 22 450 278 (subpatch) 0;
 #X array scope 4410 float 3;
 #A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -6613,8 +6612,52 @@
 #X obj 257 429 loadbang;
 #X msg 258 452 1;
 #X obj 147 306 loadbang;
-#X msg 147 327 0;
 #X msg 48 239 0 sample1 0 1000 0.35 1;
+#N canvas 843 23 450 300 syntax 1;
+#X text 15 6 to trigger a sound : list <bang sample offset dur transp
+amp >;
+#X msg 25 51 0 1 0 -1 1 1;
+#X obj 27 164 s s_;
+#X text 133 49 dur -1 : all sound;
+#X msg 31 79 0 1 0 0 1 1;
+#X text 143 76 amp 0 : stop sound;
+#X msg 53 101 0 1 0 0 1 0;
+#X obj 295 162 s s_;
+#X msg 293 49 0 sample1 0 -1 1 1;
+#X msg 299 77 0 sample1 0 0 1 1;
+#X msg 321 99 0 sample1 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 4 0 2 0;
+#X connect 6 0 2 0;
+#X connect 8 0 7 0;
+#X connect 9 0 7 0;
+#X connect 10 0 7 0;
+#X restore 91 768 pd syntax;
+#X obj 12 359 r s_;
+#N canvas 842 346 450 300 adsr_window 1;
+#X obj 22 239 s s_;
+#X obj 181 142 s s_;
+#X msg 180 15 window 0;
+#X msg 180 39 window 1;
+#X msg 20 47 adsr 0 0 100 0;
+#X text 20 92 attack time in % decay time in % sustain level in % release
+in %;
+#X msg 22 166 adsr% 10 10 20 100;
+#X text 20 -10 attack time in ms decay time in ms sustain level in
+% release in ms;
+#X text 257 3 no triangle rectangle crescendo decrescendo hamming;
+#X msg 180 63 window 3;
+#X msg 180 87 window 5;
+#X msg 20 70 adsr 100 10 50 100;
+#X connect 2 0 1 0;
+#X connect 3 0 1 0;
+#X connect 4 0 0 0;
+#X connect 6 0 0 0;
+#X connect 9 0 1 0;
+#X connect 10 0 1 0;
+#X connect 11 0 0 0;
+#X restore 87 740 pd adsr_window;
+#X msg 147 327 1;
 #X connect 3 0 2 0;
 #X connect 5 0 6 0;
 #X connect 6 0 13 0;
@@ -6625,16 +6668,16 @@
 #X connect 11 0 12 0;
 #X connect 12 0 13 0;
 #X connect 13 0 15 0;
-#X connect 13 0 19 0;
+#X connect 13 0 18 0;
 #X connect 13 0 4 0;
 #X connect 14 0 13 0;
 #X connect 16 0 15 0;
 #X connect 16 0 8 0;
-#X connect 17 0 13 0;
+#X connect 19 0 18 0;
 #X connect 20 0 19 0;
-#X connect 21 0 20 0;
-#X connect 22 0 23 0;
-#X connect 23 0 21 0;
-#X connect 24 0 25 0;
-#X connect 25 0 5 0;
+#X connect 21 0 22 0;
+#X connect 22 0 20 0;
+#X connect 23 0 28 0;
+#X connect 24 0 13 0;
 #X connect 26 0 13 0;
+#X connect 28 0 5 0;

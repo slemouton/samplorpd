@@ -22,11 +22,13 @@
 #define IN_ALLER_RETOUR_LOOP 3    /* in forward-backward loop */
 #define FINISHING_LOOP 4    /* in forward-backward loop */
 #define SAMPLOR_MAX_OUTCOUNT 16 /* maximum number of signal outlets */
-#define THREAD_SAFE 1
+#define THREAD_SAFE 0
 
 // OVERSAMPLING :
 #define UPSAMPLING 0
 enum {CLOSEST,LINEAR,SQUARE,CUBIC,CUBIC2,UPSAMPLING2,UPSAMPLING4,UPSAMPLING8};
+// MODES
+enum {ARRAY,INTERNALBUFFER,DTD};
 
 #ifndef MAX
 #define MAX(a,b) ((a)>(b)?(a):(b))
@@ -81,6 +83,7 @@ typedef struct _samplormmap
     long       b_size;          /// size of buffer in floats
     long       b_sr;            /// sampling rate of the buffer
     long       b_framesize;
+    long       b_samplewidth;   /// 16, 24 or 32 bits
     long       b_maxvalue;
     t_float    one_over_b_maxvalue; /// for optimisation !!
 } t_samplormmap;
@@ -127,9 +130,7 @@ typedef struct _samplor_params {	/* samplor parameters and pre-calculated values
 	//t_samplor_real piosr;		/* pi over sampling rate */
 } t_samplor_params;
 
-
 #include "linkedlist.h"
-
 
 typedef struct _samplor {				/* samplor control structure */
     t_samplor_inputs inputs;			/* samplor inputs */
@@ -147,19 +148,6 @@ typedef struct _samplor {				/* samplor control structure */
     long n_sf;
 } t_samplor;
 
-// typedef struct _sigsamplor {
-//     t_object x_obj;
-//     t_float x_f;        /* place to hold inlet's value if it's set by message */
-//     t_samplor *ctlp;
-//     t_samplor ctl;
-//     long num_outputs;           /* nombre de sorties (1,2 ou 3) */
-//     long stereo_mode;
-
-//     t_sample *vectors[SAMPLOR_MAX_OUTCOUNT+1]; 
-//     long time;
-//     long count;
-// } t_sigsamplor;
-
 typedef struct _samplorpd
 {
     t_object x_obj;     /* obligatory header */
@@ -167,15 +155,17 @@ typedef struct _samplorpd
     t_samplor *ctlp;
     t_samplor ctl;
     void *right_outlet;
-    long num_outputs;            /* nombre de sorties (1,2 ou 3) */
+    long num_outputs;   /* nombre de sorties (1,2 ou 3) */
     long stereo_mode;
     t_float *vectors[SAMPLOR_MAX_OUTCOUNT+1]; 
     t_double *vectors64[SAMPLOR_MAX_OUTCOUNT+1]; 
     long time;
     long count;
-    char thread_safe_mode; // attribut
-    char local_double_buffer;  // attribut : plus gourmand en memoire mais moins en CPU
-    char dtd;  // attribut : experimental streaming mode
+    char thread_safe_mode;      // attribut
+    char local_double_buffer;   // attribut : plus gourmand en memoire mais moins en CPU
+    char dtd;                   // attribut : experimental streaming mode
+    char buffer_mode;   // are the sample in a pd array, in object memory or directly streamed from disk
+    char loop_release;      // do we allow release markers (defaut : off)
     t_sample *(x_outvec[MAX_OUTPUTS]);
 } t_samplorpd;
 
@@ -188,9 +178,9 @@ void samplor_windows(t_samplor *x);
 int samplor_voice_alloc(t_samplor *x);
 int samplor_voice_append(t_samplor *x);
 void samplor_trigger(t_samplor *x, long start,t_samplor_inputs inputs);
-int samplor_run_one64(t_samplor_entry *x, t_double **out, long n, const t_float *windows, long num_outputs,long interpol,long loop_xfade,t_samplor_real modwheel);
-int samplor_run_one(t_samplor_entry *x, t_float **out, long n, t_float *windows, long num_outputs,long interpol,long loop_xfade);
-int samplor_run_one_lite(t_samplor_entry *x, t_float **out, int n, long interpol);
+int samplor_run_one64(t_samplor_entry *x, t_sample **out, long n, const t_float *windows, long num_outputs,long interpol,long loop_xfade,t_samplor_real modwheel);
+int samplor_run_one(t_samplor_entry *x, t_sample **out, long n, t_float *windows, long num_outputs,long interpol,long loop_xfade);
+int samplor_run_one_lite(t_samplor_entry *x, t_sample **out, int n, long interpol);
 void samplor_run_all(t_samplor *x, t_float **outs, long n,long num_outputs);
 void samplor_error(t_samplorpd *current); 
 void samplor_voice_stealing(t_samplorpd *x, int mode);
@@ -229,21 +219,22 @@ void samplor_stop2(t_samplorpd *x, long time);
 void samplor_stop_one_voice(t_samplorpd *x, int sample,float transp);
 void samplor_stop_play(t_samplorpd *x, t_symbol *s, short ac, t_atom *av);
 void samplor_stopall(t_samplorpd *x, long time);
+void samplor_compute_loop(t_samplor_entry *x,long m, long loop_xfade, unsigned int *in_xfadeflag,t_float *xfade_amp);
 void samplor_loop(t_samplorpd *x, t_symbol *s, short ac, t_atom *av);
 void samplor_set(t_samplorpd *x, t_symbol *s);
 float samplor_get_value(struct atom *a);
 void samplor_modwheel(t_samplorpd *x, double transp);
 void samplor_curve(t_samplorpd *x, double curve);
-t_int *samplor_perform3(t_int *w);
-t_int *samplor_perform2(t_int *w);
-t_int *samplor_perform1(t_int *w);
-t_int *samplor_perform0(t_int *w);
+static t_int *samplor_perform3(t_int *w);
+static t_int *samplor_perform2(t_int *w);
+static t_int *samplor_perform1(t_int *w);
+static t_int *samplor_perform0(t_int *w);
 void samplor_perform64_0(t_samplorpd *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam);
 //void samplor_perform64_1(t_samplorpd *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam);
 static t_int *samplor_perform64_1(t_int *w);
-void samplor_perform64_2(t_samplorpd *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam);
-void samplor_perform64_3(t_samplorpd *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam);
-void samplor_perform64N(t_samplorpd *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam);
+static t_int *samplor_perform64_2(t_int *w);
+static t_int *samplor_perform64_3(t_int *w);
+static t_int *samplor_perform64_N(t_int *w);
 void samplor_perform64_stereo(t_samplorpd *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam);
 void samplor_perform64StereoN(t_samplorpd *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam);
 void samplor_get_buffer_loop(t_samplorpd *x, t_symbol *buffer_name);

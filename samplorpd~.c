@@ -7,13 +7,1368 @@
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #endif
-#define VERSION "samplor~: version for pd without flext v0.0.82"
+#define VERSION "samplor~: version v0.0.82 = MAX version 3.64"
 
 /* ------------------------ samplorpd~ ----------------------------- */
 
 static t_class *samplorpd_class;
 
 /* ------------------------ DSP METHODS ----------------------------- */
+
+/*
+ * samplor_run_one runs one voice and returns 0 if the voice can be freed and 1
+ * if it is still needed, TOUT EST LA !
+ */
+int samplor_run_one64(t_samplor_entry *x, t_sample **out, long n, const t_float *windows, long num_outputs,long interpol,long loop_xfade,t_samplor_real modwheel)
+{
+    t_sample *out1 = out[0];
+    t_sample *out2 = out[1];
+    t_sample *out3 = out[2];
+    t_float sample = 0;
+    t_float *tab,w_f_index,f;
+    t_float amp_scale;
+    int index,index2, w_index, frames, nc;
+    const t_float *window = windows + 512 * x->win;
+    t_float xfade_amp = 0;
+    unsigned int in_xfadeflag = 0;
+    register int samplecount = 0;
+    register long m;
+    
+    //internal buffer :
+    t_samplorbuffer *mybuf = x->samplor_buf;
+    if (mybuf)
+    {
+        if ((tab = mybuf->f_samples))
+        {frames = mybuf->b_frames;
+            nc = mybuf->b_nchans;}
+        else goto zero;
+    }
+    else if (garray_getfloatwords(x->buf, &frames, &tab))
+    {
+        nc = 1;
+    }
+    else goto zero;
+#if DELAY_ACTIVE
+    if (x->start > 0)
+    {
+        m =  min(n, x->start);
+        n -= m;
+        out += m;
+        x->start -= m;
+    }
+#endif
+    if (x->count > 0)
+    {
+        if(x->loop_flag == LOOP)
+            m=n;
+        else
+        {
+            m = min(n, x->count);
+            x->count -= m;
+        }
+        while (m--)
+        {
+            /*BOUCLE*/
+#if 1
+            samplor_compute_loop(x,m, loop_xfade, &in_xfadeflag,&xfade_amp);
+#else
+            if((x->loop_flag == LOOP)|| (x->loop_flag == FINISHING_LOOP))
+            {
+                if(x->fposition >= x->loop_end)  /* on boucle */
+                {
+                    x->loop_beg = x->loop_beg_d; /* eventually, modify loop points */
+                    x->loop_end = x->loop_end_d;
+                    x->loop_dur = x->loop_dur_d;
+                    x->fposition -= x->loop_dur;
+                    
+                    if(x->loop_flag == FINISHING_LOOP)
+                    {   if(x->count < m)
+                        x->loop_flag = 0;
+                    }
+                    else
+                    {
+                        in_xfadeflag=0;
+                        x->count += 1 + x->loop_dur / x->increment; /* I don't really know why the 1 ????*/
+                    }
+                }
+                else if(loop_xfade && (x->fposition > (x->loop_end - loop_xfade))) /* dans la zone de cross-fade */
+                {
+                    in_xfadeflag=1;
+                    xfade_amp = ((x->fposition - x->loop_end) / loop_xfade) + 1.;
+                }
+                else
+                    in_xfadeflag=0;
+            }
+            else if((x->loop_flag == ALLER_RETOUR_LOOP) || (x->loop_flag == IN_ALLER_RETOUR_LOOP))
+            {
+                if(x->fposition >= x->loop_end)
+                {
+                    x->loop_beg = x->loop_beg_d; /* eventually, modify loop points */
+                    x->loop_dur = x->loop_end - x->loop_beg;
+                    x->count += x->loop_dur / x->increment;
+                    x->increment = - x->increment;
+                    x->loop_flag = IN_ALLER_RETOUR_LOOP;
+                }
+                else if((x->fposition <= x->loop_beg) && (x->loop_flag == IN_ALLER_RETOUR_LOOP))
+                {
+                    /* eventually, modify loop points */
+                    x->loop_end = x->loop_end_d;
+                    x->loop_dur = x->loop_end - x->loop_beg;
+                    x->increment = - x->increment;
+                    x->count += x->loop_dur / x->increment;
+                }
+            }
+#endif
+            f = x->fposition;
+            index = (int)f;
+            index2 = (int)x->fposition2;
+            x->fposition += x->increment * modwheel ;
+            x->fposition2 += x->increment * modwheel;
+            
+            //////////////////
+            /* 2.ECHANTILLON*/
+            if(!interpol)
+            {
+                if (index < 0)
+                    index = 0;
+                else if (index >= frames)
+                {
+                    index = frames - 1;
+                }
+                index = index * nc ;
+                sample = tab[index];
+                if(in_xfadeflag)
+                {/* do the loop cross fade !*/
+                    sample *= 1. - xfade_amp;
+                    sample +=  xfade_amp * tab[index - x->loop_dur];
+                }
+            }
+            else
+            {
+                if (f < 0)
+                    f = 0;
+                else if (f >= frames)
+                    f = frames - 1;
+                if (nc > 1)
+                {
+                    f *=  nc ;
+                    //t_buffer_info info;
+                    //  buffer_getinfo(x->buf_obj,&info);
+                    post ("interleaved stereo buffer, please use stereo (-2) mode");
+                    //  object_error ((t_object *)x,"interleaved stereo buffer, please use stereo (-2) mode");
+                    goto zero;
+                }
+                if(!in_xfadeflag)
+                {
+                    if(interpol == 1)
+                        sample = linear_interpol_f (tab,f);
+                    else if(interpol == 2)
+                        sample = square_interpol_f (tab,f);
+                    else     // if(interpol == 3)
+                        sample = cubic_interpol_f (tab,f);
+                }
+                else
+                {              /*LOOP CROSSFADE : */
+                    if (interpol == 2)
+                    {
+                        sample = (1. - xfade_amp) * square_interpol_f (tab,f);
+                        sample +=  xfade_amp * square_interpol_f (tab,f- x->loop_dur);
+                    }
+                    else if(interpol == 1)
+                    {
+                        sample = (1. - xfade_amp) * linear_interpol_f (tab,f);
+                        sample +=  xfade_amp * linear_interpol_f (tab,f- x->loop_dur);
+                    }
+                    else if(interpol == 3)
+                    {  /* optimisation possible (un seul appel a cubic_interpol()) */
+                        sample = (1. - xfade_amp) * cubic_interpol_f (tab,f);
+                        sample +=  xfade_amp * cubic_interpol_f (tab,f- x->loop_dur);
+                    }
+                    else if(interpol == 4)
+                    {  /* constant power crossfade for uncorrelated loops */
+                        sample = sqrt(1. - xfade_amp)  * cubic_interpol_f (tab,f);
+                        sample +=  sqrt(xfade_amp) * cubic_interpol_f (tab,f- x->loop_dur);
+                    }
+                }
+            }
+            
+            /* LOOPING :*/
+            if((x->loop_flag == LOOP)||(x->loop_flag == FINISHING_LOOP))
+                index = index2;
+            
+            /* AMPLITUDE ENVELOPE :*/
+            if((x->win) && !x->loop_flag) //pas de window si on boucle !
+            {
+                w_index = WIND_SIZE * ((long) x->fposition - x->begin) / x->dur;
+                w_index = min(w_index,WIND_SIZE);  // pour eviter d'aller apres la fin de l'enveloppe si modwheel est utilisé
+                sample *= x->amplitude * *(window + w_index);
+            }
+            
+            /* attack-release stuff */
+            
+            if (index < x->attack)
+            {
+                w_f_index = (float)(index - x->begin) * x->attack_ratio;
+            }
+            else if ((index > x->release) && (x->loop_flag != LOOP)&& (!x->fade_out_time))
+            {
+                w_f_index = (float)( x->end - index) * x->release_ratio;
+                //    w_f_index = (float)((long)x->fposition - x->end)* x->release_ratio;
+                w_f_index = powf(w_f_index , x->release_curve);
+            }
+            else if (index < x->decay)
+            {
+                w_f_index = 1. + (float)(index - x->attack ) * x->decay_ratio;
+            }
+            else w_f_index = x->sustain;
+            
+            w_f_index = max (w_f_index,0.); // pour eviter d'aller apres la fin de l'enveloppe si modwheel est utilisé
+            
+            sample *=  w_f_index;
+            sample *= x->amplitude;
+            
+            if(x->fade_out_time) //for clean voice_stealing
+            {
+                if(!x->fade_out_end)
+                {
+                    x->fade_out_end = (index2 + x->fade_out_time);
+                }
+                amp_scale = (float)(x->fade_out_end - index2) / x->fade_out_time;
+                amp_scale = powf(amp_scale,x->release_curve);
+                //amp_scale = MAX(0.,amp_scale);
+                // or (to instantly free the voice )
+                if (amp_scale < 0)
+                    goto zero;
+                sample *= amp_scale;
+            }
+            
+            /*PAN & AUX :*/
+            if(num_outputs > 3)
+            {
+#ifdef MULTIPAN
+                out[x->chan2][samplecount] += sample * x->pan;
+                out[x->chan][samplecount++] += sample * (1. - x->pan);
+#else
+                out[x->chan][samplecount++] += sample;
+#endif
+            }
+            else if (num_outputs > 1)
+            {
+                *out2++ += sample * x->pan;
+                if (num_outputs > 2)
+                    *out3++ += sample * x->rev;
+                *out1++ += (1. - x->pan) * sample;
+            }
+            else
+                *out1++ += sample;
+        }
+#if THREAD_SAFE
+        buffer_unlocksamples(x->buf_obj);
+#endif
+        return 1;
+    }
+    else
+    {
+    zero:
+#if THREAD_SAFE
+        buffer_unlocksamples(x->buf_obj);
+#endif
+        return 0;
+    }
+}
+
+//for internal integer buffers
+int samplor_run_one64_int(t_samplor_entry *x, t_sample **out, long n, const t_float *windows, long num_outputs,long interpol,long loop_xfade,t_samplor_real modwheel)
+{
+    t_sample *out1 = out[0];
+    t_sample *out2 = out[1];
+    t_sample *out3 = out[2];
+    t_float sample = 0;
+    int16_t *tab;
+    t_float w_f_index,f;
+    t_float amp_scale;
+    int index,index2, w_index, frames, nc;
+    const t_float *window = windows + 512 * x->win;
+    t_float xfade_amp = 0;
+    unsigned int in_xfadeflag = 0;
+    register int samplecount = 0;
+    register long m;
+    float one_over_maxvalue;
+    
+    //internal buffer :
+    t_samplorbuffer *mybuf = x->samplor_buf;
+    if (mybuf)
+    {
+        if ((tab = mybuf->b_samples))
+        {frames = mybuf->b_frames;
+            nc = mybuf->b_nchans;
+            one_over_maxvalue = x->samplor_buf->one_over_b_maxvalue;
+        }
+        else goto zero;
+    }
+    else goto zero;
+#if DELAY_ACTIVE
+    if (x->start > 0)
+    {
+        m =  min(n, x->start);
+        n -= m;
+        out += m;
+        x->start -= m;
+    }
+#endif
+    if (x->count > 0)
+    {
+        if(x->loop_flag == LOOP)
+            m=n;
+        else
+        {
+            m = min(n, x->count);
+            x->count -= m;
+        }
+        while (m--)
+        {
+            samplor_compute_loop(x,m, loop_xfade, &in_xfadeflag,&xfade_amp);
+            
+            f = x->fposition;
+            index = (int)f;
+            index2 = (int)x->fposition2;
+            x->fposition += x->increment * modwheel ;
+            x->fposition2 += x->increment * modwheel;
+            /*ECHANTILLON*/
+            if(!interpol)
+            {
+                if (index < 0)
+                    index = 0;
+                else if (index >= frames)
+                {
+                    index = frames - 1;
+                }
+                if (nc > 1)
+                    index = index * nc ;
+                sample = (t_float) tab[index];
+                if(in_xfadeflag)
+                {/* do the loop cross fade !*/
+                    sample *= 1. - xfade_amp;
+                    sample +=  xfade_amp * tab[index - x->loop_dur];
+                }
+            }
+            else
+            {
+                if (f < 0)
+                    f = 0;
+                else if (f >= frames)
+                    f = frames - 1;
+                if (nc > 1)
+                    f *=  nc ;
+                if(!in_xfadeflag)
+                {
+                    if(interpol == 1)
+                        sample = linear_interpol_i (tab,f);
+                    else if(interpol == 2)
+                        sample = square_interpol_i (tab,f);
+                    else     // if(interpol == 3)
+                        sample = cubic_interpol_i (tab,f);
+                }
+                else
+                {              /*LOOP CROSSFADE : */
+                    if (interpol == 2)
+                    {
+                        sample = (1. - xfade_amp) * square_interpol_i (tab,f);
+                        sample +=  xfade_amp * square_interpol_i (tab,f- x->loop_dur);
+                    }
+                    else if(interpol == 1)
+                    {
+                        sample = (1. - xfade_amp) * linear_interpol_i (tab,f);
+                        sample +=  xfade_amp * linear_interpol_i (tab,f- x->loop_dur);
+                    }
+                    else if(interpol == 3)
+                    {  /* optimisation possible (un seul appel a cubic_interpol()) */
+                        sample = (1. - xfade_amp) * cubic_interpol_i (tab,f);
+                        sample +=  xfade_amp * cubic_interpol_i (tab,f- x->loop_dur);
+                    }
+                    else if(interpol == 4)
+                    {  /* constant power crossfade for uncorrelated loops */
+                        sample = sqrt(1. - xfade_amp)  * cubic_interpol_i (tab,f);
+                        sample +=  sqrt(xfade_amp) * cubic_interpol_i (tab,f- x->loop_dur);
+                    }
+                }
+            }
+            sample *= one_over_maxvalue;
+            
+            /* LOOPING :*/
+            if((x->loop_flag == LOOP)||(x->loop_flag == FINISHING_LOOP))
+                index = index2;
+            
+            /* AMPLITUDE ENVELOPE :*/
+            if((x->win) && !x->loop_flag) //pas de window si on boucle !
+            {
+                w_index = WIND_SIZE * ((long) x->fposition - x->begin) / x->dur;
+                w_index = min(w_index,WIND_SIZE);  // pour eviter d'aller apres la fin de l'enveloppe si modwheel est utilisé
+                sample *= x->amplitude * *(window + w_index);
+#if WINAR
+                if (index < x->attack)
+                {
+                    w_f_index = (float)(index - x->begin) * x->attack_ratio;
+                }
+                else if (index > x->release)
+                {
+                    w_f_index = (float)( x->end - index) * x->release_ratio;
+                    //    w_f_index = (float)((long)x->fposition - x->end)* x->release_ratio;
+                    /* new in version 2.95 !!!!*/
+                    w_f_index = pow(w_f_index , x->release_curve);
+                }
+                else w_f_index = 1.;
+                sample *= w_f_index;
+#endif
+            }
+            else if(x->fade_out_time) //for clean voice_stealing
+            {
+                if(!x->fade_out_end)
+                {
+                    x->fade_out_end = (index2 + x->fade_out_time);
+                }
+                amp_scale = (float)(x->fade_out_end - index2) * x->release_ratio2;
+                amp_scale = powf(amp_scale,x->release_curve);
+                amp_scale = MAX(0.,amp_scale);
+                sample *= amp_scale;
+            }
+            {
+                /* attack-release stuff */
+                index = min (index,x->dur); // pour eviter d'aller apres la fin de l'enveloppe si modwheel est utilisé
+                if (index < x->attack)
+                {
+                    w_f_index = (float)(index - x->begin) * x->attack_ratio;
+                }
+                else if ((index > x->release) && (x->loop_flag != LOOP)&& (!x->fade_out_time))
+                {
+                    w_f_index = (float)( x->end - index) * x->release_ratio;
+                    //    w_f_index = (float)((long)x->fposition - x->end)* x->release_ratio;
+                    w_f_index = powf(w_f_index , x->release_curve);
+                }
+                else if (index < x->decay)
+                {
+                    w_f_index = 1. + (float)(index - x->attack ) * x->decay_ratio;
+                }
+                else w_f_index = x->sustain;
+                
+                sample *=  w_f_index;
+            }
+            sample *= x->amplitude;
+            /*PAN & AUX :*/
+            if(num_outputs > 3)
+            {
+#ifdef MULTIPAN
+                out[x->chan2][samplecount] += sample * x->pan;
+                out[x->chan][samplecount++] += sample * (1. - x->pan);
+#else
+                out[x->chan][samplecount++] += sample;
+#endif
+            }
+            else if (num_outputs > 1)
+            {
+                *out2++ += sample * x->pan;
+                if (num_outputs > 2)
+                    *out3++ += sample * x->rev;
+                *out1++ += (1. - x->pan) * sample;
+            }
+            else
+                *out1++ += sample;
+        }
+#if THREAD_SAFE
+        buffer_unlocksamples(x->buf_obj);
+#endif
+        return 1;
+    }
+    else
+    {
+    zero:
+#if THREAD_SAFE
+        buffer_unlocksamples(x->buf_obj);
+#endif
+        return 0;
+    }
+}
+// for directtodisk
+
+int samplor_run_one64_mmap_int(t_samplor_entry *x, t_sample **out, long n, const t_float *windows, long num_outputs,long interpol,long loop_xfade,t_samplor_real modwheel)
+{
+#if 0
+    t_sample *out1 = out[0];
+    t_sample *out2 = out[1];
+    t_sample *out3 = out[2];
+    t_float sample = 0;
+    int16_t *tab;
+    unsigned char *bytes;
+    t_float w_f_index,f;
+    t_float amp_scale;
+    int index,index2, w_index, frames, nc;
+    const t_float *window = windows + 512 * x->win;
+    t_float xfade_amp = 0;
+    unsigned int in_xfadeflag = 0;
+    register int samplecount = 0;
+    register long m;
+    float one_over_maxvalue;
+
+    if (x->mmap_buf)  /* direct to disk */
+    {
+        tab = x->mmap_buf->addr + x->mmap_buf->offset - x->mmap_buf->pa_offset;
+        bytes = tab;
+        frames = x->mmap_buf->b_frames;
+        nc = x->mmap_buf->b_nchans;
+        one_over_maxvalue = x->mmap_buf->one_over_b_maxvalue;
+    }
+    else goto zero;
+    
+//#if DELAY_ACTIVE
+    if (x->start > 0)
+    {
+        m =  min(n, x->start);
+        n -= m;
+        out += m;
+        x->start -= m;
+    }
+//#endif
+    if (x->count > 0)
+    {
+        if(x->loop_flag == LOOP)
+            m=n;
+        else
+        {
+            m = min(n, x->count);
+            x->count -= m;
+        }
+        while (m--)
+        {
+            samplor_compute_loop(x,m, loop_xfade, &in_xfadeflag,&xfade_amp);
+            
+            f = x->fposition;
+            index = (long)f;
+            index2 = (long)x->fposition2;
+            x->fposition += x->increment * modwheel ;
+            x->fposition2 += x->increment * modwheel;
+            
+            /*2 Sample access*/
+            if(!interpol)
+            {
+                if (index < 0)
+                    index = 0;
+                else if (index >= frames)
+                {
+                    index = frames - 1;
+                }
+                if (nc > 1)
+                    index = index * nc ;
+                if(x->mmap_buf->b_samplewidth == 16)
+                {
+                    if(x->mmap_buf->byteOrder == AF_BYTEORDER_LITTLEENDIAN)
+                    {
+                        sample = (t_float) tab[index];
+                        if(in_xfadeflag)
+                        {/* do the loop cross fade !*/
+                            sample *= 1. - xfade_amp;
+                            sample +=  (t_float) xfade_amp * tab[index - x->loop_dur];
+                        }
+                    }
+                    else
+                    {
+                        sample = (int16_t) _af_byteswap_int16 (tab[index]);
+                        if(in_xfadeflag)
+                        {/* do the loop cross fade !*/
+                            sample *= 1. - xfade_amp;
+                            sample +=  (t_float) xfade_amp * _af_byteswap_int16 (tab[index - x->loop_dur]);
+                        }
+                    }
+                }
+                else if(x->mmap_buf->b_samplewidth == 24)
+                {
+                    long i = index * 3;
+                    signed char a = bytes[i];
+                    unsigned char b = bytes[i+1];
+                    unsigned char c = bytes[i+2];
+                    if (x->mmap_buf->byteOrder == AF_BYTEORDER_LITTLEENDIAN)
+                    {
+                        double d = (65536 * a) + 256 * b + c ;
+                        sample = (t_float) d;
+                        if(in_xfadeflag)
+                        {/* do the loop cross fade !*/
+                            sample *= 1. - xfade_amp;
+                            sample +=  (t_float) xfade_amp * tab[index - x->loop_dur];
+                        }
+                    }
+                    else
+                    {
+                        int d = (65536 * a) + 256 * b + c ;
+                        sample = (t_float) d;
+                        if(in_xfadeflag)
+                        {/* do the loop cross fade !*/
+                            sample *= 1. - xfade_amp;
+                            sample +=  (t_float) xfade_amp * _af_byteswap_int16 (tab[index - x->loop_dur]);
+                        }
+                    }
+                }
+            }
+            else // interpolation
+            {
+                if (f < 0)
+                    f = 0;
+                else if (f >= frames)
+                    f = frames - 1;
+                if (nc > 1)
+                {
+                    f *=  nc ;
+                    // t_buffer_info info;
+                    // buffer_getinfo(x->buf_obj,&info);
+                    post ("interleaved stereo buffer, please use stereo (-2) mode");
+                    //  object_error ((t_object *)x,"interleaved stereo buffer, please use stereo (-2) mode");
+                    goto zero;
+                }
+                if((x->mmap_buf->byteOrder == AF_BYTEORDER_LITTLEENDIAN) && x->mmap_buf->b_samplewidth == 16)
+                {if(!in_xfadeflag)
+                {
+                    if(interpol == 1)
+                        sample = linear_interpol_i (tab,f);
+                    else if(interpol == 2)
+                        sample = square_interpol_i (tab,f);
+                    else     // if(interpol == 3)
+                        sample = cubic_interpol_i (tab,f);
+                }
+                else
+                {              /*LOOP CROSSFADE : */
+                    if (interpol == 2)
+                    {
+                        sample = (1. - xfade_amp) * square_interpol_i (tab,f);
+                        sample +=  xfade_amp * square_interpol_i (tab,f- x->loop_dur);
+                    }
+                    else if(interpol == 1)
+                    {
+                        sample = (1. - xfade_amp) * linear_interpol_i (tab,f);
+                        sample +=  xfade_amp * linear_interpol_i (tab,f- x->loop_dur);
+                    }
+                    else if(interpol == 3)
+                    {  /* optimisation possible (un seul appel a cubic_interpol()) */
+                        sample = (1. - xfade_amp) * cubic_interpol_i (tab,f);
+                        sample +=  xfade_amp * cubic_interpol_i (tab,f- x->loop_dur);
+                    }
+                    else if(interpol == 4)
+                    {  /* constant power crossfade for uncorrelated loops */
+                        sample = sqrt(1. - xfade_amp)  * cubic_interpol_i (tab,f);
+                        sample +=  sqrt(xfade_amp) * cubic_interpol_i (tab,f- x->loop_dur);
+                    }
+                }
+                }
+                else if((x->mmap_buf->byteOrder == AF_BYTEORDER_BIGENDIAN) && x->mmap_buf->b_samplewidth == 16)
+                {if(!in_xfadeflag)
+                {
+                    if(interpol == 1)
+                        sample = linear_interpol_i_big_endian (tab,f);
+                    else if(interpol == 2)
+                        sample = square_interpol_i_big_endian (tab,f);
+                    else     // if(interpol == 3)
+                        sample = cubic_interpol_i_big_endian (tab,f);
+                }
+                else
+                {              /*LOOP CROSSFADE : */
+                    if (interpol == 2)
+                    {
+                        sample = (1. - xfade_amp) * square_interpol_i_big_endian (tab,f);
+                        sample +=  xfade_amp * square_interpol_i_big_endian (tab,f- x->loop_dur);
+                    }
+                    else if(interpol == 1)
+                    {
+                        sample = (1. - xfade_amp) * linear_interpol_i_big_endian (tab,f);
+                        sample +=  xfade_amp * linear_interpol_i_big_endian (tab,f- x->loop_dur);
+                    }
+                    else if(interpol == 3)
+                    {  /* optimisation possible (un seul appel a cubic_interpol()) */
+                        sample = (1. - xfade_amp) * cubic_interpol_i_big_endian (tab,f);
+                        sample +=  xfade_amp * cubic_interpol_i_big_endian (tab,f- x->loop_dur);
+                    }
+                    else if(interpol == 4)
+                    {  /* constant power crossfade for uncorrelated loops */
+                        sample = sqrt(1. - xfade_amp)  * cubic_interpol_i_big_endian (tab,f);
+                        sample +=  sqrt(xfade_amp) * cubic_interpol_i_big_endian (tab,f- x->loop_dur);
+                    }
+                }
+                }
+                else if(x->mmap_buf->b_samplewidth == 24)
+                {
+                    if(!in_xfadeflag)
+                    {
+                        if(interpol == 1)
+                            sample = linear_interpol_i_24 (bytes,f);
+                        else if(interpol == 2)
+                            sample = square_interpol_i_24 (bytes,f);
+                        else     // if(interpol == 3)
+                            sample = cubic_interpol_i_24 (bytes,f);
+                    }
+                    else
+                    {              /*LOOP CROSSFADE : */
+                        if (interpol == 2)
+                        {
+                            sample = (1. - xfade_amp) * square_interpol_i_24 (bytes,f);
+                            sample +=  xfade_amp * square_interpol_i_24 (bytes,f- x->loop_dur);
+                        }
+                        else if(interpol == 1)
+                        {
+                            sample = (1. - xfade_amp) * linear_interpol_i_24 (bytes,f);
+                            sample +=  xfade_amp * linear_interpol_i_24 (bytes,f- x->loop_dur);
+                        }
+                        else if(interpol == 3)
+                        {  /* optimisation possible (un seul appel a cubic_interpol()) */
+                            sample = (1. - xfade_amp) * cubic_interpol_i_24 (bytes,f);
+                            sample +=  xfade_amp * cubic_interpol_i_24 (bytes,f- x->loop_dur);
+                        }
+                        else if(interpol == 4)
+                        {  /* constant power crossfade for uncorrelated loops */
+                            sample = sqrt(1. - xfade_amp)  * linear_interpol_i_24 (bytes,f);
+                            sample +=  sqrt(xfade_amp) * linear_interpol_i_24(bytes,f- x->loop_dur);
+                        }
+                    }
+                }
+            }
+            sample *= one_over_maxvalue;
+            
+            /* LOOPING :*/
+            if((x->loop_flag == LOOP)||(x->loop_flag == FINISHING_LOOP))
+                index = index2;
+            
+            /* AMPLITUDE ENVELOPE :*/
+            if((x->win) && !x->loop_flag) //pas de window si on boucle !
+            {
+                w_index = WIND_SIZE * ((long) x->fposition - x->begin) / x->dur;
+                w_index = min(w_index,WIND_SIZE);  // pour eviter d'aller apres la fin de l'enveloppe si modwheel est utilisé
+                sample *= x->amplitude * *(window + w_index);
+//#if WINAR
+                if (index < x->attack)
+                {
+                    w_f_index = (float)(index - x->begin) * x->attack_ratio;
+                }
+                else if (index > x->release)
+                {
+                    w_f_index = (float)( x->end - index) * x->release_ratio;
+                    //    w_f_index = (float)((long)x->fposition - x->end)* x->release_ratio;
+                    /* new in version 2.95 !!!!*/
+                    w_f_index = pow(w_f_index , x->release_curve);
+                }
+                else w_f_index = 1.;
+                sample *= w_f_index;
+//#endif
+            }
+            else if(x->fade_out_time) //for clean voice_stealing
+            {
+                if(!x->fade_out_end)
+                {
+                    x->fade_out_end = (index2 + x->fade_out_time);
+                }
+                amp_scale = (float)(x->fade_out_end - index2) * x->release_ratio2;
+                amp_scale = powf(amp_scale,x->release_curve);
+                amp_scale = MAX(0.,amp_scale);
+                sample *= amp_scale;
+            }
+            {
+                /* attack-release stuff */
+                index = min (index,x->dur); // pour eviter d'aller apres la fin de l'enveloppe si modwheel est utilisé
+                if (index < x->attack)
+                {
+                    w_f_index = (float)(index - x->begin) * x->attack_ratio;
+                }
+                else if ((index > x->release) && (x->loop_flag != LOOP)&& (!x->fade_out_time))
+                {
+                    w_f_index = (float)( x->end - index) * x->release_ratio;
+                    //    w_f_index = (float)((long)x->fposition - x->end)* x->release_ratio;
+                    w_f_index = powf(w_f_index , x->release_curve);
+                }
+                else if (index < x->decay)
+                {
+                    w_f_index = 1. + (float)(index - x->attack ) * x->decay_ratio;
+                }
+                else w_f_index = x->sustain;
+                
+                sample *=  w_f_index;
+            }
+            sample *= x->amplitude;
+            /*PAN & AUX :*/
+            if(num_outputs > 3)
+            {
+                out[x->chan][samplecount++] += sample;
+            }
+            else if (num_outputs > 1)
+            {
+                *out2++ += sample * x->pan;
+                if (num_outputs > 2)
+                    *out3++ += sample * x->rev;
+                *out1++ += (1. - x->pan) * sample;
+            }
+            else
+                *out1++ += sample;
+        }
+//#if THREAD_SAFE
+//        buffer_unlocksamples(x->buf_obj);
+//#endif
+        return 1;
+    }
+    else
+    {
+    zero:
+//#if THREAD_SAFE
+//        buffer_unlocksamples(x->buf_obj);
+//#endif
+
+    }
+    #endif
+        return 0;
+    
+}
+
+/*
+ * samplor_run_one runs one voice and returns 0 if the voice can be freed and 1
+ * if it is still needed, TOUT EST LA !
+ */
+int samplor_run_one_stereo64(t_samplor_entry *x, t_double **out, long n, t_float *windows, long num_outputs,long interpol,long loop_xfade,t_samplor_real modwheel)
+{
+    t_double *out1 = out[0];
+    t_double *out2 = out[1];
+    t_float sampleL = 0,sampleR = 0;
+    float *tab,w_f_index;
+    float amp_scale;
+    double f,f2;
+    long index, index2, w_index, frames, nc;
+    t_float *window = windows + 512 * x->win;
+    float xfade_amp = 0.;
+    long in_xfadeflag = 0;
+    long samplecount = 0;
+    long m;
+#if 0
+    tab = buffer_locksamples(x->buf_obj);
+    if (!tab)
+        goto zero;
+    frames = buffer_getframecount(x->buf_obj);
+    nc = buffer_getchannelcount(x->buf_obj);
+/*#if DELAY_ACTIVE
+    if (x->start > 0)
+    {
+        m =  min(n, x->start);
+        n -= m;
+        out += m;
+        x->start -= m;
+    }
+#endif*/
+    if (x->count > 0)
+    {
+        if(x->loop_flag == LOOP)
+            m=n;
+        else
+        {
+            m = min(n, x->count);
+            x->count -= m;
+        }
+        while (m--)
+        {
+            samplor_compute_loop(x,m, loop_xfade, &in_xfadeflag,&xfade_amp);
+            
+            f = x->fposition;
+            index = (long)f;
+            index2 = (long)x->fposition2;
+            x->fposition += x->increment * modwheel;
+            x->fposition2 += x->increment * modwheel;
+            /*ECHANTILLON*/
+            if (index < 0)
+                index = 0;
+            else if (index > frames)
+                index = frames - 1;
+            index2 = index * nc;
+            if(!interpol)
+            {
+                sampleL = tab[index2];
+                sampleR = tab[index2 + (nc - 1)];
+                if(in_xfadeflag)
+                {/* do the loop cross fade !*/
+                    sampleL *= 1. - xfade_amp;
+                    sampleR *= 1. - xfade_amp;
+                    sampleL +=  xfade_amp * tab[index2 - (nc * x->loop_dur)];
+                    sampleR +=  xfade_amp * tab[index2 + (nc - 1) - (nc * x->loop_dur)];
+                }
+            }
+            else
+            {
+                if (f < 0)
+                    f = 0;
+                else if (f > frames)
+                    f = frames - 3;
+                f2 = f - floor(f);
+                f = (double) index2;
+                f += f2;
+                if(!in_xfadeflag)
+                {
+                    if(interpol == 2)
+                    {
+                        sampleL = square_interpol_n_f (tab,index2,f2,nc);
+                        sampleR = square_interpol_n_f (tab,index2 + (nc - 1),f2,nc);
+                    }
+                    else if(interpol == 1)
+                    {
+                        sampleL = linear_interpol_n_f (tab,index2,f2,nc);
+                        sampleR = linear_interpol_n_f (tab,index2 + (nc - 1),f2,nc);
+                    }
+                    
+                    else if(interpol == 3)
+                    {
+                        sampleL = cubic_interpol_n_f (tab,index2,f2,nc);
+                        sampleR = cubic_interpol_n_f (tab,index2 + (nc - 1),f2,nc);
+                    }
+                }
+                else
+                /*LOOP CROSSFADE : */
+                {
+                    if(interpol == 1)
+                    {
+                        sampleL = (1. - xfade_amp) * linear_interpol_n_f (tab,index2,f2,nc);
+                        sampleL +=  xfade_amp * linear_interpol_n_f (tab,index2 - (nc * x->loop_dur),f2,nc);
+                        sampleR = (1. - xfade_amp) * linear_interpol_n_f (tab,index2 + (nc - 1),f2,nc);
+                        sampleR +=  xfade_amp * linear_interpol_n_f (tab,index2 + (nc - 1) - (nc * x->loop_dur), f2,nc);
+                    }
+                    else if(interpol == 2)
+                    {
+                        sampleL = (1. - xfade_amp) * square_interpol_n_f (tab,index2,f2,nc);
+                        sampleL +=  xfade_amp * square_interpol_n_f (tab,index2 - (nc * x->loop_dur),f2,nc);
+                        sampleR = (1. - xfade_amp) * square_interpol_n_f (tab,index2 + (nc - 1),f2,nc);
+                        sampleR +=  xfade_amp * square_interpol_n_f (tab,index2 + (nc - 1) - (nc * x->loop_dur),f2,nc);
+                    }
+                    else if(interpol == 3)
+                    {  /* optimisation possible (un seul appel a cubic_interpol()) */
+                        sampleL = (1. - xfade_amp) * cubic_interpol_n_f (tab,index2,f2,nc);
+                        sampleL +=  xfade_amp * cubic_interpol_n_f (tab,index2 - (nc * x->loop_dur),f2,nc);
+                        sampleR = (1. - xfade_amp) * cubic_interpol_n_f (tab,index2 + (nc - 1),f2,nc);
+                        sampleR +=  xfade_amp * cubic_interpol_n_f (tab,index2 + (nc - 1) - (nc * x->loop_dur),f2,nc);
+                    }
+                }
+            }
+            /* AMPLITUDE ENVELOPE :*/
+            if((x->loop_flag == LOOP)||(x->loop_flag == FINISHING_LOOP))
+                index = index2;
+            if((x->win) && !x->loop_flag ) //pas de window si on boucle !
+            {
+                w_index = WIND_SIZE * ((long) x->fposition - x->begin) / x->dur;
+                w_index = min(w_index,WIND_SIZE);  // pour eviter d'aller apres la fin
+                sampleL *= x->amplitude * *(window + w_index);
+                sampleR *= x->amplitude * *(window + w_index);
+/*
+ #if WINAR
+                if (index < x->attack)
+                {
+                    w_f_index = (float)(index - x->begin) * x->attack_ratio;
+                }
+                else if (index > x->release)
+                {
+                    w_f_index = (float)( x->end - index) * x->release_ratio;
+                    //    w_f_index = (float)((long)x->fposition - x->end)* x->release_ratio;
+                    w_f_index = pow(w_f_index , x->release_curve);
+                    
+                }
+                else w_f_index = 1.;
+                sampleL *= w_f_index;
+                sampleR *= w_f_index;
+#endif*/
+            }
+            {
+                /* attack-release stuff */
+                
+                if (index < x->attack)
+                {
+                    w_f_index = (float)(index - x->begin) * x->attack_ratio;
+                }
+                else if ((index > x->release) && (x->loop_flag != LOOP)&& (!x->fade_out_time))
+                {
+                    w_f_index = (float)( x->end - index) * x->release_ratio;
+                    w_f_index = powf(w_f_index , x->release_curve);
+                }
+                else if (index < x->decay)
+                {
+                    w_f_index = 1. + (float)(index - x->attack ) * x->decay_ratio;
+                }
+                else
+                    w_f_index = x->sustain;
+                w_f_index = max (w_f_index,0.); // pour eviter d'aller apres la fin de l'enveloppe si modwheel est utilisé
+                
+                sampleL *= x->amplitude * w_f_index;
+                sampleR *= x->amplitude * w_f_index;
+            }
+            //         if(x->fade_out_time) //for clean voice_stealing
+            if (0)
+            {
+                if(!x->fade_out_end)
+                    x->fade_out_end = (index2 + x->fade_out_time);
+                
+                //           amp_scale = (float)(x->fade_out_end - index2) * x->release_ratio2;
+                amp_scale = (float)(x->fade_out_end - index2) / x->fade_out_time;
+                amp_scale = powf(amp_scale,x->release_curve);
+                //amp_scale = MAX(0.,amp_scale);
+                // or (to instantly free the voice )
+                if (amp_scale < 0)
+                    goto zero;
+                
+                sampleL *= amp_scale;
+                sampleR *= amp_scale;
+            }
+            
+            if(x->fade_out_time) //for cleaner voice_stealing
+            {
+                if(!x->fade_out_end)
+                    x->fade_out_end = (index2 + x->fade_out_time);
+                
+                //           amp_scale = (float)(x->fade_out_end - index2) * x->release_ratio2;
+                amp_scale = (float)(x->fade_out_counter) / x->fade_out_time;
+                amp_scale = powf(amp_scale,x->release_curve);
+                //amp_scale = MAX(0.,amp_scale);
+                // or (to instantly free the voice )
+                if (x->fade_out_counter-- < 0)
+                    goto zero;
+                
+                sampleL *= amp_scale;
+                sampleR *= amp_scale;
+            }
+            
+            if(num_outputs > 3)
+            {
+                out[x->chan][samplecount++] += sampleL;
+            }
+            else
+            {
+                *out2++ += sampleR * x->pan;
+                *out1++ += (1. - x->pan) * sampleL;
+            }
+        }
+        return 1;
+    }
+    else
+        zero:
+#endif
+        return 0;
+}
+
+int samplor_run_one_stereo64_mmap(t_samplor_entry *x, t_double **out, long n, t_float *windows, long num_outputs,long interpol,long loop_xfade,t_samplor_real modwheel)
+{
+    t_double *out1 = out[0];
+    t_double *out2 = out[1];
+    t_float sampleL = 0,sampleR = 0;
+    int16_t *tab;
+    t_float w_f_index;
+    unsigned char *bytes;
+    t_float amp_scale;
+    t_float f,f2;
+    long index, index2, w_index, frames, nc;
+    t_float *window = windows + 512 * x->win;
+    t_float xfade_amp = 0.;
+    unsigned int in_xfadeflag = 0;
+    register int samplecount = 0;
+    register long m;
+    float one_over_maxvalue;
+#if 0
+    if (x->mmap_buf)  /* direct to disk */
+    {
+        tab = x->mmap_buf->addr + x->mmap_buf->offset - x->mmap_buf->pa_offset;
+        bytes = tab;
+        frames = x->mmap_buf->b_frames;
+        nc = x->mmap_buf->b_nchans;
+        one_over_maxvalue = x->mmap_buf->one_over_b_maxvalue;
+    }
+    else goto zero;
+/*
+#if DELAY_ACTIVE
+    if (x->start > 0)
+    {
+        m =  min(n, x->start);
+        n -= m;
+        out += m;
+        x->start -= m;
+    }
+#endif
+ */
+    if (x->count > 0)
+    {
+        if(x->loop_flag == LOOP)
+            m=n;
+        else
+        {
+            m = min(n, x->count);
+            x->count -= m;
+        }
+        while (m--)
+        {
+            /* 1. sample index*/
+            samplor_compute_loop(x,m, loop_xfade, &in_xfadeflag,&xfade_amp);
+            
+            f = x->fposition;
+            index = (long)f;
+            index2 = (long)x->fposition2;
+            x->fposition += x->increment * modwheel;
+            x->fposition2 += x->increment * modwheel;
+            
+            /* 2.sample access ECHANTILLON*/
+            if (index < 0)
+                index = 0;
+            else if (index > frames)
+                index = frames - 1;
+            index2 = index * nc;
+            if(!interpol)
+            {
+                if(x->mmap_buf->b_samplewidth == 16)
+                {
+                    if(x->mmap_buf->byteOrder == AF_BYTEORDER_LITTLEENDIAN)
+                    {
+                        sampleL = (t_float) tab[index2];
+                        sampleR = (t_float) tab[index2 + (nc - 1)];
+                        if(in_xfadeflag)
+                        {/* do the loop cross fade !*/
+                            sampleL *= 1. - xfade_amp;
+                            sampleR *= 1. - xfade_amp;
+                            sampleL +=  xfade_amp * tab[index2 - (nc * x->loop_dur)];
+                            sampleR +=  xfade_amp * tab[index2 + (nc - 1) - (nc * x->loop_dur)];
+                        }
+                    }
+                    else
+                    {
+                        sampleL = (int16_t) _af_byteswap_int16 (tab[index2]);
+                        sampleR = (int16_t) _af_byteswap_int16 (tab[index2 + (nc - 1)]);
+                        if(in_xfadeflag)
+                        {/* do the loop cross fade !*/
+                            sampleL *= 1. - xfade_amp;
+                            sampleR *= 1. - xfade_amp;
+                            sampleL +=  (t_float) xfade_amp * _af_byteswap_int16 (tab[index2 - (nc * x->loop_dur)]);
+                            sampleR +=  (t_float) xfade_amp * _af_byteswap_int16 (tab[index2 + (nc - 1) - (nc * x->loop_dur)]);
+                        }
+                    }
+                }
+                else if(x->mmap_buf->b_samplewidth == 24)
+                {
+                    long i = index2 * 3;
+                    long i2 = (index2 + (nc - 1)) * 3;
+                    signed char a = bytes[i];
+                    signed char a2 = bytes[i2];
+                    unsigned char b = bytes[i+1];
+                    unsigned char b2 = bytes[i2+1];
+                    unsigned char c = bytes[i+2];
+                    unsigned char c2 = bytes[i2+2];
+                    if (x->mmap_buf->byteOrder == AF_BYTEORDER_LITTLEENDIAN)
+                    {
+                        double d = (65536 * a) + 256 * b + c ;
+                        sampleL = (t_float) d;
+                        d = (65536 * a2) + 256 * b2 + c2 ;
+                        sampleR = (t_float) d;
+                        if(in_xfadeflag)
+                        {/* do the loop cross fade !*/
+                            sampleL *= 1. - xfade_amp;
+                            //  sampleL +=  (t_float) xfade_amp * tab[index - x->loop_dur];
+                            sampleR *= 1. - xfade_amp;
+                            // sampleR +=  (t_float) xfade_amp * tab[index - x->loop_dur];
+                        }
+                    }
+                    else
+                    {
+                        int d = (65536 * a) + 256 * b + c ;
+                        sampleL = (t_float) d;
+                        d = (65536 * a2) + 256 * b2 + c2 ;
+                        sampleR = (t_float) d;
+                        {/* do the loop cross fade !*/
+                            sampleL *= 1. - xfade_amp;
+                            // sampleL +=  (t_float) xfade_amp * _af_byteswap_int16 (tab[index - x->loop_dur]);
+                        }
+                    }
+                }
+            }
+            else  // we are in interpolation mode
+            {
+                if (f < 0)
+                    f = 0;
+                else if (f > frames)
+                    f = frames - 3;
+                f2 = f - floor(f);
+                f = (double) index2;
+                f += f2;
+                if(!in_xfadeflag)
+                {
+                    if(x->mmap_buf->b_samplewidth == 16 && x->mmap_buf->byteOrder == AF_BYTEORDER_LITTLEENDIAN)
+                    {
+                        if(interpol == 2)
+                        {
+                            sampleL = square_interpol_n_f (tab,index2,f2,nc);
+                            sampleR = square_interpol_n_f (tab,index2 + (nc - 1),f2,nc);
+                        }
+                        else if(interpol == 1)
+                        {
+                            sampleL = linear_interpol_n_f (tab,index2,f2,nc);
+                            sampleR = linear_interpol_n_f (tab,index2 + (nc - 1),f2,nc);
+                        }
+                        else // if(interpol == 3)
+                        {
+                            sampleL = cubic_interpol_n_f (tab,index2,f2,nc);
+                            sampleR = cubic_interpol_n_f (tab,index2 + (nc - 1),f2,nc);
+                        }
+                    }
+                    else if(x->mmap_buf->b_samplewidth == 16 && x->mmap_buf->byteOrder == AF_BYTEORDER_BIGENDIAN)
+                    {
+                        if(interpol == 2)
+                        {
+                            sampleL = square_interpol_n_i_big_endian (tab,index2,f2,nc);
+                            sampleR = square_interpol_n_i_big_endian (tab,index2 + (nc - 1),f2,nc);
+                        }
+                        else if(interpol == 1)
+                        {
+                            sampleL = linear_interpol_n_i_big_endian (tab,index2,f2,nc);
+                            sampleR = linear_interpol_n_i_big_endian (tab,index2 + (nc - 1),f2,nc);
+                        }
+                        else // if(interpol == 3)
+                        {
+                            sampleL = cubic_interpol_n_i_big_endian (tab,index2,f2,nc);
+                            sampleR = cubic_interpol_n_i_big_endian (tab,index2 + (nc - 1),f2,nc);
+                        }
+                    }
+                    
+                    else if(x->mmap_buf->b_samplewidth == 24)
+                    {
+                        if(interpol == 2)
+                        {
+                            sampleL = square_interpol_n_i_24 (bytes,index2,f2,nc);
+                            sampleR = square_interpol_n_i_24 (bytes,index2 + (nc - 1),f2,nc);
+                        }
+                        else if(interpol == 1)
+                        {
+                            sampleL = linear_interpol_n_i_24 (bytes,index2,f2,nc);
+                            sampleR = linear_interpol_n_i_24 (bytes,index2 + (nc - 1),f2,nc);
+                        }
+                        else // if(interpol == 3)
+                        {
+                            sampleL = cubic_interpol_n_i_24 (bytes,index2,f2,nc);
+                            sampleR = cubic_interpol_n_i_24 (bytes,index2 + (nc - 1),f2,nc);
+                        }
+                    }
+                }
+                else  /* we are in a LOOP CROSSFADE : */
+                {
+                    if(interpol == 1)
+                    {
+                        sampleL = (1. - xfade_amp) * linear_interpol_n_f (tab,index2,f2,nc);
+                        sampleL +=  xfade_amp * linear_interpol_n_f (tab,index2 - (nc * x->loop_dur),f2,nc);
+                        sampleR = (1. - xfade_amp) * linear_interpol_n_f (tab,index2 + (nc - 1),f2,nc);
+                        sampleR +=  xfade_amp * linear_interpol_n_f (tab,index2 + (nc - 1) - (nc * x->loop_dur), f2,nc);
+                    }
+                    else if(interpol == 2)
+                    {
+                        sampleL = (1. - xfade_amp) * square_interpol_n_f (tab,index2,f2,nc);
+                        sampleL +=  xfade_amp * square_interpol_n_f (tab,index2 - (nc * x->loop_dur),f2,nc);
+                        sampleR = (1. - xfade_amp) * square_interpol_n_f (tab,index2 + (nc - 1),f2,nc);
+                        sampleR +=  xfade_amp * square_interpol_n_f (tab,index2 + (nc - 1) - (nc * x->loop_dur),f2,nc);
+                    }
+                    else if(interpol == 3)
+                    {  /* optimisation possible (un seul appel a cubic_interpol()) */
+                        sampleL = (1. - xfade_amp) * cubic_interpol_n_f (tab,index2,f2,nc);
+                        sampleL +=  xfade_amp * cubic_interpol_n_f (tab,index2 - (nc * x->loop_dur),f2,nc);
+                        sampleR = (1. - xfade_amp) * cubic_interpol_n_f (tab,index2 + (nc - 1),f2,nc);
+                        sampleR +=  xfade_amp * cubic_interpol_n_f (tab,index2 + (nc - 1) - (nc * x->loop_dur),f2,nc);
+                    }
+                }
+            }
+            sampleL *= one_over_maxvalue;
+            sampleR *= one_over_maxvalue;
+            /* AMPLITUDE ENVELOPE :*/
+            if((x->loop_flag == LOOP)||(x->loop_flag == FINISHING_LOOP))
+                index = index2;
+            if((x->win) && !x->loop_flag ) //pas de window si on boucle !
+            {
+                w_index = WIND_SIZE * ((long) x->fposition - x->begin) / x->dur;
+                w_index = min(w_index,WIND_SIZE);  // pour eviter d'aller apres la fin
+                sampleL *= x->amplitude * *(window + w_index);
+                sampleR *= x->amplitude * *(window + w_index);
+/*#if WINAR
+                if (index < x->attack)
+                {
+                    w_f_index = (float)(index - x->begin) * x->attack_ratio;
+                }
+                else if (index > x->release)
+                {
+                    w_f_index = (float)( x->end - index) * x->release_ratio;
+                    w_f_index = pow(w_f_index , x->release_curve);
+                    
+                }
+                else w_f_index = 1.;
+                sampleL *= w_f_index;
+                sampleR *= w_f_index;
+#endif*/
+            }
+            {
+                /* attack-release stuff */
+                
+                if (index < x->attack)
+                {
+                    w_f_index = (float)(index - x->begin) * x->attack_ratio;
+                }
+                else if ((index > x->release) && (x->loop_flag != LOOP)&& (!x->fade_out_time))
+                {
+                    w_f_index = (float)( x->end - index) * x->release_ratio;
+                    w_f_index = powf(w_f_index , x->release_curve);
+                }
+                else if (index < x->decay)
+                {
+                    w_f_index = 1. + (float)(index - x->attack ) * x->decay_ratio;
+                }
+                else
+                    w_f_index = x->sustain;
+                w_f_index = max (w_f_index,0.); // pour eviter d'aller apres la fin de l'enveloppe si modwheel est utilisé
+                
+                sampleL *= x->amplitude * w_f_index;
+                sampleR *= x->amplitude * w_f_index;
+            }
+            //         if(x->fade_out_time) //for clean voice_stealing
+            if (0)
+            {
+                if(!x->fade_out_end)
+                    x->fade_out_end = (index2 + x->fade_out_time);
+                
+                //           amp_scale = (float)(x->fade_out_end - index2) * x->release_ratio2;
+                amp_scale = (float)(x->fade_out_end - index2) / x->fade_out_time;
+                amp_scale = powf(amp_scale,x->release_curve);
+                //amp_scale = MAX(0.,amp_scale);
+                // or (to instantly free the voice )
+                if (amp_scale < 0)
+                    goto zero;
+                
+                sampleL *= amp_scale;
+                sampleR *= amp_scale;
+            }
+            if(x->fade_out_time) //for cleaner voice_stealing
+            {
+                if(!x->fade_out_end)
+                    x->fade_out_end = (index2 + x->fade_out_time);
+                
+                //           amp_scale = (float)(x->fade_out_end - index2) * x->release_ratio2;
+                amp_scale = (float)(x->fade_out_counter) / x->fade_out_time;
+                amp_scale = powf(amp_scale,x->release_curve);
+                //amp_scale = MAX(0.,amp_scale);
+                // or (to instantly free the voice )
+                if (x->fade_out_counter-- < 0)
+                    goto zero;
+                
+                sampleL *= amp_scale;
+                sampleR *= amp_scale;
+            }
+            
+            if(num_outputs > 3)
+            {
+                out[x->chan][samplecount++] += sampleL;
+            }
+            else
+            {
+                *out2++ += sampleR * x->pan;
+                *out1++ += (1. - x->pan) * sampleL;
+            }
+        }
+        return 1;
+    }
+    else
+        zero:
+#endif
+        return 0;
+}
 
 int samplor_run_one_lite64(t_samplor_entry *x, t_sample **out, int n,long interpol)
 {
@@ -46,7 +1401,7 @@ int samplor_run_one_lite64(t_samplor_entry *x, t_sample **out, int n,long interp
         while (m--)
         {
             f = x->fposition;
-            index = (long)f;
+            index = (int)f;
             x->fposition += x->increment ;
             {
                 if (f < 0)
@@ -106,6 +1461,374 @@ int samplor_run_one_lite64(t_samplor_entry *x, t_sample **out, int n,long interp
         return (0);
 }
 
+int samplor_run_one_lite64_int(t_samplor_entry *x, t_sample **out, int n,long interpol)
+{
+    t_sample *out1 = out[0];
+    t_float sample = 0.;
+    float w_f_index;
+    int16_t *tab;
+    double f;
+    int index, frames, nc;
+    float one_over_maxvalue;
+    
+    if (x->samplor_buf)  /* est-ce necessaire (l'info est déja dans la structure "entry", non ? */
+    {
+        tab = x->samplor_buf->b_samples ;
+        frames = x->samplor_buf->b_frames;
+        nc = x->samplor_buf->b_nchans;
+        one_over_maxvalue = x->samplor_buf->one_over_b_maxvalue;
+    }
+    else if (garray_getfloatwords(x->buf, &frames, &tab))
+    {
+        nc = 1;
+    }
+    else goto zero;
+    
+    if (x->count > 0)
+    {
+        long m = min(n, x->count);
+        x->count -= m;
+        while (m--)
+        {
+            f = x->fposition;
+            index = (long)f;
+            x->fposition += x->increment ;
+            {
+                if (f < 0)
+                    f = 0;
+                else if (f >= frames) // OPTIMISATIONS : ce test est evitable !!!
+                    f = frames - 1;
+                if (nc > 1)
+                    f *=  nc ;
+                if(interpol == 1)
+                    sample = linear_interpol_i(tab,f);
+                else if(interpol == 2)
+                    sample = square_interpol_i(tab,f);
+                else if(interpol == 3)
+                    sample = cubic_interpol_i(tab,f);
+                else
+                    sample = (t_float) tab[index];
+                sample *= one_over_maxvalue;
+            }
+            /* attack-release stuff */
+            if (index < x->attack)
+            {
+                w_f_index = (float)(index - x->begin) * x->attack_ratio;
+            }
+            else if (index > x->release)
+            {
+                w_f_index = (float)( x->end - index)* x->release_ratio;
+            }
+            else if (index < x->decay)
+            {
+                w_f_index = 1. + (float)(index - x->attack) * x->decay_ratio;
+            }
+            else
+                w_f_index = x->sustain;
+            sample *= x->amplitude * w_f_index;
+            if(x->fade_out_time) //for clean voice_stealing
+            {
+                if(!x->fade_out_end)
+                    x->fade_out_end = (index + x->fade_out_time);
+                sample *= (float)(x->fade_out_end - index) / (float) x->fade_out_time;
+            }
+            *out1++ += sample;
+        }
+        return (1);
+    }
+    else
+        zero:
+        return (0);
+}
+
+int samplor_run_one_lite64_mmap_int(t_samplor_entry *x, t_sample **out, int n,long interpol)
+{
+    t_sample *out1 = out[0];
+    t_float sample = 0.;
+    float w_f_index;
+    int16_t *tab;
+    double f;
+    long index, frames, nc;
+    float one_over_maxvalue;
+#if 0
+    if (x->mmap_buf)  /* direct to disk */
+    {
+        tab = x->mmap_buf->addr + x->mmap_buf->offset - x->mmap_buf->pa_offset;
+        frames = x->mmap_buf->b_frames;
+        nc = x->mmap_buf->b_nchans;
+        one_over_maxvalue = x->mmap_buf->one_over_b_maxvalue;
+    }
+    else goto zero;
+    
+    if (x->count > 0)
+    {
+        long m = min(n, x->count);
+        if (x->mmap_buf )
+            if (((x->fposition + m + interpol)  > (x->mmap_buf->index_end)) &&
+                (x->fposition < x->mmap_buf->index_start))// reload the memory map
+                if(samplor_do_mmap(x->mmap_buf,(off_t) x->fposition,(size_t) x->mmap_buf->length))
+                    goto zero;
+        
+        x->count -= m;
+        while (m--)
+        {
+            f = x->fposition;
+            index = (long)f;
+            x->fposition += x->increment ;
+            {
+                if (f < 0)
+                    f = 0;
+                else if (f >= frames) // OPTIMISATIONS : ce test est evitable !!!
+                    f = frames - 1;
+                if (nc > 1)
+                    f *=  nc ;
+                if(x->mmap_buf->b_samplewidth == 16)
+                {
+                    if(x->mmap_buf->byteOrder == AF_BYTEORDER_LITTLEENDIAN)
+                    {
+                        if(interpol == 1)
+                            sample = linear_interpol_i(tab,f);
+                        else if(interpol == 2)
+                            sample = square_interpol_i(tab,f);
+                        else if(interpol == 3)
+                            sample = cubic_interpol_i(tab,f);
+                        else
+                            sample =  (t_float) tab[index];
+                        
+                    }
+                    else if(interpol == 1)
+                        sample = linear_interpol_i_big_endian(tab,f);
+                    else if(interpol == 2)
+                        sample = square_interpol_i_big_endian(tab,f);
+                    else if(interpol == 3)
+                        sample = cubic_interpol_i_big_endian(tab,f);
+                    else
+                        sample = (int16_t) _af_byteswap_int16(tab[index]);
+                    
+                    sample *= one_over_maxvalue;
+                }
+                else goto zero;
+            }
+            /* attack-release stuff */
+            if (index < x->attack)
+            {
+                w_f_index = (float)(index - x->begin) * x->attack_ratio;
+            }
+            else if (index > x->release)
+            {
+                w_f_index = (float)( x->end - index)* x->release_ratio;
+            }
+            else if (index < x->decay)
+            {
+                w_f_index = 1. + (float)(index - x->attack) * x->decay_ratio;
+            }
+            else
+                w_f_index = x->sustain;
+            sample *= x->amplitude * w_f_index;
+            if(x->fade_out_time) //for clean voice_stealing
+            {
+                if(!x->fade_out_end)
+                    x->fade_out_end = (index + x->fade_out_time);
+                sample *= (float)(x->fade_out_end - index) / (float) x->fade_out_time;
+            }
+            *out1++ += sample;
+        }
+        return (1);
+    }
+    else
+        zero:
+#endif
+        return (0);
+}
+
+/*
+ * samplor_run_all runs all voices and removes the finished voices
+ * from the used list and puts them into the free list
+ */
+void samplor_run_all64(t_samplor *x, t_sample **outs, long n,long num_outputs)
+{
+    t_samplor_entry *prev = x->list.used;
+    t_samplor_entry *curr = prev;
+    t_float *windows = (t_float *)x->windows;
+    
+    while (curr != LIST_END)
+    {
+        if (samplor_run_one64(curr, outs, n, windows, num_outputs, x->interpol,x->loop_xfade,x->modwheel))
+        { /* next voice */
+            prev = curr;
+            curr = curr->next;
+        }
+        else
+        {/* "removing one" */
+            x->active_voices--;
+            if(curr == prev)/*for the first time */
+            {/* "in front" */
+                x->list.used = curr->next;
+                curr->next = x->list.free;
+                x->list.free = curr;
+                prev = curr = x->list.used;
+            }
+            else
+            {
+                curr = samplist_free_voice(&x->list,prev,curr);
+            }
+        }
+    }
+}
+
+void samplor_run_all64_mmap_int(t_samplor *x, t_sample **outs, int n,long num_outputs)
+{
+    t_samplor_entry *prev = x->list.used;
+    t_samplor_entry *curr = prev;
+    t_float *windows = (t_float *)x->windows;
+    
+    while (curr != LIST_END)
+    {
+        if (samplor_run_one64_mmap_int(curr, outs, n, windows, num_outputs, x->interpol,x->loop_xfade,x->modwheel))
+        { /* next voice */
+            prev = curr;
+            curr = curr->next;
+        }
+        else
+        {/* "removing one" */
+            x->active_voices--;
+            if(curr == prev)/*for the first time */
+            {/* "in front" */
+                x->list.used = curr->next;
+                curr->next = x->list.free;
+                x->list.free = curr;
+                prev = curr = x->list.used;
+            }
+            else
+            {
+                curr = samplist_free_voice(&x->list,prev,curr);
+            }
+        }
+    }
+}
+
+void samplor_run_all64_int(t_samplor *x, t_sample **outs, int n,long num_outputs)
+{
+    t_samplor_entry *prev = x->list.used;
+    t_samplor_entry *curr = prev;
+    t_float *windows = (t_float *)x->windows;
+    
+    while (curr != LIST_END)
+    {
+        if (samplor_run_one64_int(curr, outs, n, windows, num_outputs, x->interpol,x->loop_xfade,x->modwheel))
+        { /* next voice */
+            prev = curr;
+            curr = curr->next;
+        }
+        else
+        {/* "removing one" */
+            x->active_voices--;
+            if(curr == prev)/*for the first time */
+            {/* "in front" */
+                x->list.used = curr->next;
+                curr->next = x->list.free;
+                x->list.free = curr;
+                prev = curr = x->list.used;
+            }
+            else
+            {
+                curr = samplist_free_voice(&x->list,prev,curr);
+            }
+        }
+    }
+}
+
+
+void samplor_run_all_stereo64_mmap(t_samplor *x, t_sample **outs, long n,long num_outputs)
+{
+    t_samplor_entry *prev = x->list.used;
+    t_samplor_entry *curr = prev;
+    t_float *windows = (t_float *)x->windows;
+    
+    while (curr != LIST_END)
+    {
+        if (samplor_run_one_stereo64_mmap(curr, outs, n, windows, num_outputs, x->interpol,x->loop_xfade,x->modwheel))
+        { /* next voice */
+            prev = curr;
+            curr = curr->next;
+        }
+        else
+        {/* "removing one" */
+            x->active_voices--;
+            if(curr == prev)/*for the first time */
+            {/* "in front" */
+                x->list.used = curr->next;
+                curr->next = x->list.free;
+                x->list.free = curr;
+                prev = curr = x->list.used;
+            }
+            else
+            {
+                curr = samplist_free_voice(&x->list,prev,curr);
+            }
+        }
+    }
+}
+
+void samplor_run_all_stereo64(t_samplor *x, t_sample **outs, long n,long num_outputs)
+{
+    t_samplor_entry *prev = x->list.used;
+    t_samplor_entry *curr = prev;
+    t_float *windows = (t_float *)x->windows;
+    
+    while (curr != LIST_END)
+    {
+        if (samplor_run_one_stereo64(curr, outs, n, windows, num_outputs, x->interpol,x->loop_xfade,x->modwheel))
+        { /* next voice */
+            prev = curr;
+            curr = curr->next;
+        }
+        else
+        {/* "removing one" */
+            x->active_voices--;
+            if(curr == prev)/*for the first time */
+            {/* "in front" */
+                x->list.used = curr->next;
+                curr->next = x->list.free;
+                x->list.free = curr;
+                prev = curr = x->list.used;
+            }
+            else
+            {
+                curr = samplist_free_voice(&x->list,prev,curr);
+            }
+        }
+    }
+}
+void samplor_run_all_lite64_mmap_int(t_samplor *x, t_sample **outs, int n,long num_outputs)
+{
+    t_samplor_entry *prev = x->list.used;
+    t_samplor_entry *curr = prev;
+    
+    while (curr != LIST_END)
+    {
+        if (samplor_run_one_lite64_mmap_int(curr, outs, n, x->interpol))
+        { /* next voice */
+            prev = curr;
+            curr = curr->next;
+        }
+        else
+        {/* "removing one" */
+            x->active_voices--;
+            if(curr == prev)/*for the first time */
+            {/* "in front" */
+                x->list.used = curr->next;
+                curr->next = x->list.free;
+                x->list.free = curr;
+                prev = curr = x->list.used;
+            }
+            else
+            {
+                curr = samplist_free_voice(&x->list,prev,curr);
+            }
+        }
+    }
+}
 /* lite version : mono, no delay, no windows */
 void samplor_run_all_lite64(t_samplor *x, t_sample **outs, int n,long num_outputs)
 {
@@ -165,7 +1888,6 @@ void samplor_init(t_samplor *x)
     x->inputs.samplor_buf = 0;
     x->params.sr = DEFAULT_SRATE;
     x->params.sp = 1 / x->params.sr;
-    #if 1
     samplor_windows(x);
     list_init(&x->waiting_notes);
     x->interpol = 1;        /* default : linear interpolation */
@@ -176,7 +1898,6 @@ void samplor_init(t_samplor *x)
     x->modwheel = 1.;
     x->n_sf = 1;
  //   x->buf_tab = (t_hashtab *)hashtab_new(0);//hashtable initialisation :
- #endif
 }
 
 /*
@@ -601,7 +2322,6 @@ int samplor_curve_set(t_samplorpd *x , void *attr, long *ac, t_atom *av)
     return 0;
 }
 
-
 void samplor_curve_get(t_samplorpd *x, void *attr, long *ac, t_atom **av)
 {
 #if 0
@@ -617,6 +2337,55 @@ void samplor_curve_get(t_samplorpd *x, void *attr, long *ac, t_atom **av)
 
 }
 
+void samplor_compute_loop(t_samplor_entry *x,long m, long loop_xfade, unsigned int *in_xfadeflag,t_float *xfade_amp)
+{
+    if((x->loop_flag == LOOP)|| (x->loop_flag == FINISHING_LOOP))
+    {
+        if(x->fposition >= x->loop_end)  /* on boucle */
+        {
+            x->loop_beg = x->loop_beg_d; /* eventually, modify loop points */
+            x->loop_end = x->loop_end_d;
+            x->loop_dur = x->loop_dur_d;
+            x->fposition -= x->loop_dur;
+            
+            if(x->loop_flag == FINISHING_LOOP)
+            {   if(x->count < m)
+                x->loop_flag = 0;
+            }
+            else
+            {
+                *in_xfadeflag = 0;
+                x->count += 1 + x->loop_dur / x->increment; /* I don't really know why the 1 ????*/
+            }
+        }
+        else if(loop_xfade && (x->fposition > (x->loop_end - loop_xfade))) /* dans la zone de cross-fade */
+        {
+            *in_xfadeflag = 1;
+            *xfade_amp = ((x->fposition - x->loop_end) / loop_xfade) + 1.;
+        }
+        else
+            in_xfadeflag=0;
+    }
+    else if((x->loop_flag == ALLER_RETOUR_LOOP) || (x->loop_flag == IN_ALLER_RETOUR_LOOP))
+    {
+        if(x->fposition >= x->loop_end)
+        {
+            x->loop_beg = x->loop_beg_d; /* eventually, modify loop points */
+            x->loop_dur = x->loop_end - x->loop_beg;
+            x->count += x->loop_dur / x->increment;
+            x->increment = - x->increment;
+            x->loop_flag = IN_ALLER_RETOUR_LOOP;
+        }
+        else if((x->fposition <= x->loop_beg) && (x->loop_flag == IN_ALLER_RETOUR_LOOP))
+        {
+            /* eventually, modify loop points */
+            x->loop_end = x->loop_end_d;
+            x->loop_dur = x->loop_end - x->loop_beg;
+            x->increment = - x->increment;
+            x->count += x->loop_dur / x->increment;
+        }
+    }
+}
 void samplor_loop_points(t_samplorpd *x, int start,int end)
 {
     x->ctlp->inputs.susloopstart = start;
@@ -827,10 +2596,7 @@ void samplor_stop_one_voice_str(t_samplorpd *x, t_symbol *buf_name,float transp)
     t_samplor_entry *prev = x->ctlp->list.used;
     t_samplor_entry *curr = prev;
     long time;
-#if 0
-    t_buffer_obj *buf = buffer_ref_getobject(x->ctlp->inputs.buf_ref);
-    
-    transp *= buffer_getsamplerate(buf) / x->ctlp->params.sr;
+
     while (curr != LIST_END)
     {
         if((!strcmp(buf_name->s_name,curr->buf_name->s_name))&&(((float)curr->increment==transp)||(transp==0))&&(curr->loop_flag!=FINISHING_LOOP))
@@ -852,16 +2618,16 @@ void samplor_stop_one_voice_str(t_samplorpd *x, t_symbol *buf_name,float transp)
                 }
                 if (x->loop_release)
                 {
-                    float start2 = 1000. * (float)curr->loop_end / curr->buf->b_sr;
+                    float start2 = 1000. * (float)curr->loop_end / 44100.;
                     if(x->ctlp->debug)
-                        post ("buf %s amp %f loop_end %d %f %f",curr->buf_name->s_name,curr->amplitude,curr->loop_end,curr->buf->b_sr/1000.,start2);
+                        post ("buf %s amp %f loop_end %d %f %f",curr->buf_name->s_name,curr->amplitude,curr->loop_end,start2);
                     t_atom av[6];
-                    atom_setlong(av, 0);
-                    atom_setsym(av+1, curr->buf_name); //buffer
-                    atom_setfloat(av+2,start2 ); // start
-                    atom_setlong(av+3,0);               //dur
-                    atom_setfloat(av+4,1 );       //transp
-                    atom_setfloat(av+5,curr->amplitude);  //amp
+                    SETFLOAT(av, 0);
+                    SETSYMBOL(av+1, curr->buf_name); //buffer
+                    SETFLOAT(av+2,start2 ); // start
+                    SETFLOAT(av+3,0);               //dur
+                    SETFLOAT(av+4,1 );       //transp
+                    SETFLOAT(av+5,curr->amplitude);  //amp
                     samplor_list(x,curr->buf_name,6,av);
                 }
                 break;
@@ -877,7 +2643,6 @@ void samplor_stop_one_voice_str(t_samplorpd *x, t_symbol *buf_name,float transp)
         prev = curr;
         curr = curr->next;
     }
-#endif
 }
 
 void samplor_stop_play(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
@@ -892,28 +2657,27 @@ void samplor_stop_play(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
     t_samplor_entry *prev = x->ctlp->list.used;
     t_samplor_entry *curr = prev;
     long time = 5;
-#if 0
-    t_buffer_obj *buf = buffer_ref_getobject(x->ctlp->inputs.buf_ref);
+
     
-    transp *= buffer_getsamplerate(buf) / x->ctlp->params.sr;
+    transp *= 44100. / x->ctlp->params.sr;
     if (ac > 1)
     {
-        if (av->a_type == A_SYM )
-            samplor_bufname(x, av->a_w.w_sym->s_name);
+        if (av->a_type == A_SYMBOL )
+            samplor_bufname(x, av->a_w.w_symbol->s_name);
         else
             samplor_buf(x, atom_getfloat(av));
     }
     if (ac > 2)
         for (i = 1 ; i<ac;i++) // syntax parsing
         {
-            if ((av + i)->a_type == A_SYM )
+            if ((av + i)->a_type == A_SYMBOL )
             {
-                if (!strcmp((av + i)->a_w.w_sym->s_name,"loop"))
+                if (!strcmp((av + i)->a_w.w_symbol->s_name,"loop"))
                 {
                     susloopstart = atom_getfloat(av+i+1);
                     susloopend = atom_getfloat(av+i+2);
                 }
-                else if (!strcmp((av + i)->a_w.w_sym->s_name,"adsr"))
+                else if (!strcmp((av + i)->a_w.w_symbol->s_name,"adsr"))
                 {
                     x->ctlp->inputs.adsr_mode = 0;
                     samplor_win(x,0);
@@ -922,27 +2686,27 @@ void samplor_stop_play(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
                     if (ac > 2) sustain = atom_getfloat(av+i+3);
                     if (ac > 3) release = atom_getfloat(av+i+4);
                 }
-                else if (!strcmp((av + i)->a_w.w_sym->s_name,"delay"))
+                else if (!strcmp((av + i)->a_w.w_symbol->s_name,"delay"))
                 {
                     del = atom_getfloat(av+i+1);
                 }
-                else if (!strcmp((av + i)->a_w.w_sym->s_name,"offset"))
+                else if (!strcmp((av + i)->a_w.w_symbol->s_name,"offset"))
                 {
                     offset = atom_getfloat(av+i+1);
                 }
-                else if (!strcmp((av + i)->a_w.w_sym->s_name,"dur"))
+                else if (!strcmp((av + i)->a_w.w_symbol->s_name,"dur"))
                 {
                     dur = atom_getfloat(av+i+1);
                 }
-                else if (!strcmp((av + i)->a_w.w_sym->s_name,"transp"))
+                else if (!strcmp((av + i)->a_w.w_symbol->s_name,"transp"))
                 {
                     transp = atom_getfloat(av+i+1);
                 }
-                else if (!strcmp((av + i)->a_w.w_sym->s_name,"pan"))
+                else if (!strcmp((av + i)->a_w.w_symbol->s_name,"pan"))
                 {
                     pan = atom_getfloat(av+i+1);
                 }
-                else if (!strcmp((av + i)->a_w.w_sym->s_name,"aux"))
+                else if (!strcmp((av + i)->a_w.w_symbol->s_name,"aux"))
                 {
                     rev = atom_getfloat(av+i+1);
                 }
@@ -950,7 +2714,7 @@ void samplor_stop_play(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
         }
     while (curr != LIST_END)
     {
-        if((!strcmp(av->a_w.w_sym->s_name,curr->buf_name->s_name))&&((float)curr->increment==transp)&&(susloopstart==(int)curr->loop_beg)&&(susloopend==(int)curr->loop_end)&&(curr->loop_flag!=FINISHING_LOOP))
+        if((!strcmp(av->a_w.w_symbol->s_name,curr->buf_name->s_name))&&((float)curr->increment==transp)&&(susloopstart==(int)curr->loop_beg)&&(susloopend==(int)curr->loop_end)&&(curr->loop_flag!=FINISHING_LOOP))
         {
             time = curr->end - curr->release;
             if(curr->loop_flag)
@@ -979,7 +2743,6 @@ void samplor_stop_play(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
         prev = curr;
         curr = curr->next;
     }
-#endif
 }
 
 /*
@@ -1016,7 +2779,6 @@ void samplor_loop(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
         curr = curr->next;
     }
 }
-
 
 /*
  * samplor_list triggers one voice with : (delay, sample, offset, duration, ...)
@@ -1250,15 +3012,90 @@ static t_int *samplorpd_perform(t_int *w)
     return (w+4);
 }
 
-//void samplor_perform64_1(t_sigsamplor *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam)
+static t_int *samplor_perform64N(t_int *w)
+{
+#if 0
+    t_samplorpd *x = (t_samplorpd *)(w[1]):
+    long i,j;
+    long n = sys_getblksize();
+    t_samplor *x_ctl = x->ctlp;
+  //  void (*fun_ptr)(t_samplor *, t_double **, long ,long ) = userparam;
+    for (i=0;i<(x->num_outputs);i++)
+        x->vectors64[i] = outs[i];
+    
+    i = n;
+    while(i--)
+    {
+        for (j=0;j<(x->num_outputs);j++)
+            x->vectors64[j][i] = 0.;
+    }
+    (fun_ptr)(x_ctl, x->vectors64, n, x->num_outputs);
+#endif
+    return (w+2);
+}
 
- static t_int *samplor_perform64_1(t_int *w)
+static t_int *samplor_perform64_3(t_int *w)
+{
+    t_samplorpd *x = (t_samplorpd *)(w[1]);
+    t_samplor *x_ctl = x->ctlp;
+    t_sample *samplor_outs[3];
+    long n = sys_getblksize();
+    long i = n;
+    t_sample *o1 = x->x_outvec[0];
+    t_sample *o2 = x->x_outvec[1];
+    t_sample *o3 = x->x_outvec[2];
+    samplor_outs[0] =  x->x_outvec[0];
+    samplor_outs[1] =  x->x_outvec[1];
+    samplor_outs[2] =  x->x_outvec[2];
+    
+    while(i--)
+    {
+        *o1++ = 0.;
+        *o2++ = 0.;
+        *o3++ = 0.;
+    }
+    switch(x->buffer_mode)
+    {
+        case ARRAY: samplor_run_all64(x_ctl, samplor_outs, n, 1);break;
+        case DTD: samplor_run_all_lite64_mmap_int(x_ctl, samplor_outs,n,1);break;
+    }
+    return(w+2);
+}
+
+static t_int *samplor_perform64_2(t_int *w)
+{
+    t_samplorpd *x = (t_samplorpd *)(w[1]);
+    t_samplor *x_ctl = x->ctlp;
+    t_sample *samplor_outs[2];
+ //   void (*fun_ptr)(t_samplor *, t_double **, long ,long ) = userparam;
+    long n = sys_getblksize();
+    long i = n;
+    t_sample *o1 = x->x_outvec[0];
+    t_sample *o2 = x->x_outvec[1];
+    samplor_outs[0] = x->x_outvec[0];
+    samplor_outs[1] = x->x_outvec[1];
+    
+    while(i--)
+    {
+        *o1++ = 0.;
+        *o2++ = 0.;
+    }
+    //    samplor_run_all64(x_ctl, samplor_outs, n, 2);
+    //(fun_ptr)(x_ctl, samplor_outs, n, 2);
+    switch(x->buffer_mode)
+    {
+        case ARRAY: samplor_run_all64(x_ctl, samplor_outs, n, 1);break;
+        case DTD: samplor_run_all_lite64_mmap_int(x_ctl, samplor_outs,n,1);break;
+    }
+    return(w+2);
+}
+
+static t_int *samplor_perform64_1(t_int *w)
 {
     t_samplorpd *x = (t_samplorpd *)(w[1]);
     t_samplor *x_ctl = x->ctlp;
     t_sample *samplor_outs[1];
 
- 
     //    void (*fun_ptr)(t_samplor *, t_double **, long ,long ) = userparam;
     long n = sys_getblksize();
     long i = n;
@@ -1266,7 +3103,24 @@ static t_int *samplorpd_perform(t_int *w)
     samplor_outs[0] = x->x_outvec[0];
     while(i--)
         *o++ = 0.;
-    samplor_run_all_lite64(x_ctl, samplor_outs, n, 1);
+   
+    switch(x->num_outputs)
+    {
+        case 1 :
+            switch(x->buffer_mode)
+        {
+            case ARRAY: samplor_run_all64(x_ctl, samplor_outs, n, 1);break;
+            case DTD: samplor_run_all_lite64_mmap_int(x_ctl, samplor_outs,n,1);break;
+        }
+            break;
+        case 0 :
+            switch(x->buffer_mode)
+        {
+            case ARRAY: samplor_run_all_lite64(x_ctl, samplor_outs, n, 1);break;
+            case DTD: samplor_run_all_lite64_mmap_int(x_ctl, samplor_outs,n,1);break;
+        }
+            break;
+    }
     return(w+2);
 }
 
@@ -1282,67 +3136,13 @@ static void samplorpd_dsp(t_samplorpd *x, t_signal **sp)
     //   for (i = 0; i < noutlets; i++)
     //      x->x_outvec[i] = sp[i]->s_vec;
     x->x_outvec[0] = sp[0]->s_vec;
-//    dsp_add(samplorpd_perform, 3, sp[0]->s_vec, sp[1]->s_vec, sp[0]->s_n);
-    dsp_add(samplor_perform64_1,1,x);
-}
-
-void samplorpd_dsp_full(t_samplorpd *x, t_signal **sp)
-{
-#if 0
-    x->ctlp->params.sr = 44100;
-    x->ctlp->params.vs = 64;
-    if (x->num_outputs > 3)
-   {
-        if(x->stereo_mode == 1)
-            object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64N, 0, samplor_run_all_stereo64);
-        else
-        {
-            if (x->dtd)
-                object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64N, 0, samplor_run_all64_mmap_int);
-            else if (x->local_double_buffer == 1)
-                object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64N, 0, samplor_run_all64);
-            else
-                object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64N, 0, samplor_run_all64_int);
-        }
-    }
-    else if (x->num_outputs == 3)
-        object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_3, 0, NULL);
-    else if (x->num_outputs == 2)
+    switch(x->num_outputs)
     {
-        if (x->stereo_mode == 1)
-            if (x->dtd)
-                object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_2, 0, samplor_run_all_stereo64_mmap);
-            else
-                object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_2, 0, samplor_run_all_stereo64);
-            else
-            {
-                if (x->dtd)
-                    object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_2, 0, samplor_run_all64_mmap_int);
-                else if (x->local_double_buffer == 1)
-                    object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_2, 0, samplor_run_all64);
-                else
-                    object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_2, 0, samplor_run_all64_int);
-            }
+        case 3: dsp_add(samplor_perform64_3,1,x);break;
+        case 2: dsp_add(samplor_perform64_2,1,x);break;
+        case 1:
+        default: dsp_add(samplor_perform64_1,1,x);break;
     }
-    else if (x->num_outputs == 1)
-    {
-        if (x->dtd)
-            object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_1, 0, samplor_run_all64_mmap_int);
-        else if (x->local_double_buffer == 1)
-            object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_1, 0, samplor_run_all64);
-        else
-            object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_1, 0, samplor_run_all64_int);
-    }
-    else
-    {
-        if (x->dtd)
-            object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_1, 1, samplor_run_all_lite64_mmap_int);
-        else if (x->local_double_buffer == 1)
-            object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_1, 1, samplor_run_all_lite64);
-        else
-            object_method(dsp64, gensym("dsp_add64"), x, samplor_perform64_1, 2, samplor_run_all_lite64_int);
-    }
-#endif
 }
 
 static void *samplorpd_new(t_symbol *s, int argc, t_atom *argv)
@@ -1387,7 +3187,7 @@ static void *samplorpd_new(t_symbol *s, int argc, t_atom *argv)
         n = max(numoutputs,1);
         x->num_outputs = max(numoutputs,0);
 #if 0
-        /* INLETS */
+        /* INLETS the pd version has only one inlet */
         if (x->num_outputs == 3)
             floatin(x,7);
         if (x->num_outputs >= 2)
@@ -1404,7 +3204,6 @@ static void *samplorpd_new(t_symbol *s, int argc, t_atom *argv)
             outlet_new(&x->x_obj,gensym("signal"));
         
         /* object initialisation */
-#if 1
         x->ctlp = &(x->ctl);
         samplor_init(x->ctlp);
         //  x->ctlp->list.samplors = (t_samplor_entry *)sysmem_newptr(maxvoices * sizeof(t_samplor_entry));
@@ -1415,11 +3214,11 @@ static void *samplorpd_new(t_symbol *s, int argc, t_atom *argv)
         x->dtd = 0;
         x->thread_safe_mode = 0;
         x->local_double_buffer = 1;
+        x->buffer_mode = ARRAY;
+        x->loop_release = 0;
         
         for (i=0;i<=x->num_outputs;i++)
             x->vectors[i] = NULL;
-        
-#endif
     }
     return(x);
 }
@@ -1432,7 +3231,7 @@ void samplorpd_tilde_setup(void)
     samplorpd_class = class_new(gensym("samplorpd~"), (t_newmethod)samplorpd_new, 0, sizeof(t_samplorpd), 0, A_GIMME, 0);
 
      // declares leftmost inlet as a signal inlet
-    CLASS_MAINSIGNALIN(samplorpd_class, t_samplorpd, x_f);
+    //CLASS_MAINSIGNALIN(samplorpd_class, t_samplorpd, x_f);
 
     class_addmethod(samplorpd_class, (t_method)samplor_maxvoices, gensym("maxvoices"), 0);
     class_addmethod(samplorpd_class, (t_method)samplor_int, gensym("int"),0);
@@ -1476,6 +3275,4 @@ void samplorpd_tilde_setup(void)
     class_addmethod(samplorpd_class, (t_method)samplorpd_dsp, gensym("dsp"), 0);
     post("%s",VERSION);
     post("compiled %s %s",__DATE__, __TIME__);
-    
 }
-
