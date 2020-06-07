@@ -16,11 +16,9 @@ open -a Pd-0.48-1.app test-samplorpd~.pd
 /Users/lemouton/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/pd.sublime-build
 
 ### Xcode
-todo xcode allow debuging
+xcode allow debuging
 
 ## todo
-###array access
-cf /Users/lemouton/Projets/PureData/iem16-externals
 
 ###hashtable in C
 

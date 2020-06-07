@@ -7,7 +7,7 @@
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #endif
-#define VERSION "samplor~: version v0.0.82 = MAX version 3.64"
+#define VERSION "samplor~: version v0.0.821b = MAX version 3.64"
 
 /* ------------------------ samplorpd~ ----------------------------- */
 
@@ -68,57 +68,8 @@ int samplor_run_one64(t_samplor_entry *x, t_sample **out, long n, const t_float 
         }
         while (m--)
         {
-            /*BOUCLE*/
-#if 1
             samplor_compute_loop(x,m, loop_xfade, &in_xfadeflag,&xfade_amp);
-#else
-            if((x->loop_flag == LOOP)|| (x->loop_flag == FINISHING_LOOP))
-            {
-                if(x->fposition >= x->loop_end)  /* on boucle */
-                {
-                    x->loop_beg = x->loop_beg_d; /* eventually, modify loop points */
-                    x->loop_end = x->loop_end_d;
-                    x->loop_dur = x->loop_dur_d;
-                    x->fposition -= x->loop_dur;
-                    
-                    if(x->loop_flag == FINISHING_LOOP)
-                    {   if(x->count < m)
-                        x->loop_flag = 0;
-                    }
-                    else
-                    {
-                        in_xfadeflag=0;
-                        x->count += 1 + x->loop_dur / x->increment; /* I don't really know why the 1 ????*/
-                    }
-                }
-                else if(loop_xfade && (x->fposition > (x->loop_end - loop_xfade))) /* dans la zone de cross-fade */
-                {
-                    in_xfadeflag=1;
-                    xfade_amp = ((x->fposition - x->loop_end) / loop_xfade) + 1.;
-                }
-                else
-                    in_xfadeflag=0;
-            }
-            else if((x->loop_flag == ALLER_RETOUR_LOOP) || (x->loop_flag == IN_ALLER_RETOUR_LOOP))
-            {
-                if(x->fposition >= x->loop_end)
-                {
-                    x->loop_beg = x->loop_beg_d; /* eventually, modify loop points */
-                    x->loop_dur = x->loop_end - x->loop_beg;
-                    x->count += x->loop_dur / x->increment;
-                    x->increment = - x->increment;
-                    x->loop_flag = IN_ALLER_RETOUR_LOOP;
-                }
-                else if((x->fposition <= x->loop_beg) && (x->loop_flag == IN_ALLER_RETOUR_LOOP))
-                {
-                    /* eventually, modify loop points */
-                    x->loop_end = x->loop_end_d;
-                    x->loop_dur = x->loop_end - x->loop_beg;
-                    x->increment = - x->increment;
-                    x->count += x->loop_dur / x->increment;
-                }
-            }
-#endif
+
             f = x->fposition;
             index = (int)f;
             index2 = (int)x->fposition2;
@@ -245,12 +196,8 @@ int samplor_run_one64(t_samplor_entry *x, t_sample **out, long n, const t_float 
             /*PAN & AUX :*/
             if(num_outputs > 3)
             {
-#ifdef MULTIPAN
                 out[x->chan2][samplecount] += sample * x->pan;
                 out[x->chan][samplecount++] += sample * (1. - x->pan);
-#else
-                out[x->chan][samplecount++] += sample;
-#endif
             }
             else if (num_outputs > 1)
             {
@@ -2170,7 +2117,7 @@ void samplor_amp(t_samplorpd *x, double amp)
 /*
  * samplor_pan
  */
-void samplor_pan(t_samplorpd *x, double pan)
+void samplor_pan(t_samplorpd *x, t_float pan)
 {
     int chan;
     
@@ -2999,18 +2946,6 @@ void samplor_play(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
 #endif
 }
 
-static t_int *samplorpd_perform(t_int *w)
-{
-    t_float *in = (t_float *)(w[1]);
-    t_float *out = (t_float *)(w[2]);
-    int n = (int)(w[3]);
-    while (n--)
-    {
-    float f = *(in++);
-	*out++ = (f > 0 ? f : -f);
-    }
-    return (w+4);
-}
 
 static t_int *samplor_perform64N(t_int *w)
 {
@@ -3056,8 +2991,8 @@ static t_int *samplor_perform64_3(t_int *w)
     }
     switch(x->buffer_mode)
     {
-        case ARRAY: samplor_run_all64(x_ctl, samplor_outs, n, 1);break;
-        case DTD: samplor_run_all_lite64_mmap_int(x_ctl, samplor_outs,n,1);break;
+        case ARRAY: samplor_run_all64(x_ctl, samplor_outs, n, 3);break;
+        case DTD: samplor_run_all_lite64_mmap_int(x_ctl, samplor_outs,n, 3);break;
     }
     return(w+2);
 }
@@ -3084,8 +3019,8 @@ static t_int *samplor_perform64_2(t_int *w)
     //(fun_ptr)(x_ctl, samplor_outs, n, 2);
     switch(x->buffer_mode)
     {
-        case ARRAY: samplor_run_all64(x_ctl, samplor_outs, n, 1);break;
-        case DTD: samplor_run_all_lite64_mmap_int(x_ctl, samplor_outs,n,1);break;
+        case ARRAY: samplor_run_all64(x_ctl, samplor_outs, n, 2);break;
+        case DTD: samplor_run_all_lite64_mmap_int(x_ctl, samplor_outs, n, 2);break;
     }
     return(w+2);
 }
@@ -3133,15 +3068,21 @@ static void samplorpd_dsp(t_samplorpd *x, t_signal **sp)
 
     x->ctlp->params.sr = sys_getsr();
     x->ctlp->params.vs = sys_getblksize();
-    //   for (i = 0; i < noutlets; i++)
-    //      x->x_outvec[i] = sp[i]->s_vec;
     x->x_outvec[0] = sp[0]->s_vec;
+    for (int i = 0; i < x->num_outputs; i++)
+        x->x_outvec[i] = sp[i]->s_vec;
     switch(x->num_outputs)
     {
-        case 3: dsp_add(samplor_perform64_3,1,x);break;
-        case 2: dsp_add(samplor_perform64_2,1,x);break;
+        case 3:
+            dsp_add(samplor_perform64_3,1,x);
+            break;
+        case 2:
+            dsp_add(samplor_perform64_2,1,x);
+            break;
         case 1:
-        default: dsp_add(samplor_perform64_1,1,x);break;
+        default:
+            dsp_add(samplor_perform64_1,1,x);
+            break;
     }
 }
 
@@ -3199,9 +3140,9 @@ static void *samplorpd_new(t_symbol *s, int argc, t_atom *argv)
         intin(x,1);
 #endif
         /* OUTLETS */
-        x->right_outlet = outlet_new(&x->x_obj,NULL); //to report the number of active voices and the loop points
-        while(n--)
+         while(--n)
             outlet_new(&x->x_obj,gensym("signal"));
+        x->right_outlet = outlet_new(&x->x_obj,NULL); //to report the number of active voices and the loop points
         
         /* object initialisation */
         x->ctlp = &(x->ctl);

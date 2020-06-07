@@ -200,7 +200,7 @@ void samplor_offset(t_samplorpd *x, int offset);
 void samplor_dur(t_samplorpd *x, double dur);
 void samplor_transp(t_samplorpd *x, double transp);
 void samplor_amp(t_samplorpd *x, double amp);
-void samplor_pan(t_samplorpd *x, double pan);
+void samplor_pan(t_samplorpd *x, t_float pan);
 void samplor_rev(t_samplorpd *x, double rev);
 void samplor_win(t_samplorpd *x, int win);
 void samplor_winar(t_samplorpd *x, int win,int attack,int release);
