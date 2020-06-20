@@ -36,6 +36,7 @@
 *.x86_64
 *.hex
 *.pd_darwin
+*.pd_linux
 
 # Debug files
 *.dSYM/

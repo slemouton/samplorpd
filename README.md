@@ -3,6 +3,7 @@
 
 ## dependencies
 puredata (0.49 built from sources)
+libxml2 (for importing machfive presets in samplorkg)
 
 ## to build and test samplor external for pd :
 
@@ -18,6 +19,10 @@ open -a Pd-0.48-1.app test-samplorpd~.pd
 ### for Raspberry-pi
 
 make -f makefile.raspberry samplorpd
+sudo apt-get install libxml2-dev
+pd test-samplorpd~.pd 
+tested with a Kork nanoKeys midikeyboard and alsa driver, you may have to :
+aconnect 12:0128:0
 
 ### Build with Sublime Text
 /Users/lemouton/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/pd.sublime-build

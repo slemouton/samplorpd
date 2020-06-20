@@ -10,7 +10,7 @@
 #elif defined(_WIN32)
 #define WIN_VERSION
 #else
-#error Unexepected build platform!
+#warning Unexepected build platform!
 #endif
 
 #endif  // #if !defined(MAC_VERSION) && !defined(WIN_VERSION)
