@@ -1,0 +1,73 @@
+//------------------------------------------------------------------------------
+//  Pd Objects
+//  Xcode project for Pd object developement
+//
+//  Created by Cooper Baker on 01/19/17.
+//  Copyright (c) 2017 Cooper Baker. All rights reserved.
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// adding a new object
+//------------------------------------------------------------------------------
+
+Select "Pd Objects" Project in left pane
+
+Add Target
+    File -> New -> Target
+    macOS -> Framework & Library -> Library
+    Choose a Product Name + Organization Name + Identifier
+    Set "Framework" to "None (Plain C/C++ Library)"
+    Set "Type" to "Dynamic"
+
+Edit Build Settings For The New Target
+    Select "Build Active Architecture Only", press delete
+    Set "Executable Extension" to "pd_darwin"
+    Select "Executable Prefix", press delete
+
+Add New C File to "Source" group
+    Select macOS -> C File
+    Type a name matching new target
+    Do not create a header file (unless you know you want one)
+    Place in "source" directory
+    Check the box next to the newly created target, uncheck others
+
+//------------------------------------------------------------------------------
+// debugging
+//------------------------------------------------------------------------------
+
+Edit Scheme
+    Product -> Scheme -> Manage Schemes
+    Select Object, click "Edit"
+    Under "info" pane set executable to:
+    /Applications/Pd-0.47-1.app/Contents/Resources/bin/pd
+
+Debugging
+    Product -> Run (select the 32bit version in the Xcode menubar)
+    Pd will open
+    Open test patch, instantiate object
+    Debug in Xcode...
+    Click Xcode Stop button to end debugging
+
+//------------------------------------------------------------------------------
+// include info
+//------------------------------------------------------------------------------
+
+This project was created using the Pd vanilla application at this path:
+
+    /Applications/Pd-0.47-1.app/
+
+If the application path changes, header location in the project settings will
+need to be changed, and debugging executable locations will need to be changed
+to match the new path
+
+//------------------------------------------------------------------------------
+// products
+//------------------------------------------------------------------------------
+
+Compiled objects will appear in the objects directory of this project tree
+
+    i.e.: Pd Objects/objects/add~.pd_darwin
+
+//------------------------------------------------------------------------------
+// EOF
+//------------------------------------------------------------------------------

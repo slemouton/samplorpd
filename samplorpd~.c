@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "m_pd.h"
 #include "samplor2.h"
 #include "slm1.h"
@@ -2051,22 +2052,17 @@ samplor_bang(t_samplorpd *x)
 {
     samplor_start(x, 0.);
 }
+
 /*
  * samplor_buf set the sound buffer
  */
 void samplor_buf(t_samplorpd *x, int buf)
 {
-    char bufname[9] = "sample100";
+    char bufname[] = "sample100";
     buf = min(buf,999);
     snprintf(bufname,sizeof(bufname),"sample%d",buf);
     x->ctlp->inputs.samplenumber = buf;
-#if 1
     samplor_set(x, gensym(bufname));
-#else
-    t_atom av[1];
-    atom_setsym(av, gensym(bufname));
-    defer_low((t_object *)x,(method)samplor_deferredset,NULL,1,av);
-#endif
 }
 
 /*

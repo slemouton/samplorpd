@@ -1,0 +1,12 @@
+#N canvas 563 432 450 300 10;
+#X obj 120 97 loadbang;
+#X obj 120 191 soundfiler;
+#X obj 120 121 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 120 147 symbol \$1;
+#X obj 245 204 table \$1;
+#X msg 121 169 read -resize \$1 \$1;
+#X connect 0 0 2 0;
+#X connect 2 0 3 0;
+#X connect 3 0 5 0;
+#X connect 5 0 1 0;
