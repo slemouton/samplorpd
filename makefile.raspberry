@@ -16,7 +16,7 @@ samplorpd : slm1.o linkedlist.o samplorpd~.pd_linux
 LINUXCFLAGS = -DPD -O2 -funroll-loops -fomit-frame-pointer \
     -Wall -W -Wshadow -Wstrict-prototypes \
     -Wno-unused -Wno-parentheses -Wno-switch
-
+__APPLE__=True
 #LINUXINCLUDE =  -I../../src
 LINUXINCLUDE = -I/Applications/Pd-0.48-1.app/Contents/Resources/src
 

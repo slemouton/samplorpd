@@ -8,7 +8,7 @@
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #endif
-#define VERSION "samplor~: version v0.0.821b = MAX version 3.64"
+#define VERSION "samplor~: version v0.0.821bb = MAX version 3.64"
 
 /* ------------------------ samplorpd~ ----------------------------- */
 
