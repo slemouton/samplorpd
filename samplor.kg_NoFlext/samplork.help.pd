@@ -1,0 +1,90 @@
+#N canvas 570 126 599 524 10;
+#X text 223 123 2.bang creates the keygroups;
+#X text 0 22 samplor2.kg : key group voice allocator for samplor~;
+#N canvas 304 583 1068 445 keygroupSyntax 1;
+#X msg 143 130 1 D#0_F.mo 27 20 29 1 127 \, 2 G#0_F2.mo 32 30 34 1
+127 \, 3 C#1.mo 37 35 39 1 127 \, 4 F1.mo 41 40 43 1 127 \, 5 C2.mo
+48 44 50 1 127 \, 6 G2.mo 55 51 57 1 127 \, 7 C3.mo 60.1 58 62 1 127
+\, 8 F#3.mo 66 63 68 1 127 \, 9 C4.mo 72 69 74 1 127 \, 10 F4.mo 77
+75 79 1 127 \, 11 B4.mo 83 80 85 1 127 \, 12 F5.mo 89 86 89 1 127 \,
+13 G5.mo 91 90 93 1 127 \, 14 B5.mo 95 94 97 1 127 \, 15 F6.mo 101
+98 120 1 127;
+#X msg 84 99 1 test2 60 48 72 65 127 100 222;
+#X msg 39 66 1 test1 60 48 72 1 64 100 222;
+#X text 33 24 <Channel soundname pitch minpitch maxpitch minvel maxvel
+starttime endtime>;
+#X obj 80 233 outlet;
+#X connect 0 0 4 0;
+#X connect 1 0 4 0;
+#X connect 2 0 4 0;
+#X restore 133 142 pd keygroupSyntax;
+#X obj 35 238 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 35 263 velcurve \$1;
+#X obj 111 77 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 378 319 print TEXT;
+#N canvas 845 452 600 400 importMachFivePreset 1;
+#X msg 218 118 pathtype boot;
+#X obj 218 95 loadbang;
+#X obj 139 74 inlet~;
+#X obj 139 202 outlet~;
+#X obj 139 169 prepend import;
+#X obj 139 137 conformpath;
+#X obj 139 102 opendialog;
+#X connect 0 0 5 0;
+#X connect 1 0 0 0;
+#X connect 2 0 6 0;
+#X connect 4 0 3 0;
+#X connect 5 0 4 0;
+#X connect 6 0 5 0;
+#X restore 111 175 pd importMachFivePreset;
+#X floatatom 380 250 0 0 0 0 - - -;
+#X obj 165 109 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 176 220 makenote 80 1000;
+#X msg 33 130 clear;
+#X obj 306 223 notein;
+#X text 380 231 CHANNEL;
+#X text 0 490 lemouton@ircam.fr 2008;
+#X text 128 76 1.import a mach five preset;
+#X msg 33 157 print 1;
+#X obj 184 200 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 2700 1;
+#X obj 154 351 spigot;
+#X obj 186 326 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 154 294 samplorkg, f 38;
+#X obj 264 353 spigot;
+#X obj 295 331 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 264 377 print;
+#X floatatom 474 173 0 0 0 0 - - -;
+#X obj 154 375 print samplor;
+#X obj 36 188 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 35 211 debug \$1;
+#X connect 2 0 20 0;
+#X connect 3 0 4 0;
+#X connect 4 0 20 0;
+#X connect 5 0 7 0;
+#X connect 7 0 20 0;
+#X connect 8 0 20 2;
+#X connect 9 0 20 0;
+#X connect 10 0 20 0;
+#X connect 10 1 20 1;
+#X connect 11 0 20 0;
+#X connect 12 0 20 0;
+#X connect 12 1 20 1;
+#X connect 16 0 20 0;
+#X connect 17 0 10 0;
+#X connect 18 0 25 0;
+#X connect 19 0 18 1;
+#X connect 20 0 18 0;
+#X connect 20 1 21 0;
+#X connect 20 2 6 0;
+#X connect 21 0 23 0;
+#X connect 22 0 21 1;
+#X connect 24 0 17 0;
+#X connect 26 0 27 0;
+#X connect 27 0 20 0;
