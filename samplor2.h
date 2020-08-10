@@ -223,7 +223,7 @@ void samplor_compute_loop(t_samplor_entry *x,long m, long loop_xfade, unsigned i
 void samplor_loop(t_samplorpd *x, t_symbol *s, short ac, t_atom *av);
 void samplor_set(t_samplorpd *x, t_symbol *s);
 float samplor_get_value(struct atom *a);
-void samplor_modwheel(t_samplorpd *x, double transp);
+void samplor_modwheel(t_samplorpd *x, t_float transp);
 void samplor_curve(t_samplorpd *x, double curve);
 static t_int *samplor_perform3(t_int *w);
 static t_int *samplor_perform2(t_int *w);

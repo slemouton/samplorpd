@@ -8,7 +8,7 @@
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #endif
-#define VERSION "samplor~: version v0.0.821bb = MAX version 3.64"
+#define VERSION "samplor~: version v0.0.823 = MAX version 3.64"
 
 /* ------------------------ samplorpd~ ----------------------------- */
 
@@ -2016,7 +2016,7 @@ void samplor_start(t_samplorpd *x, float p)
     }
     else if (buf)
     {      /* n'alloue pas de voix si offset > duree du son */
-        post ("offset %d framecount %d", ctlp->inputs.offset,garray_npoints(buf));
+       // post ("offset %d framecount %d", ctlp->inputs.offset,garray_npoints(buf));
        // if (buffer_getmillisamplerate(buf) * ctlp->inputs.offset < buffer_getframecount(buf))
         {
             ctlp->inputs.transp *= 44100 / ctlp->params.sr;
@@ -2377,7 +2377,7 @@ void samplor_set_buffer_loop(t_samplorpd *x, t_symbol *buffer_s,long loopstart,l
 #endif
 }
 
-void samplor_modwheel(t_samplorpd *x, double transp)
+void samplor_modwheel(t_samplorpd *x, t_float transp)
 {
     double transpo = max(0.1,transp);
     x->ctlp->modwheel = (t_samplor_real)transpo;
@@ -2767,7 +2767,7 @@ void samplor_list(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
     }
     else
 #endif
-        post ("starting %s %f",atom_getsymbol(av + 1)->s_name, atom_getfloat(av + 2));
+   //     post ("starting %s %f",atom_getsymbol(av + 1)->s_name, atom_getfloat(av + 2));
         samplor_start(x, atom_getfloat(av));
 }
 
@@ -2799,8 +2799,7 @@ void samplor_set(t_samplorpd *x, t_symbol *s)
             return;
         }
     x->ctlp->inputs.buf = a;
-    for(int j = 0;j<8;j++)
-    {post ("%d %f",j,vec[j].w_float);}
+   // for(int j = 0;j<8;j++) {post ("%d %f",j,vec[j].w_float);}
     
     x->ctlp->inputs.samplor_mmap = NULL;
     x->ctlp->inputs.samplor_buf = NULL;

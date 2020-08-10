@@ -198,7 +198,7 @@ t_samplor_entry
         new->release_ratio = new->sustain/(float)release_dur;
         new->release_ratio2 = new->release_ratio / new->increment;
        
-#if 1
+#if 0
         post ("msr frames size %f %d %d",b_msr,b_frames,garray_npoints(inputs.buf));
          post ("win st dur %d %d %d",new->win,new->start,new->dur);
          post ("pos inc amp count %f %f %f %d",new->fposition,new->increment,new->amplitude,new->count);

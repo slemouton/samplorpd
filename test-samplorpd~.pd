@@ -6222,7 +6222,7 @@
 #X msg 258 452 1;
 #X obj 147 306 loadbang;
 #X msg 48 239 0 sample1 0 1000 0.35 1;
-#N canvas 842 23 450 300 syntax 0;
+#N canvas 842 23 450 300 syntax 1;
 #X text 21 10 to trigger a sound : list <bang sample offset dur transp
 amp >, f 63;
 #X msg 25 51 0 1 0 -1 1 1;
@@ -6230,8 +6230,8 @@ amp >, f 63;
 #X text 139 91 amp 0 : stop sound;
 #X msg 48 93 0 1 0 0 1 0;
 #X obj 295 162 s s_;
-#X msg 293 49 0 sample1 0 -1 1 1;
-#X msg 299 77 0 sample1 0 0 1 1;
+#X msg 300 47 0 sample1 0 -1 1 1;
+#X msg 306 75 0 sample1 0 0 1 1;
 #X msg 321 99 0 sample1 0 0 1 0;
 #X obj 24 278 send;
 #X msg 92 187 symbol s_;
@@ -6299,7 +6299,7 @@ in %;
 #X connect 5 1 6 1;
 #X restore 34 765 pd object_args;
 #N canvas 0 23 450 300 benchmarks 0;
-#X restore 33 787 pd benchmarks;
+#X restore 35 804 pd benchmarks;
 #N canvas 605 77 732 621 a_simple_sampler_example 0;
 #X obj 241 440 loadbang;
 #N canvas 218 573 1024 490 keygroupSyntax 0;
@@ -6329,7 +6329,7 @@ starttime endtime>;
 1;
 #X msg 60 213 debug \$1;
 #X msg 45 333 exportastext;
-#N canvas 519 619 834 524 importMachFivePresets 1;
+#N canvas 519 504 834 524 importMachFivePresets 1;
 #X obj 8 481 outlet;
 #X obj 99 479 outlet;
 #X obj 8 29 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
@@ -6636,6 +6636,18 @@ Piano_Stein_m_A0.aif 33 33 35 84 127 0 0 0.5 0 \; 1 Piano_Stein_m_A-1.aif
 #X connect 66 0 55 0;
 #X connect 67 0 63 0;
 #X restore 133 720 pd a_simple_sampler_example;
+#N canvas 0 23 450 300 pitch_modulation 0;
+#X obj 294 227 s s_;
+#X msg 119 92 0 sample1 0 -1 1 1;
+#X obj 301 22 vsl 15 128 -1200 1200 0 0 empty empty empty 0 -9 0 10
+-262144 -1 -1 0 1;
+#X obj 300 157 expr pow(2 \, $f1/1200.);
+#X msg 298 180 modwheel \$1;
+#X connect 1 0 0 0;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 4 0 0 0;
+#X restore 35 784 pd pitch_modulation;
 #X connect 3 0 2 0;
 #X connect 5 0 6 0;
 #X connect 6 0 13 0;
