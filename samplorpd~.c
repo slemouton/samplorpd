@@ -8,7 +8,7 @@
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #endif
-#define VERSION "samplor~: version v0.0.823 = MAX version 3.64"
+#define VERSION "samplor~: version v0.0.824 = MAX version 3.64"
 
 /* ------------------------ samplorpd~ ----------------------------- */
 
@@ -1874,6 +1874,16 @@ void samplor_debug(t_samplorpd *x,t_floatarg d)
     post("debug %d",(long) d);
 }
 
+void samplor_window(t_samplorpd *x,t_floatarg d)
+{
+    samplor_win(x, (int) d);
+}
+
+void samplor_voicestealing(t_samplorpd *x,t_floatarg d)
+{
+    x->ctlp->voice_stealing = (long) d;
+}
+
 /*
  * don't use
  */
@@ -1939,7 +1949,6 @@ void samplor_maxvoices(t_samplorpd *x, long v)
 
 void samplor_interpol(t_samplorpd *x, t_floatarg f)
 {
-  
 int interpol = (int)f;
     post("interpol %d",interpol);
     x->ctlp->interpol = interpol;
@@ -3171,9 +3180,8 @@ void samplorpd_tilde_setup(void)
 
     class_addmethod(samplorpd_class, (t_method)samplor_maxvoices, gensym("maxvoices"), 0);
     class_addmethod(samplorpd_class, (t_method)samplor_int, gensym("int"),0);
-    class_addmethod(samplorpd_class, (t_method)samplor_debug, gensym("debug"), A_FLOAT, 0);
+
     class_addmethod(samplorpd_class, (t_method)samplor_manual_init, gensym("init"), 0);
-    class_addmethod(samplorpd_class, (t_method)samplor_interpol, gensym("interpol"), A_FLOAT,0);
     class_addmethod(samplorpd_class, (t_method)samplor_set, gensym("set"), 0);
     class_addmethod(samplorpd_class, (t_method)samplor_list, gensym("list"), A_GIMME,0);
     class_addmethod(samplorpd_class, (t_method)samplor_bang, gensym("bang"), 0);
@@ -3187,7 +3195,12 @@ void samplorpd_tilde_setup(void)
     class_addmethod(samplorpd_class,(t_method)samplor_loop,gensym("loop"), A_GIMME,0);
     class_addmethod(samplorpd_class,(t_method)samplor_start,gensym("float"),A_FLOAT,0);
     class_addmethod(samplorpd_class,(t_method)samplor_count_active_voices,gensym("count"), A_DEFFLOAT, 0);
-
+    
+    class_addmethod(samplorpd_class, (t_method)samplor_window, gensym("window"), A_FLOAT, 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_voicestealing, gensym("voice_stealing"), A_FLOAT, 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_interpol, gensym("interpol"), A_FLOAT, 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_debug, gensym("debug"), A_FLOAT, 0);
+    
     //  class_addmethod(samplorpd_class,(t_method)samplor_buf,"in1",A_LONG,0);
     //  class_addmethod(samplorpd_class,(t_method)samplor_offset,"in2");
     //  class_addmethod(samplorpd_class,(t_method)samplor_dur, "in3");

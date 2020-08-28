@@ -1,4 +1,4 @@
-#N canvas 1205 38 425 887 10;
+#N canvas 955 23 425 887 10;
 #X msg 30 14 \; pd dsp 1;
 #N canvas 0 23 1029 327 (subpatch) 0;
 #X array sample1 44100 float 3;
@@ -6222,7 +6222,7 @@
 #X msg 258 452 1;
 #X obj 147 306 loadbang;
 #X msg 48 239 0 sample1 0 1000 0.35 1;
-#N canvas 842 23 450 300 syntax 1;
+#N canvas 842 23 450 300 syntax 0;
 #X text 21 10 to trigger a sound : list <bang sample offset dur transp
 amp >, f 63;
 #X msg 25 51 0 1 0 -1 1 1;
@@ -6300,7 +6300,7 @@ in %;
 #X restore 34 765 pd object_args;
 #N canvas 0 23 450 300 benchmarks 0;
 #X restore 35 804 pd benchmarks;
-#N canvas 605 77 732 621 a_simple_sampler_example 0;
+#N canvas 948 23 732 621 a_simple_sampler_example 0;
 #X obj 241 440 loadbang;
 #N canvas 218 573 1024 490 keygroupSyntax 0;
 #X msg 179 143 1 D#0_F.mo 27 20 29 1 127 \, 2 G#0_F2.mo 32 30 34 1
@@ -6329,7 +6329,7 @@ starttime endtime>;
 1;
 #X msg 60 213 debug \$1;
 #X msg 45 333 exportastext;
-#N canvas 519 504 834 524 importMachFivePresets 1;
+#N canvas 519 504 834 524 importMachFivePresets 0;
 #X obj 8 481 outlet;
 #X obj 99 479 outlet;
 #X obj 8 29 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
@@ -6418,15 +6418,15 @@ starttime endtime>;
 #X restore 423 179 pd makenote+;
 #X msg 241 466 adsr 2 1 100 1000;
 #X obj 521 129 loadbang;
-#X msg 385 9 \; samplor_ adsr 2 1 100 1000;
-#X msg 385 42 \; samplor_ adsr 800 1 100 1;
+#X msg 385 2 \; samplor_ adsr 2 1 100 1000;
+#X msg 385 35 \; samplor_ adsr 800 1 100 1;
 #X msg 78 378 interpol 3;
 #X msg 79 361 interpol 1;
 #X obj 583 156 r s-notes-dur;
 #X msg 55 304 velcurve \$1;
 #X msg 521 154 1000;
-#X floatatom 10 396 5 0 0 0 - - -;
-#X msg 10 428 voice_stealing \$1;
+#X floatatom 9 409 5 0 0 0 - - -;
+#X msg 9 431 voice_stealing \$1;
 #X obj 219 389 unpack 0 s 0 0 0 0;
 #X obj 424 156 r s-notes+;
 #X obj 325 176 unpack 0 0 0;
@@ -6501,7 +6501,7 @@ starttime endtime>;
 #X obj 359 406 / 1;
 #X obj 424 276 loadbang;
 #X obj 29 47 random 12;
-#X msg 385 87 \; samplor_ 0 Piano_Stein_m_E3.aif 0 0 1.1036 0.620001
+#X msg 385 66 \; samplor_ 0 Piano_Stein_m_E3.aif 0 0 1.1036 0.620001
 ;
 #X obj 219 528 *~ 0.5;
 #X obj 273 525 *~ 0.5;
@@ -6565,6 +6565,9 @@ Piano_Stein_m_A0.aif 33 33 35 84 127 0 0 0.5 0 \; 1 Piano_Stein_m_A-1.aif
 #X obj 214 251 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X msg 583 480 line 0 \, bang;
+#X msg 384 98 \; samplor_ 0 Piano_Stein_m_E3.aif 0 0 1.1036 0;
+#X floatatom 12 465 5 0 0 0 - - -;
+#X msg 12 484 window \$1;
 #X connect 0 0 13 0;
 #X connect 1 0 55 0;
 #X connect 2 0 20 0;
@@ -6635,6 +6638,8 @@ Piano_Stein_m_A0.aif 33 33 35 84 127 0 0 0.5 0 \; 1 Piano_Stein_m_A-1.aif
 #X connect 65 0 64 1;
 #X connect 66 0 55 0;
 #X connect 67 0 63 0;
+#X connect 69 0 70 0;
+#X connect 70 0 51 0;
 #X restore 133 720 pd a_simple_sampler_example;
 #N canvas 0 23 450 300 pitch_modulation 0;
 #X obj 294 227 s s_;

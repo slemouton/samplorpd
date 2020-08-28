@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.097569"
+            timestampString = "620350847.823424"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3071"
-            endingLineNumber = "3071"
+            startingLineNumber = "3079"
+            endingLineNumber = "3079"
             landmarkName = "samplorpd_dsp"
             landmarkType = "9">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.099213"
+            timestampString = "620350847.82461"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1963"
-            endingLineNumber = "1963"
+            startingLineNumber = "1972"
+            endingLineNumber = "1972"
             landmarkName = "samplor_start"
             landmarkType = "9">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.0997601"
+            timestampString = "620350847.8250951"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1965"
-            endingLineNumber = "1965"
+            startingLineNumber = "1974"
+            endingLineNumber = "1974"
             landmarkName = "samplor_start"
             landmarkType = "9">
          </BreakpointContent>
@@ -90,7 +90,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.100225"
+            timestampString = "620350847.825527"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1339"
@@ -106,7 +106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.100647"
+            timestampString = "620350847.825973"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1787"
@@ -122,7 +122,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../linkedlist.c"
-            timestampString = "609418872.7114691"
+            timestampString = "618791684.899756"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "164"
@@ -138,7 +138,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../linkedlist.c"
-            timestampString = "609418872.71153"
+            timestampString = "618791684.900067"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "165"
@@ -154,7 +154,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../linkedlist.c"
-            timestampString = "609418872.7116131"
+            timestampString = "618791684.900291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "166"
@@ -170,7 +170,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../linkedlist.c"
-            timestampString = "609418872.711675"
+            timestampString = "618791684.9005359"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "145"
@@ -186,7 +186,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.101272"
+            timestampString = "620350847.826484"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1359"
@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.101714"
+            timestampString = "620350847.82691"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1973"
-            endingLineNumber = "1973"
+            startingLineNumber = "1982"
+            endingLineNumber = "1982"
             landmarkName = "samplor_start"
             landmarkType = "9">
          </BreakpointContent>
@@ -218,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.102142"
+            timestampString = "620350847.827361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2024"
-            endingLineNumber = "2024"
+            startingLineNumber = "2033"
+            endingLineNumber = "2033"
             landmarkName = "samplor_start"
             landmarkType = "9">
          </BreakpointContent>
@@ -234,7 +234,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.102636"
+            timestampString = "620350847.827804"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1362"
@@ -250,7 +250,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.1030509"
+            timestampString = "620350847.8282371"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1354"
@@ -266,7 +266,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.103466"
+            timestampString = "620350847.8286901"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1355"
@@ -282,7 +282,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.103972"
+            timestampString = "620350847.829124"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1356"
@@ -298,7 +298,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.104478"
+            timestampString = "620350847.829563"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1357"
@@ -314,7 +314,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.1048959"
+            timestampString = "620350847.830002"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1358"
@@ -326,11 +326,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.105383"
+            timestampString = "620350847.830588"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "197"
@@ -346,7 +346,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.105817"
+            timestampString = "620350847.8310519"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "202"
@@ -362,7 +362,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.106228"
+            timestampString = "620350847.831628"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "206"
@@ -378,202 +378,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.106644"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2063"
-            endingLineNumber = "2063"
-            landmarkName = "samplor_buf"
-            landmarkType = "9">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_buf"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  timestampString = "613516920.338254"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2064"
-                  endingLineNumber = "2064"
-                  offsetFromSymbolStart = "108">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_list"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  timestampString = "613516920.341382"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2064"
-                  endingLineNumber = "2064"
-                  offsetFromSymbolStart = "171">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_stop_play"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  timestampString = "613516920.343271"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2064"
-                  endingLineNumber = "2064"
-                  offsetFromSymbolStart = "211">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.1071579"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2064"
-            endingLineNumber = "2064"
-            landmarkName = "samplor_buf"
-            landmarkType = "9">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_buf"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  timestampString = "613516920.4094419"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2064"
-                  endingLineNumber = "2064"
-                  offsetFromSymbolStart = "108">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_list"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  timestampString = "613516920.411373"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2064"
-                  endingLineNumber = "2064"
-                  offsetFromSymbolStart = "171">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_stop_play"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  timestampString = "613516920.4136291"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2064"
-                  endingLineNumber = "2064"
-                  offsetFromSymbolStart = "211">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.107603"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2734"
-            endingLineNumber = "2734"
-            landmarkName = "samplor_list"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.108127"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2735"
-            endingLineNumber = "2735"
-            landmarkName = "samplor_list"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.10867"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2736"
-            endingLineNumber = "2736"
-            landmarkName = "samplor_list"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.1091321"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2737"
-            endingLineNumber = "2737"
-            landmarkName = "samplor_list"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.109708"
+            timestampString = "620350847.832193"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2072"
             endingLineNumber = "2072"
-            landmarkName = "samplor_bufname"
+            landmarkName = "samplor_buf"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -584,106 +394,280 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.11025"
+            timestampString = "620350847.832705"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2073"
             endingLineNumber = "2073"
-            landmarkName = "samplor_bufname"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.110778"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2074"
-            endingLineNumber = "2074"
-            landmarkName = "samplor_bufname"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.111431"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2075"
-            endingLineNumber = "2075"
-            landmarkName = "samplor_bufname"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.112005"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2060"
-            endingLineNumber = "2060"
             landmarkName = "samplor_buf"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.833155"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2743"
+            endingLineNumber = "2743"
+            landmarkName = "samplor_list"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.833644"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2744"
+            endingLineNumber = "2744"
+            landmarkName = "samplor_list"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.834092"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2745"
+            endingLineNumber = "2745"
+            landmarkName = "samplor_list"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.8345391"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2746"
+            endingLineNumber = "2746"
+            landmarkName = "samplor_list"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.834971"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2081"
+            endingLineNumber = "2081"
+            landmarkName = "samplor_bufname"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.835404"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2082"
+            endingLineNumber = "2082"
+            landmarkName = "samplor_bufname"
             landmarkType = "9">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "samplor_buf"
+                  symbolName = "samplor_bufname"
                   moduleName = "samplorpd~.pd_darwin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  timestampString = "613517102.942093"
+                  timestampString = "618790540.917165"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2060"
-                  endingLineNumber = "2060"
-                  offsetFromSymbolStart = "48">
+                  startingLineNumber = "2075"
+                  endingLineNumber = "2075"
+                  offsetFromSymbolStart = "9">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "samplor_list"
                   moduleName = "samplorpd~.pd_darwin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  timestampString = "613517102.944466"
+                  timestampString = "618790540.918836"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2060"
-                  endingLineNumber = "2060"
-                  offsetFromSymbolStart = "115">
+                  startingLineNumber = "2075"
+                  endingLineNumber = "2075"
+                  offsetFromSymbolStart = "72">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "samplor_stop_play"
                   moduleName = "samplorpd~.pd_darwin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  timestampString = "613517102.946666"
+                  timestampString = "618790540.920387"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2060"
-                  endingLineNumber = "2060"
-                  offsetFromSymbolStart = "148">
+                  startingLineNumber = "2075"
+                  endingLineNumber = "2075"
+                  offsetFromSymbolStart = "100">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.8358769"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2083"
+            endingLineNumber = "2083"
+            landmarkName = "samplor_bufname"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "samplor_bufname"
+                  moduleName = "samplorpd~.pd_darwin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
+                  timestampString = "618790540.925365"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2075"
+                  endingLineNumber = "2075"
+                  offsetFromSymbolStart = "9">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "samplor_list"
+                  moduleName = "samplorpd~.pd_darwin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
+                  timestampString = "618790540.926953"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2075"
+                  endingLineNumber = "2075"
+                  offsetFromSymbolStart = "72">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "samplor_stop_play"
+                  moduleName = "samplorpd~.pd_darwin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
+                  timestampString = "618790540.928407"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2075"
+                  endingLineNumber = "2075"
+                  offsetFromSymbolStart = "100">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.836301"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2084"
+            endingLineNumber = "2084"
+            landmarkName = "samplor_bufname"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "samplor_bufname"
+                  moduleName = "samplorpd~.pd_darwin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
+                  timestampString = "618790540.9326611"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2075"
+                  endingLineNumber = "2075"
+                  offsetFromSymbolStart = "9">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "samplor_list"
+                  moduleName = "samplorpd~.pd_darwin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
+                  timestampString = "618790540.934116"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2075"
+                  endingLineNumber = "2075"
+                  offsetFromSymbolStart = "72">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "samplor_stop_play"
+                  moduleName = "samplorpd~.pd_darwin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
+                  timestampString = "618790540.935581"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2075"
+                  endingLineNumber = "2075"
+                  offsetFromSymbolStart = "100">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -695,28 +679,188 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.1125391"
+            timestampString = "620350847.836728"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2061"
-            endingLineNumber = "2061"
+            startingLineNumber = "2069"
+            endingLineNumber = "2069"
             landmarkName = "samplor_buf"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.837153"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2070"
+            endingLineNumber = "2070"
+            landmarkName = "samplor_buf"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.837575"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2071"
+            endingLineNumber = "2071"
+            landmarkName = "samplor_buf"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../linkedlist.c"
+            timestampString = "618791684.913202"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "204"
+            endingLineNumber = "204"
+            landmarkName = "samplist_new_voice"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.8380719"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "283"
+            endingLineNumber = "283"
+            landmarkName = "samplor_run_one64_int"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.83849"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
+            landmarkName = "samplor_run_one64_int"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.838904"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "samplor_run_one64"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.8394769"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "samplor_run_one64"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.839921"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2391"
+            endingLineNumber = "2391"
+            landmarkName = "samplor_modwheel"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.840377"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2392"
+            endingLineNumber = "2392"
+            landmarkName = "samplor_modwheel"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.840819"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2119"
+            endingLineNumber = "2119"
+            landmarkName = "samplor_amp"
             landmarkType = "9">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "samplor_buf"
+                  symbolName = "samplor_amp"
                   moduleName = "samplorpd~.pd_darwin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  timestampString = "613517103.25596"
+                  timestampString = "619362575.372655"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2061"
-                  endingLineNumber = "2061"
-                  offsetFromSymbolStart = "62">
+                  startingLineNumber = "2110"
+                  endingLineNumber = "2110"
+                  offsetFromSymbolStart = "4">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -726,27 +870,12 @@
                   moduleName = "samplorpd~.pd_darwin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  timestampString = "613517103.258827"
+                  timestampString = "619362575.3754261"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2061"
-                  endingLineNumber = "2061"
-                  offsetFromSymbolStart = "128">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_stop_play"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  timestampString = "613517103.260818"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2061"
-                  endingLineNumber = "2061"
-                  offsetFromSymbolStart = "163">
+                  startingLineNumber = "2110"
+                  endingLineNumber = "2110"
+                  offsetFromSymbolStart = "257">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -758,60 +887,77 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../samplorpd~.c"
-            timestampString = "614272798.1131459"
+            timestampString = "620350847.841262"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2062"
-            endingLineNumber = "2062"
-            landmarkName = "samplor_buf"
+            startingLineNumber = "2884"
+            endingLineNumber = "2884"
+            landmarkName = "samplor_play"
             landmarkType = "9">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_buf"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  timestampString = "613517103.612947"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2062"
-                  endingLineNumber = "2062"
-                  offsetFromSymbolStart = "101">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_list"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  timestampString = "613517103.6158659"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2062"
-                  endingLineNumber = "2062"
-                  offsetFromSymbolStart = "164">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_stop_play"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  timestampString = "613517103.618573"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2062"
-                  endingLineNumber = "2062"
-                  offsetFromSymbolStart = "203">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.841732"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2742"
+            endingLineNumber = "2742"
+            landmarkName = "samplor_list"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.842185"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2552"
+            endingLineNumber = "2552"
+            landmarkName = "samplor_stop_one_voice_str"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.842622"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2550"
+            endingLineNumber = "2550"
+            landmarkName = "samplor_stop_one_voice_str"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            timestampString = "620350847.843069"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2556"
+            endingLineNumber = "2556"
+            landmarkName = "samplor_stop_one_voice_str"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
