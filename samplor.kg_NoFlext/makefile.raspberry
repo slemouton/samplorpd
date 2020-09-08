@@ -13,12 +13,12 @@ samplorkg: samplorkg.pd_linux
 
 .SUFFIXES: .pd_linux
 
-LINUXCFLAGS = -DPD -O2 -funroll-loops -fomit-frame-pointer \
+LINUXCFLAGS = -DPD -O2 -std=gnu99 -funroll-loops -fomit-frame-pointer \
     -Wall -W -Wshadow -Wstrict-prototypes \
     -Wno-unused -Wno-parentheses -Wno-switch
 __APPLE__=True
 #LINUXINCLUDE =  -I../../src
-LINUXINCLUDE = -I/Applications/Pd-0.48-1.app/Contents/Resources/src -I/usr/include/libxml2
+LINUXINCLUDE = -I../../pd-0.51-1/src -I/usr/include/libxml2
 
 .c.pd_linux: 
 	cc $(LINUXCFLAGS) $(LINUXINCLUDE) -o $*.o -c $*.c
