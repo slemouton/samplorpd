@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MachFiveProgram>
+  <Program Name="Program" Polyphony="16" PortamentoTime="0.1" ProgramName="TubularBelles.M5p" ProgramPath="$gutenberg-pd/samplor/TubularBelles.M5p" Role="Gen" Streaming="1">
+    <Layer Color="#ffff0000" Name="Tubular Bells (metal)" PolyphonicPortamentoTime="1" Role="Gen">
+      <Keygroup HighKey="89" LowKey="70" LowVelocity="1" Name="Glocken_ME_C5_f.wav" Role="Gen" VelocitySens="1" Volume="0.544813">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="7.94534" Steps="c-0.748887v1;c0t0.001;c-0.97;t7.94534v0;" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AnalogDrive Bus="Oscillator" Name="Drive" Order="1" Role="Ins">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;DriveAmount" ModulationRatio="1" ModulationSource="@MIDI CC 75" Name="DriveEdit"/>
+        </AnalogDrive>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="0.94" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="1" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="1" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="72" Name="Oscillator" Role="Gen" SampleName="Glocken_ME_C5_f.wav" SamplePath="./TubularBelles Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;;t0.05v0;" VelocityAmount="0.94" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="0" ModulationSource="Pitch Env" Name="PitchEnvMod"/>
+      </Keygroup>
+      <Keygroup HighKey="69" LowKey="48" LowVelocity="1" Name="Glocken_ME_G4_f.wav" Role="Gen" VelocitySens="1" Volume="0.544813">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="7.94534" Steps="c-0.748887v1;c0t0.001;c-0.97;t7.94534v0;" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AnalogDrive Bus="Oscillator" Name="Drive" Order="1" Role="Ins">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;DriveAmount" ModulationRatio="1" ModulationSource="@MIDI CC 75" Name="DriveEdit"/>
+        </AnalogDrive>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="0.94" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="1" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="1" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="67" Name="Oscillator" Role="Gen" SampleName="Glocken_ME_G4_f.wav" SamplePath="./TubularBelles Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;;t0.05v0;" VelocityAmount="0.94" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="0" ModulationSource="Pitch Env" Name="PitchEnvMod"/>
+      </Keygroup>
+    </Layer>
+  </Program>
+</MachFiveProgram>

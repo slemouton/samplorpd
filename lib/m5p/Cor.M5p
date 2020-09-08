@@ -1,0 +1,686 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MachFiveProgram>
+  <Program Name="Program" Polyphony="12" PortamentoTime="0.03" ProgramName="Cor.m5p" ProgramPath="$Gutenberg/gutenberg-pd/samplor/Cor.m5p" Role="Gen" Streaming="1">
+    <FilteredReverb Bus="Main Out" Bypass="1" Name="Effect1" Order="1" ReverbDecayTime="5.35746" ReverbFilter="-0.366667" ReverbHighDamp="0.433333" Role="Ins" SyncToHost="1" WetMix="0.106667"/>
+    <LfoEnvelope LfoEnvelopeFreq="10" Name="GlobalLFO1" Version="1"/>
+    <LfoEnvelope LfoEnvelopeFreq="10" Name="GlobalLFO2" Version="1"/>
+    <Layer Color="lime" HighKey="80" LowKey="40" LowVelocity="1" Name="Layer 0" PolyphonicPortamentoTime="1" Role="Gen">
+      <Keygroup HighKey="58" HighVelocity="113" LowKey="56" LowVelocity="95" Name="8FHorns_sus_f_A#2.aif" Role="Gen" VelocitySens="1" Volume="0.880688">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="58" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_f_A#2.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="76" HighVelocity="113" LowKey="70" LowVelocity="95" Name="8FHorns_sus_f_A#3.aif" Role="Gen" VelocitySens="1" Volume="0.880688">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="70" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_f_A#3.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="50" HighVelocity="113" LowKey="47" LowVelocity="95" Name="8FHorns_sus_f_B1.aif" Role="Gen" VelocitySens="1" Volume="0.880688">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0;c-0.97t0.001;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="47" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_f_B1.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;;t0.001v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="38" LowKey="35" LowVelocity="95" Name="8FHorns_sus_f_D1.aif" Role="Gen" VelocitySens="1" Volume="0.880688">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="38" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_f_D1.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="63" HighVelocity="113" LowKey="59" LowVelocity="95" Name="8FHorns_sus_f_D3.aif" Role="Gen" VelocitySens="1" Volume="0.880688">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="62" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_f_D3.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="55" HighVelocity="113" LowKey="51" LowVelocity="95" Name="8FHorns_sus_f_F#2.aif" Role="Gen" VelocitySens="1" Volume="0.880688">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0;c-0.97t0.001;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="54" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_f_F#2.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;;t0.001v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="69" HighVelocity="113" LowKey="64" LowVelocity="95" Name="8FHorns_sus_f_F#3.aif" Role="Gen" VelocitySens="1" Volume="0.880688">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="66" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_f_F#3.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="42" HighVelocity="113" LowKey="39" LowVelocity="95" Name="8FHorns_sus_f_F1.aif" Role="Gen" VelocitySens="1" Volume="0.880688">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="41" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_f_F1.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="46" HighVelocity="113" LowKey="43" LowVelocity="95" Name="8FHorns_sus_f_G#1.aif" Role="Gen" VelocitySens="1" Volume="0.880688">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0;c-0.97t0.001;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="44" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_f_G#1.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;;t0.001v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="58" LowKey="56" LowVelocity="114" Name="8FHorns_sus_ff_A#2.aif" Role="Gen" VelocitySens="1" Volume="0.806045">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="58" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_ff_A#2.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="76" LowKey="70" LowVelocity="114" Name="8FHorns_sus_ff_A#3.aif" Role="Gen" VelocitySens="1" Volume="0.806045">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="70" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_ff_A#3.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="50" LowKey="47" LowVelocity="114" Name="8FHorns_sus_ff_C2.aif" Role="Gen" VelocitySens="1" Volume="0.806045">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0;c-0.97t0.001;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="48" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_ff_C2.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;;t0.001v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="63" LowKey="59" LowVelocity="114" Name="8FHorns_sus_ff_C3.aif" Role="Gen" VelocitySens="1" Volume="0.806045">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="60" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_ff_C3.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="69" LowKey="64" LowVelocity="114" Name="8FHorns_sus_ff_F#3.aif" Role="Gen" VelocitySens="1" Volume="0.806045">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="66" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_ff_F#3.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="42" LowKey="39" LowVelocity="114" Name="8FHorns_sus_ff_F1.aif" Role="Gen" VelocitySens="1" Volume="0.806045">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="41" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_ff_F1.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="46" LowKey="43" LowVelocity="114" Name="8FHorns_sus_ff_G1.aif" Role="Gen" VelocitySens="1" Volume="0.806045">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="43" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_ff_G1.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="55" LowKey="51" LowVelocity="114" Name="8FHorns_sus_ff_G2.aif" Role="Gen" VelocitySens="1" Volume="0.806045">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="55" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_ff_G2.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="46" HighVelocity="94" LowKey="43" LowVelocity="1" Name="8FHorns_sus_mf_A#1.aif" Role="Gen" VelocitySens="1" Volume="0.933253">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="46" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_mf_A#1.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="76" HighVelocity="94" LowKey="70" LowVelocity="1" Name="8FHorns_sus_mf_A#3.aif" Role="Gen" VelocitySens="1" Volume="0.933253">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="70" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_mf_A#3.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="63" HighVelocity="94" LowKey="59" LowVelocity="1" Name="8FHorns_sus_mf_D#3.aif" Role="Gen" VelocitySens="1" Volume="0.933253">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="63" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_mf_D#3.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="38" HighVelocity="94" LowKey="35" LowVelocity="1" Name="8FHorns_sus_mf_D1.aif" Role="Gen" VelocitySens="1" Volume="0.933253">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="38" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_mf_D1.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="50" HighVelocity="94" LowKey="47" LowVelocity="1" Name="8FHorns_sus_mf_D2.aif" Role="Gen" VelocitySens="1" Volume="0.933253">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="50" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_mf_D2.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="69" HighVelocity="94" LowKey="64" LowVelocity="1" Name="8FHorns_sus_mf_F#3.aif" Role="Gen" VelocitySens="1" Volume="0.933253">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="66" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_mf_F#3.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="42" HighVelocity="94" LowKey="39" LowVelocity="1" Name="8FHorns_sus_mf_F1.aif" Role="Gen" VelocitySens="1" Volume="0.933253">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="41" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_mf_F1.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="55" HighVelocity="94" LowKey="51" LowVelocity="1" Name="8FHorns_sus_mf_F2.aif" Role="Gen" VelocitySens="1" Volume="0.933253">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" HoldTime="0.001" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0t0.001;c-0.97;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="53" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_mf_F2.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" HoldTime="0.001" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;t0.001;v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+      <Keygroup HighKey="58" HighVelocity="94" LowKey="56" LowVelocity="1" Name="8FHorns_sus_mf_G#2.aif" Role="Gen" VelocitySens="1" Volume="0.933253">
+        <AHDSR AttackCurve="0.42" DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" MultiEnvMode="1" Name="Amp. Env" ReleaseIndex="3" ReleaseTime="0.345131" Steps="c-0.748887v1;c0;c-0.97t0.001;t0.345131v0;" VelocityAmount="0.85" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="1" MultiEnvMode="1" Name="Filter Env" ReleaseIndex="3" Steps="v1;;t0.001;t0.05v0;" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO1" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 96" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <LfoEnvelope EnableReTrigger="1" LfoEnvelopeFreq="10" Name="LFO2" Version="1">
+          <SignalConnection Mode="Edition" ModulationDestination="&gt;LfoEnvelopeFreq" ModulationRatio="1" ModulationSource="@MIDI CC 97" Name="LFOFreqEdit"/>
+        </LfoEnvelope>
+        <SamplePlayer BaseNote="56" Name="Oscillator" Role="Gen" SampleName="8FHorns_sus_mf_G#2.aif" SamplePath="./Cor Samples" Streaming="1"/>
+        <AHDSR DecayIndex="2" DecayTime="0.001" EnableReTrigger="1" EnvCurveType="2" MultiEnvMode="1" Name="Pitch Env" ReleaseIndex="3" Steps="v1;;t0.001v0;t0.05;" SustainLevel="0" VelocityAmount="1" VelocitySens="-0.75" Version="1">
+          <SignalConnection ModulationDestination="EnvStep0&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToAttackTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam KeyFollow" Name="KeyToDecayTime"/>
+          <SignalConnection ModulationDestination="EnvStep2&gt;Time" ModulationRatio="0" ModulationSource="@VoiceParam OriginalVelocity" Name="VelocityToDecayTime"/>
+        </AHDSR>
+        <SignalConnection ModulationDestination="&gt;Volume" ModulationRatio="1" ModulationSource="Amp. Env" Name="AmpEnvMod"/>
+        <SignalConnection ModulationDestination="&gt;Pitch" ModulationRatio="2" ModulationSource="@PitchBend" Name="PitchBendMod"/>
+      </Keygroup>
+    </Layer>
+  </Program>
+</MachFiveProgram>
