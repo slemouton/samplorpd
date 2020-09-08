@@ -1,0 +1,506 @@
+#N canvas 455 35 1059 678 10;
+#X obj 241 440 loadbang;
+#N canvas 218 573 1024 490 keygroupSyntax 0;
+#X msg 179 143 1 D#0_F.mo 27 20 29 1 127 \, 2 G#0_F2.mo 32 30 34 1
+127 \, 3 C#1.mo 37 35 39 1 127 \, 4 F1.mo 41 40 43 1 127 \, 5 C2.mo
+48 44 50 1 127 \, 6 G2.mo 55 51 57 1 127 \, 7 C3.mo 60.1 58 62 1 127
+\, 8 F#3.mo 66 63 68 1 127 \, 9 C4.mo 72 69 74 1 127 \, 10 F4.mo 77
+75 79 1 127 \, 11 B4.mo 83 80 85 1 127 \, 12 F5.mo 89 86 89 1 127 \,
+13 G5.mo 91 90 93 1 127 \, 14 B5.mo 95 94 97 1 127 \, 15 F6.mo 101
+98 120 1 127;
+#X msg 105 109 1 test2 60 48 72 65 127 100 222;
+#X msg 49 73 1 test1 60 48 72 1 64 100 222;
+#X obj 100 256 outlet;
+#X text 67 27 <Channel soundname pitch minpitch maxpitch minvel maxvel
+starttime endtime>;
+#X msg 211 240 1 "Piano_Stein_m_A0.aif" 33 33 35 84 127 0.5 0 1;
+#X connect 0 0 3 0;
+#X connect 1 0 3 0;
+#X connect 2 0 3 0;
+#X connect 5 0 3 0;
+#X restore 158 181 pd keygroupSyntax;
+#X obj 55 286 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X floatatom 294 179 0 0 0 0 - - -;
+#X msg 61 170 clear;
+#X obj 39 212 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 60 213 debug \$1;
+#X msg 45 333 exportastext;
+#N canvas 537 398 834 524 importMachFivePresets 0;
+#X obj 8 481 outlet;
+#X obj 99 479 outlet;
+#X obj 8 29 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 8 6 loadbang;
+#X msg 40 365 import \$1;
+#X obj 40 139 unpack s 0;
+#X msg 40 80 ConcertGrndPnoClassical 1 \, Hp-ord.fxp 2 \, crotales
+3 \, pacman 4 \, trombone 5 \, trompette 6 \, cor 7 \, pizzharpe 8
+\, TubularBells 9;
+#X obj 40 164 pack symbol s;
+#X obj 8 48 t b b b;
+#X msg 35 439 clear;
+#X obj 75 200 ggee/getdir;
+#X msg 75 250 set \$1;
+#X obj 40 312 makefilename x;
+#X obj 75 227 makefilename %s/lib/samplor/%%s.M5p;
+#X msg 195 277 set /Users/lemouton/Projets/Co/Stockhausen/Mantra/mantra2015/mantra-pd/lib/samplor/%s.M5p
+;
+#X obj 195 251 loadbang;
+#X connect 2 0 8 0;
+#X connect 3 0 2 0;
+#X connect 4 0 0 0;
+#X connect 5 0 7 0;
+#X connect 5 1 1 0;
+#X connect 6 0 5 0;
+#X connect 7 0 12 0;
+#X connect 8 0 0 0;
+#X connect 8 1 6 0;
+#X connect 8 2 10 0;
+#X connect 9 0 0 0;
+#X connect 10 0 13 0;
+#X connect 12 0 4 0;
+#X connect 13 0 11 0;
+#X connect 14 0 12 0;
+#X connect 15 0 14 0;
+#X restore 128 146 pd importMachFivePresets;
+#X text 283 114 channel;
+#X obj 145 408 r samplor_;
+#X floatatom 30 84 5 0 0 0 - - -, f 5;
+#N canvas 836 431 485 382 makenote+ 0;
+#X obj 114 50 inlet;
+#X msg 107 90 \$3 \$1 \$2;
+#X obj 102 169 unpack 0 0;
+#X obj 206 173 unpack 0 0;
+#X obj 109 119 route 1 2 3;
+#X obj 297 175 unpack 0 0;
+#X obj 98 266 pack 0 0 1;
+#X obj 197 270 pack 0 0 2;
+#X obj 305 268 pack 0 0 3;
+#X obj 116 312 unpack 0 0 1;
+#X obj 77 346 outlet;
+#X obj 156 346 outlet;
+#X obj 198 382;
+#X obj 216 346 outlet;
+#X obj 47 208 makenote 60 1000;
+#X obj 206 213 makenote 60 1000;
+#X obj 341 216 makenote 60 1000;
+#X obj 261 51 inlet;
+#X connect 0 0 1 0;
+#X connect 1 0 4 0;
+#X connect 2 0 14 0;
+#X connect 2 1 14 1;
+#X connect 3 0 15 0;
+#X connect 3 1 15 1;
+#X connect 4 0 2 0;
+#X connect 4 1 3 0;
+#X connect 4 2 5 0;
+#X connect 5 0 16 0;
+#X connect 5 1 16 1;
+#X connect 6 0 9 0;
+#X connect 7 0 9 0;
+#X connect 8 0 9 0;
+#X connect 9 0 10 0;
+#X connect 9 1 11 0;
+#X connect 9 2 13 0;
+#X connect 14 0 6 0;
+#X connect 14 1 6 1;
+#X connect 15 0 7 0;
+#X connect 15 1 7 1;
+#X connect 16 0 8 0;
+#X connect 16 1 8 1;
+#X connect 17 0 14 2;
+#X connect 17 0 15 2;
+#X connect 17 0 16 2;
+#X restore 423 179 pd makenote+;
+#X msg 241 466 adsr 2 1 100 1000;
+#X obj 521 129 loadbang;
+#X msg 385 2 \; samplor_ adsr 2 1 100 1000;
+#X msg 385 35 \; samplor_ adsr 800 1 100 1;
+#X msg 78 378 interpol 3;
+#X msg 79 361 interpol 1;
+#X obj 583 156 r s-notes-dur;
+#X msg 55 304 velcurve \$1;
+#X msg 521 154 1000;
+#X floatatom 9 409 5 0 0 0 - - -, f 5;
+#X msg 9 431 voice_stealing \$1;
+#X obj 219 389 unpack 0 s 0 0 0 0;
+#X obj 424 156 r s-notes+;
+#X obj 325 176 unpack 0 0 0;
+#X obj 325 135 r s-notes;
+#X obj 310 335 r s-notes-dur;
+#X floatatom 309 360 5 0 0 0 - - -, f 5;
+#X msg 55 264 0;
+#X obj 54 242 loadbang;
+#X obj 219 420 pack 0 s 0 0 0 0;
+#X obj 29 -2 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 30 62 + 57;
+#N canvas -1655 36 1455 1010 sound-buffers 0;
+#X obj 251 20 skg.buffer~ Piano_Stein_m_A0.aif;
+#X obj 251 38 skg.buffer~ Piano_Stein_m_A1.aif;
+#X obj 251 56 skg.buffer~ Piano_Stein_m_A4.aif;
+#X obj 251 74 skg.buffer~ Piano_Stein_m_B2.aif;
+#X obj 251 92 skg.buffer~ Piano_Stein_m_B3.aif;
+#X obj 251 110 skg.buffer~ Piano_Stein_m_B6.aif;
+#X obj 251 128 skg.buffer~ Piano_Stein_m_C#3.aif;
+#X obj 251 146 skg.buffer~ Piano_Stein_m_C1.aif;
+#X obj 251 164 skg.buffer~ Piano_Stein_m_C2.aif;
+#X obj 251 182 skg.buffer~ Piano_Stein_m_C5.aif;
+#X obj 251 200 skg.buffer~ Piano_Stein_m_C6.aif;
+#X obj 251 218 skg.buffer~ Piano_Stein_m_C7.aif;
+#X obj 251 236 skg.buffer~ Piano_Stein_m_D0.aif;
+#X obj 251 254 skg.buffer~ Piano_Stein_m_D4.aif;
+#X obj 251 272 skg.buffer~ Piano_Stein_m_E1.aif;
+#X obj 251 290 skg.buffer~ Piano_Stein_m_E2.aif;
+#X obj 251 308 skg.buffer~ Piano_Stein_m_E3.aif;
+#X obj 251 326 skg.buffer~ Piano_Stein_m_E5.aif;
+#X obj 251 344 skg.buffer~ Piano_Stein_m_E6.aif;
+#X obj 251 362 skg.buffer~ Piano_Stein_m_F1.aif;
+#X obj 251 380 skg.buffer~ Piano_Stein_m_F4.aif;
+#X obj 251 398 skg.buffer~ Piano_Stein_m_G0.aif;
+#X obj 251 416 skg.buffer~ Piano_Stein_m_G2.aif;
+#X obj 251 434 skg.buffer~ Piano_Stein_m_G3.aif;
+#X obj 251 452 skg.buffer~ Piano_Stein_m_G5.aif;
+#X obj 251 470 skg.buffer~ Piano_Stein_m_G6.aif;
+#X obj 251 488 skg.buffer~ Piano_Stein_p_A-1.aif;
+#X obj 251 506 skg.buffer~ Piano_Stein_p_A0.aif;
+#X obj 251 524 skg.buffer~ Piano_Stein_p_A1.aif;
+#X obj 251 542 skg.buffer~ Piano_Stein_p_A4.aif;
+#X obj 251 560 skg.buffer~ Piano_Stein_p_B2.aif;
+#X obj 251 578 skg.buffer~ Piano_Stein_p_B3.aif;
+#X obj 251 596 skg.buffer~ Piano_Stein_p_B6.aif;
+#X obj 251 614 skg.buffer~ Piano_Stein_p_C#3.aif;
+#X obj 251 632 skg.buffer~ Piano_Stein_p_C1.aif;
+#X obj 251 650 skg.buffer~ Piano_Stein_p_C2.aif;
+#X obj 251 668 skg.buffer~ Piano_Stein_p_C5_.aif;
+#X obj 251 686 skg.buffer~ Piano_Stein_p_C7_.aif;
+#X obj 251 704 skg.buffer~ Piano_Stein_p_D0.aif;
+#X obj 251 722 skg.buffer~ Piano_Stein_p_D4.aif;
+#X obj 251 740 skg.buffer~ Piano_Stein_p_E1.aif;
+#X obj 251 758 skg.buffer~ Piano_Stein_p_E2.aif;
+#X obj 251 776 skg.buffer~ Piano_Stein_p_E3.aif;
+#X obj 251 794 skg.buffer~ Piano_Stein_p_E6_.aif;
+#X obj 251 812 skg.buffer~ Piano_Stein_p_F1.aif;
+#X obj 251 830 skg.buffer~ Piano_Stein_p_F4.aif;
+#X obj 251 848 skg.buffer~ Piano_Stein_p_G0.aif;
+#X obj 251 866 skg.buffer~ Piano_Stein_p_G2.aif;
+#X obj 251 883 skg.buffer~ Piano_Stein_p_G3.aif;
+#X obj 251 901 skg.buffer~ Piano_Stein_p_G6.aif;
+#X obj 251 2 skg.buffer~ Piano_Stein_m_A-1.aif;
+#X obj -5 512 skg.buffer~ pacman-f-3.aif;
+#X obj -5 1 skg.buffer~ cloche.2_fa4.wav;
+#X obj -5 19 skg.buffer~ cloche.3_fa#4.wav;
+#X obj -5 37 skg.buffer~ cloche.6_la4.wav;
+#X obj -5 55 skg.buffer~ cloche.7_la#4.wav;
+#X obj -5 73 skg.buffer~ cloche.14_fa5.wav;
+#X obj -5 91 skg.buffer~ cloche.15_fa#5.wav;
+#X obj -5 127 skg.buffer~ cloche.19_la#5.wav;
+#X obj -5 242 skg.buffer~ pacman-a-1.aif;
+#X obj -5 260 skg.buffer~ pacman-a-2.aif;
+#X obj -5 278 skg.buffer~ pacman-b-3.aif;
+#X obj -5 296 skg.buffer~ pacman-b-9.aif;
+#X obj -5 314 skg.buffer~ pacman-c-1.aif;
+#X obj -5 332 skg.buffer~ pacman-c-2.aif;
+#X obj -5 350 skg.buffer~ pacman-c-3.aif;
+#X obj -5 368 skg.buffer~ pacman-c-4.aif;
+#X obj -5 386 skg.buffer~ pacman-c-5.aif;
+#X obj -5 404 skg.buffer~ pacman-c-6.aif;
+#X obj -5 422 skg.buffer~ pacman-d-1.aif;
+#X obj -5 440 skg.buffer~ pacman-d-2.aif;
+#X obj -5 458 skg.buffer~ pacman-e-1.aif;
+#X obj -5 476 skg.buffer~ pacman-f-1.aif;
+#X obj -5 494 skg.buffer~ pacman-f-2.aif;
+#X obj -5 530 skg.buffer~ pacman-g-2.aif;
+#X obj -5 109 skg.buffer~ cloche.18_la5.wav;
+#X obj -5 211 skg.buffer~ pizzharpeSib6.aif;
+#X obj -4 172 skg.buffer~ Glocken_ME_C5_f.wav;
+#X obj -4 154 skg.buffer~ Glocken_ME_G4_f.wav;
+#X obj -4 554 skg.buffer~ cartoon-05.wav;
+#X obj -4 577 skg.buffer~ cartoon-06.wav;
+#X obj -4 600 skg.buffer~ cartoon-07.wav;
+#X obj -4 623 skg.buffer~ cartoon-08.wav;
+#X obj -4 646 skg.buffer~ cartoon-09.wav;
+#X obj -4 669 skg.buffer~ cartoon-10.wav;
+#X obj -4 691 skg.buffer~ cartoon-12.wav;
+#X obj -4 714 skg.buffer~ cartoon-13.wav;
+#X obj -4 737 skg.buffer~ cartoon-15.wav;
+#X obj -2 760 skg.buffer~ cartoon-18.wav;
+#X obj -2 783 skg.buffer~ cartoon-19.wav;
+#X obj -2 806 skg.buffer~ cartoon-20.wav;
+#X obj 548 922 skg.buffer~ Hp-ord-A1-mf.wav;
+#X obj 548 940 skg.buffer~ Hp-ord-A2-mf.wav;
+#X obj 548 962 skg.buffer~ Hp-ord-A3-mf.wav;
+#X obj 548 980 skg.buffer~ Hp-ord-A4-mf.wav;
+#X obj 548 997 skg.buffer~ Hp-ord-A5-mf.wav;
+#X obj 548 1016 skg.buffer~ Hp-ord-A6-mf.wav;
+#X obj 548 1035 skg.buffer~ Hp-ord-C#1-mf.wav;
+#X obj 548 1052 skg.buffer~ Hp-ord-C#2-mf.wav;
+#X obj 548 1070 skg.buffer~ Hp-ord-C#3-mf.wav;
+#X obj 548 1087 skg.buffer~ Hp-ord-C#4-mf.wav;
+#X obj 548 1105 skg.buffer~ Hp-ord-C#5-mf.wav;
+#X obj 548 1123 skg.buffer~ Hp-ord-C#6-mf.wav;
+#X obj 548 1142 skg.buffer~ Hp-ord-C#7-mf.wav;
+#X obj 548 1161 skg.buffer~ Hp-ord-F1-mf.wav;
+#X obj 548 1180 skg.buffer~ Hp-ord-F2-mf.wav;
+#X obj 548 1198 skg.buffer~ Hp-ord-F3-mf.wav;
+#X obj 548 1216 skg.buffer~ Hp-ord-F4-mf.wav;
+#X obj 548 1233 skg.buffer~ Hp-ord-F5-mf.wav;
+#X obj 548 1251 skg.buffer~ Hp-ord-F6-mf.wav;
+#X obj 548 1268 skg.buffer~ Hp-ord-F7-mf.wav;
+#X obj 1164 207 skg.buffer~ 8FHorns_sus_f_A#2.aif;
+#X obj 1164 225 skg.buffer~ 8FHorns_sus_f_A#3.aif;
+#X obj 1164 243 skg.buffer~ 8FHorns_sus_f_B1.aif;
+#X obj 1164 261 skg.buffer~ 8FHorns_sus_f_D1.aif;
+#X obj 1164 279 skg.buffer~ 8FHorns_sus_f_D3.aif;
+#X obj 1164 297 skg.buffer~ 8FHorns_sus_f_F#2.aif;
+#X obj 1164 315 skg.buffer~ 8FHorns_sus_f_F#3.aif;
+#X obj 1164 333 skg.buffer~ 8FHorns_sus_f_F1.aif;
+#X obj 1164 351 skg.buffer~ 8FHorns_sus_f_G#1.aif;
+#X obj 1164 369 skg.buffer~ 8FHorns_sus_ff_A#2.aif;
+#X obj 1164 387 skg.buffer~ 8FHorns_sus_ff_A#3.aif;
+#X obj 1164 405 skg.buffer~ 8FHorns_sus_ff_C2.aif;
+#X obj 1164 423 skg.buffer~ 8FHorns_sus_ff_C3.aif;
+#X obj 1164 441 skg.buffer~ 8FHorns_sus_ff_F#3.aif;
+#X obj 1164 459 skg.buffer~ 8FHorns_sus_ff_F1.aif;
+#X obj 1164 477 skg.buffer~ 8FHorns_sus_ff_G1.aif;
+#X obj 1164 495 skg.buffer~ 8FHorns_sus_ff_G2.aif;
+#X obj 1164 513 skg.buffer~ 8FHorns_sus_mf_A#1.aif;
+#X obj 1164 531 skg.buffer~ 8FHorns_sus_mf_A#3.aif;
+#X obj 1164 549 skg.buffer~ 8FHorns_sus_mf_D#3.aif;
+#X obj 1164 567 skg.buffer~ 8FHorns_sus_mf_D1.aif;
+#X obj 1164 585 skg.buffer~ 8FHorns_sus_mf_D2.aif;
+#X obj 1164 603 skg.buffer~ 8FHorns_sus_mf_F#3.aif;
+#X obj 1164 621 skg.buffer~ 8FHorns_sus_mf_F1.aif;
+#X obj 1164 639 skg.buffer~ 8FHorns_sus_mf_F2.aif;
+#X obj 1164 657 skg.buffer~ 8FHorns_sus_mf_G#2.aif;
+#X obj 537 200 skg.buffer~ Trombone_solo_sus_f_A2.aif;
+#X obj 537 219 skg.buffer~ Trombone_solo_sus_f_A3.aif;
+#X obj 537 238 skg.buffer~ Trombone_solo_sus_f_B3.aif;
+#X obj 537 257 skg.buffer~ Trombone_solo_sus_f_C2.aif;
+#X obj 537 276 skg.buffer~ Trombone_solo_sus_f_C3.aif;
+#X obj 537 295 skg.buffer~ Trombone_solo_sus_f_D2.aif;
+#X obj 537 314 skg.buffer~ Trombone_solo_sus_f_D3.aif;
+#X obj 537 333 skg.buffer~ Trombone_solo_sus_f_D4.aif;
+#X obj 537 352 skg.buffer~ Trombone_solo_sus_f_E1.aif;
+#X obj 537 371 skg.buffer~ Trombone_solo_sus_f_F2.aif;
+#X obj 537 390 skg.buffer~ Trombone_solo_sus_f_F3.aif;
+#X obj 537 409 skg.buffer~ Trombone_solo_sus_f_G1.aif;
+#X obj 537 428 skg.buffer~ Trombone_solo_sus_mf_A2.aif;
+#X obj 537 447 skg.buffer~ Trombone_solo_sus_mf_A3.aif;
+#X obj 537 466 skg.buffer~ Trombone_solo_sus_mf_C2.aif;
+#X obj 537 485 skg.buffer~ Trombone_solo_sus_mf_C3.aif;
+#X obj 537 504 skg.buffer~ Trombone_solo_sus_mf_C4.aif;
+#X obj 537 523 skg.buffer~ Trombone_solo_sus_mf_D2.aif;
+#X obj 537 542 skg.buffer~ Trombone_solo_sus_mf_D3.aif;
+#X obj 537 578 skg.buffer~ Trombone_solo_sus_mf_D4.aif;
+#X obj 537 561 skg.buffer~ Trombone_solo_sus_mf_E1.aif;
+#X obj 536 597 skg.buffer~ Trombone_solo_sus_mf_F2.aif;
+#X obj 536 616 skg.buffer~ Trombone_solo_sus_mf_F3.aif;
+#X obj 536 635 skg.buffer~ Trombone_solo_sus_mf_G1.aif;
+#X obj 536 654 skg.buffer~ Trombone_solo_sus_p_A2.aif;
+#X obj 536 673 skg.buffer~ Trombone_solo_sus_p_A3.aif;
+#X obj 536 692 skg.buffer~ Trombone_solo_sus_p_C2.aif;
+#X obj 536 711 skg.buffer~ Trombone_solo_sus_p_C3.aif;
+#X obj 536 730 skg.buffer~ Trombone_solo_sus_p_C4.aif;
+#X obj 536 749 skg.buffer~ Trombone_solo_sus_p_D2.aif;
+#X obj 536 768 skg.buffer~ Trombone_solo_sus_p_D3.aif;
+#X obj 536 787 skg.buffer~ Trombone_solo_sus_p_D4.aif;
+#X obj 536 805 skg.buffer~ Trombone_solo_sus_p_F1.aif;
+#X obj 536 823 skg.buffer~ Trombone_solo_sus_p_F2.aif;
+#X obj 536 840 skg.buffer~ Trombone_solo_sus_p_F3.aif;
+#X obj 536 858 skg.buffer~ Trombone_solo_sus_p_G1.aif;
+#X obj 871 193 skg.buffer~ Trumpets_Sus_mf_A#2.aif;
+#X obj 871 211 skg.buffer~ Trumpets_Sus_mf_A#3.aif;
+#X obj 871 229 skg.buffer~ Trumpets_Sus_mf_A#4.aif;
+#X obj 871 247 skg.buffer~ Trumpets_Sus_mf_C3.aif;
+#X obj 871 265 skg.buffer~ Trumpets_Sus_mf_C4.aif;
+#X obj 871 283 skg.buffer~ Trumpets_Sus_mf_D3.aif;
+#X obj 871 301 skg.buffer~ Trumpets_Sus_mf_D4.aif;
+#X obj 871 319 skg.buffer~ Trumpets_Sus_mf_E3.aif;
+#X obj 871 337 skg.buffer~ Trumpets_Sus_mf_E4.aif;
+#X obj 871 355 skg.buffer~ Trumpets_Sus_mf_F#3.aif;
+#X obj 871 373 skg.buffer~ Trumpets_Sus_mf_F#4.aif;
+#X obj 871 391 skg.buffer~ Trumpets_Sus_mf_G#3.aif;
+#X obj 871 409 skg.buffer~ Trumpets_Sus_mf_G#4.aif;
+#X obj 871 427 skg.buffer~ Trumpets_Sus_p_A#2.aif;
+#X obj 871 445 skg.buffer~ Trumpets_Sus_p_A#3.aif;
+#X obj 871 463 skg.buffer~ Trumpets_Sus_p_A#4.aif;
+#X obj 871 481 skg.buffer~ Trumpets_Sus_p_C3.aif;
+#X obj 871 499 skg.buffer~ Trumpets_Sus_p_C4.aif;
+#X obj 871 517 skg.buffer~ Trumpets_Sus_p_D3.aif;
+#X obj 871 535 skg.buffer~ Trumpets_Sus_p_D4.aif;
+#X obj 871 553 skg.buffer~ Trumpets_Sus_p_E3.aif;
+#X obj 871 571 skg.buffer~ Trumpets_Sus_p_E4.aif;
+#X obj 871 589 skg.buffer~ Trumpets_Sus_p_F#3.aif;
+#X obj 871 607 skg.buffer~ Trumpets_Sus_p_F#4.aif;
+#X obj 871 625 skg.buffer~ Trumpets_Sus_p_G#3.aif;
+#X obj 871 643 skg.buffer~ Trumpets_Sus_p_G#4.aif;
+#X obj 871 661 skg.buffer~ Trumpets_Sus_f_A#2.aif;
+#X obj 871 679 skg.buffer~ Trumpets_Sus_f_A#3.aif;
+#X obj 871 697 skg.buffer~ Trumpets_Sus_f_A#4.aif;
+#X obj 871 715 skg.buffer~ Trumpets_Sus_f_C3.aif;
+#X obj 871 733 skg.buffer~ Trumpets_Sus_f_C4.aif;
+#X obj 871 750 skg.buffer~ Trumpets_Sus_f_D3.aif;
+#X obj 871 768 skg.buffer~ Trumpets_Sus_f_D4.aif;
+#X obj 871 785 skg.buffer~ Trumpets_Sus_f_E3.aif;
+#X obj 871 803 skg.buffer~ Trumpets_Sus_f_E4.aif;
+#X obj 871 821 skg.buffer~ Trumpets_Sus_f_F#3.aif;
+#X obj 871 838 skg.buffer~ Trumpets_Sus_f_F#4.aif;
+#X obj 871 856 skg.buffer~ Trumpets_Sus_f_G#3.aif;
+#X obj 871 873 skg.buffer~ Trumpets_Sus_f_G#4.aif;
+#X restore 186 63 pd sound-buffers;
+#X floatatom 70 62 5 0 0 0 - - -, f 5;
+#X obj 426 324 samplerate~;
+#X floatatom 425 351 5 0 0 0 - - -, f 5;
+#X obj 425 302 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 359 406 / 1;
+#X obj 424 276 loadbang;
+#X obj 30 40 random 12;
+#X msg 385 66 \; samplor_ 0 Piano_Stein_m_E3.aif 0 0 1.1036 0.620001
+;
+#X obj 219 528 *~ 0.5;
+#X obj 273 525 *~ 0.5;
+#X obj 425 372 / 48000;
+#X floatatom 96 16 5 0 0 0 - - -, f 5;
+#X obj 357 465 loadbang;
+#X msg 359 490 0.5;
+#X obj 219 491 samplorpd~ 1 64;
+#X text 51 -4 random player;
+#X obj 218 558 dac~;
+#X obj 29 18 metro 200;
+#X obj 219 351 samplorkg;
+#X obj 490 497 print b;
+#X obj 511 458 print c;
+#X obj 462 528 print a;
+#X msg 61 191 print 1;
+#X obj 586 431 text insert bank1;
+#X obj 581 457 text define -k bank1;
+#A set 1 Piano_Stein_p_G6.aif 103 103 106 1 83 0 0 0.5 0 \; 1 Piano_Stein_p_G3.aif
+67 67 69 1 83 0 0 0.5 0 \; 1 Piano_Stein_p_G2.aif 55 55 58 1 83 0 0
+0.5 0 \; 1 Piano_Stein_p_G0.aif 31 31 32 1 83 0 0 0.5 0 \; 1 Piano_Stein_p_F4.aif
+77 77 80 1 83 0 0 0.5 0 \; 1 Piano_Stein_p_F1.aif 41 41 44 1 83 0 0
+0.5 0 \; 1 Piano_Stein_p_E6_.aif 100 100 102 1 83 0 0 0.5 0 \; 1 Piano_Stein_p_E3.aif
+64 64 66 1 83 0 0 0.5 0 \; 1 Piano_Stein_p_E2.aif 52 52 54 1 83 0 0
+0.5 0 \; 1 Piano_Stein_p_E1.aif 40 40 40 1 83 0 0 0.5 0 \; 1 Piano_Stein_p_D4.aif
+74 74 76 1 83 0 0 0.5 0 \; 1 Piano_Stein_p_D0.aif 26 26 30 1 83 0 0
+0.5 0 \; 1 Piano_Stein_p_C7_.aif 108 108 108 1 83 0 0 0.5 0 \; 1 Piano_Stein_p_C5_.aif
+84 84 87 1 83 0 0 0.5 0 \; 1 Piano_Stein_p_C2.aif 48 48 51 1 83 0 0
+0.5 0 \; 1 Piano_Stein_p_C1.aif 36 36 39 1 83 0 0 0.5 0 \; 1 Piano_Stein_p_C#3.aif
+61 61 63 1 83 0 0 0.5 0 \; 1 Piano_Stein_p_B6.aif 107 107 107 1 83
+0 0 0.5 0 \; 1 Piano_Stein_p_B3.aif 71 70 73 1 83 0 0 0.5 0 \; 1 Piano_Stein_p_B2.aif
+59 59 60 1 83 0 0 0.5 0 \; 1 Piano_Stein_p_A4.aif 81 81 83 1 83 0 0
+0.5 0 \; 1 Piano_Stein_p_A1.aif 45 45 47 1 83 0 0 0.5 0 \; 1 Piano_Stein_p_A0.aif
+33 33 35 1 83 0 0 0.5 0 \; 1 Piano_Stein_p_A-1.aif 21 21 25 1 83 0
+0 0.5 0 \; 1 Piano_Stein_m_G6.aif 103 103 106 84 127 0 0 0.5 0 \; 1
+Piano_Stein_m_G5.aif 91 91 95 1 127 0 0 0.5 0 \; 1 Piano_Stein_m_G3.aif
+67 67 69 84 127 0 0 0.5 0 \; 1 Piano_Stein_m_G2.aif 55 55 58 84 127
+0 0 0.5 0 \; 1 Piano_Stein_m_G0.aif 31 31 32 84 127 0 0 0.5 0 \; 1
+Piano_Stein_m_F4.aif 77 77 80 84 127 0 0 0.5 0 \; 1 Piano_Stein_m_F1.aif
+41 41 44 84 127 0 0 0.5 0 \; 1 Piano_Stein_m_E6.aif 100 100 102 84
+127 0 0 0.5 0 \; 1 Piano_Stein_m_E5.aif 88 88 90 1 127 0 0 0.5 0 \;
+1 Piano_Stein_m_E3.aif 64 64 66 84 127 0 0 0.5 0 \; 1 Piano_Stein_m_E2.aif
+52 52 54 84 127 0 0 0.5 0 \; 1 Piano_Stein_m_E1.aif 40 40 40 84 127
+0 0 0.5 0 \; 1 Piano_Stein_m_D4.aif 74 74 76 84 127 0 0 0.5 0 \; 1
+Piano_Stein_m_D0.aif 26 26 30 84 127 0 0 0.5 0 \; 1 Piano_Stein_m_C7.aif
+108 108 108 84 127 0 0 0.5 0 \; 1 Piano_Stein_m_C6.aif 96 96 99 1 127
+0 0 0.5 0 \; 1 Piano_Stein_m_C5.aif 84 84 87 84 127 0 0 0.5 0 \; 1
+Piano_Stein_m_C2.aif 48 48 51 84 127 0 0 0.5 0 \; 1 Piano_Stein_m_C1.aif
+36 36 39 84 127 0 0 0.5 0 \; 1 Piano_Stein_m_C#3.aif 61 61 63 84 127
+0 0 0.5 0 \; 1 Piano_Stein_m_B6.aif 107 107 107 84 127 0 0 0.5 0 \;
+1 Piano_Stein_m_B3.aif 71 70 73 84 127 0 0 0.5 0 \; 1 Piano_Stein_m_B2.aif
+59 59 60 84 127 0 0 0.5 0 \; 1 Piano_Stein_m_A4.aif 81 81 83 84 127
+0 0 0.5 0 \; 1 Piano_Stein_m_A1.aif 45 45 47 84 127 0 0 0.5 0 \; 1
+Piano_Stein_m_A0.aif 33 33 35 84 127 0 0 0.5 0 \; 1 Piano_Stein_m_A-1.aif
+21 21 25 84 127 0 0 0.5 0 \;;
+#X obj 585 402 prepend list;
+#X obj 584 504 text sequence bank1;
+#X obj 585 375 spigot;
+#X obj 613 351 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 214 251 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X msg 583 480 line 0 \, bang;
+#X msg 384 98 \; samplor_ 0 Piano_Stein_m_E3.aif 0 0 1.1036 0;
+#X floatatom 12 465 5 0 0 0 - - -, f 5;
+#X msg 12 484 window \$1;
+#X obj 30 103 pack 60 1;
+#X floatatom 91 104 5 0 0 0 - - -, f 5;
+#X msg 30 123 \; s-notes \$1 100 \$2 \;;
+#X text 145 16 sampler bank for la nuit de gutenberg;
+#X connect 0 0 13 0;
+#X connect 1 0 54 0;
+#X connect 2 0 20 0;
+#X connect 3 0 54 2;
+#X connect 4 0 54 0;
+#X connect 5 0 6 0;
+#X connect 6 0 54 0;
+#X connect 7 0 54 0;
+#X connect 8 0 54 0;
+#X connect 8 1 3 0;
+#X connect 10 0 50 0;
+#X connect 11 0 70 0;
+#X connect 12 0 54 0;
+#X connect 12 1 54 1;
+#X connect 12 2 54 2;
+#X connect 13 0 50 0;
+#X connect 14 0 21 0;
+#X connect 17 0 50 0;
+#X connect 18 0 50 0;
+#X connect 19 0 12 1;
+#X connect 20 0 54 0;
+#X connect 21 0 12 1;
+#X connect 22 0 23 0;
+#X connect 23 0 50 0;
+#X connect 24 0 32 0;
+#X connect 24 1 32 1;
+#X connect 24 2 32 2;
+#X connect 24 4 40 0;
+#X connect 24 5 32 5;
+#X connect 25 0 12 0;
+#X connect 26 0 54 0;
+#X connect 26 1 54 1;
+#X connect 26 2 54 2;
+#X connect 27 0 26 0;
+#X connect 28 0 29 0;
+#X connect 29 0 32 3;
+#X connect 30 0 2 0;
+#X connect 31 0 30 0;
+#X connect 32 0 50 0;
+#X connect 33 0 53 0;
+#X connect 34 0 11 0;
+#X connect 36 0 34 1;
+#X connect 37 0 38 0;
+#X connect 38 0 46 0;
+#X connect 39 0 37 0;
+#X connect 40 0 32 4;
+#X connect 41 0 39 0;
+#X connect 42 0 34 0;
+#X connect 44 0 52 0;
+#X connect 45 0 52 1;
+#X connect 46 0 40 1;
+#X connect 47 0 53 1;
+#X connect 48 0 49 0;
+#X connect 49 0 44 1;
+#X connect 49 0 45 1;
+#X connect 50 0 44 0;
+#X connect 50 0 45 0;
+#X connect 53 0 42 0;
+#X connect 54 0 24 0;
+#X connect 54 0 57 0;
+#X connect 54 1 55 0;
+#X connect 54 1 63 0;
+#X connect 54 2 56 0;
+#X connect 58 0 54 0;
+#X connect 61 0 59 0;
+#X connect 62 0 54 0;
+#X connect 63 0 61 0;
+#X connect 64 0 63 1;
+#X connect 65 0 54 0;
+#X connect 66 0 62 0;
+#X connect 68 0 69 0;
+#X connect 69 0 50 0;
+#X connect 70 0 72 0;
+#X connect 71 0 70 1;
