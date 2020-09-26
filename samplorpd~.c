@@ -2028,7 +2028,7 @@ void samplor_start(t_samplorpd *x, float p)
        // post ("offset %d framecount %d", ctlp->inputs.offset,garray_npoints(buf));
        // if (buffer_getmillisamplerate(buf) * ctlp->inputs.offset < buffer_getframecount(buf))
         {
-            ctlp->inputs.transp *= 44100 / ctlp->params.sr;
+            ctlp->inputs.transp *= DEFAULT_SRATE / ctlp->params.sr;
             if (ctlp->active_voices < x->ctlp->polyphony)
             {
                 samplist_insert(&(x->ctlp->list),start,ctlp->inputs);
@@ -2548,7 +2548,7 @@ void samplor_stop_one_voice_str(t_samplorpd *x, t_symbol *buf_name,float transp)
     t_samplor_entry *prev = x->ctlp->list.used;
     t_samplor_entry *curr = prev;
     long time;
-
+    transp *= DEFAULT_SRATE / x->ctlp->params.sr;
     while (curr != LIST_END)
     {
         if((!strcmp(buf_name->s_name,curr->buf_name->s_name))&&(((float)curr->increment==transp)||(transp==0))&&(curr->loop_flag!=FINISHING_LOOP))
