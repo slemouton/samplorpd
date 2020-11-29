@@ -22,7 +22,7 @@ LINUXINCLUDE = -I../../pd-0.51-1/src -I/usr/include/libxml2
 
 .c.pd_linux: 
 	cc $(LINUXCFLAGS) $(LINUXINCLUDE) -o $*.o -c $*.c
-	ld -export_dynamic  -shared -o $*.pd_linux $*.o -lc -lm -lxml2
+	ld -export_dynamic  -shared -o $*.pd_linux $*.o -L /usr/lib/gcc/arm-linux-gnueabihf/4.9.2 -lc -lm -lgcc -lxml2
 	strip --strip-unneeded $*.pd_linux
 	rm $*.o
 
