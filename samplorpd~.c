@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "m_pd.h"
 #include "samplor2.h"
 #include "slm1.h"

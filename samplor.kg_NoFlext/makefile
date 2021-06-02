@@ -16,7 +16,7 @@ LINUXCFLAGS = -DPD -O2 -funroll-loops -fomit-frame-pointer \
     -Wno-unused -Wno-parentheses -Wno-switch
 
 #LINUXINCLUDE =  -I../../src
-LINUXINCLUDE = -I/Applications/Pd-0.48-1.app/Contents/Resources/src -I/usr/include/libxml2
+LINUXINCLUDE = -I/Applications/Pd-0.51-4.app/Contents/Resources/src -I/usr/include/libxml2
 
 
 # ----------------------- Mac OSX -----------------------
@@ -38,4 +38,4 @@ DARWINCFLAGS = -DPD -O2 -Wall -W -Wshadow -Wstrict-prototypes \
 	rm -f $*.o
 
 install:
-	cp samplorkg.pd_darwin /Applications/Pd-0.48-1.app/Contents/Resources/extra
+	cp samplorkg.pd_darwin /Applications/Pd-0.51-4.app/Contents/Resources/extra

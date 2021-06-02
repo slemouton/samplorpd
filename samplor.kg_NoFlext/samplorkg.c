@@ -461,7 +461,8 @@ unsigned char gpitchMin,gpitchMax,gvelMin = 1,gvelMax = 127;
 float gtune = 0.,gpan = 0.5;
 
 static void parseM5p(Skg *m,xmlNode * a_node)
-{	
+//parse a MachFive or Falcon Progrom
+{
     xmlNode *cur_node = NULL;
     xmlAttr* attr;
     xmlChar* ac = NULL;
@@ -577,6 +578,140 @@ static void parseM5p(Skg *m,xmlNode * a_node)
             }
         }
         parseM5p(m,cur_node->children);
+    }
+}
+
+static void parseM5m(Skg *m,xmlNode * a_node)
+//parse a Falcon Multi
+{	
+    xmlNode *cur_node = NULL;
+    xmlAttr* attr;
+    xmlChar* ac = NULL;
+    char sampleName[256],sampleName2[256];
+    int stereo_sample = 0;
+    int channel = 1;
+    float pitch = 60.;
+    float coarse = 0.;
+    float fine = 0.;
+    
+    for (cur_node = a_node; cur_node; cur_node = cur_node->next) {
+        if (cur_node->type == XML_ELEMENT_NODE)
+        {
+            if(m->debug)
+                post("\t\t<<%s>>\n", cur_node->name);
+            if (!strcmp((char *)cur_node->name, "UVI4"))
+            {
+                m->machfiveVersion = 3;
+                post("Attention : fichier MachFive version 3 (UVI4)", cur_node->name);
+            }
+            if (!strcmp((char *)cur_node->name, "Keygroup"))
+            {
+                post ("parsing program");
+                channel ++;
+                attr = cur_node->properties;
+                while(attr)
+                {
+                    if(m->debug)
+                        post("\t\t<%s><%s><%s>\n", cur_node->name,attr->name, ac);
+                }
+            }
+                
+            if (!strcmp((char *)cur_node->name, "Keygroup"))
+            {
+                gvelMax = 127;
+                attr = cur_node->properties;
+                while(attr)
+                {
+                    ac = xmlGetProp(cur_node, attr->name);
+                    
+                    if(m->debug)
+                        post("\t\t<%s><%s><%s>\n", cur_node->name,attr->name, ac);
+                    
+                    if (!strcmp((char *)attr->name, "HighKey"))
+                        gpitchMax = strtol((char *)ac,NULL,0);
+                    if (!strcmp((char *)attr->name, "LowKey"))
+                        gpitchMin = strtol((char *)ac,NULL,0);
+                    if (!strcmp((char *)attr->name, "HighVelocity"))
+                        gvelMax = strtol((char *)ac,NULL,0);
+                    if (!strcmp((char *)attr->name, "LowVelocity"))
+                        gvelMin = strtol((char *)ac,NULL,0);
+                    if (!strcmp((char *)attr->name, "Pan"))
+                        gpan = 0.5 * (2. * strtof((char *)ac,NULL));
+                    
+                    if (!strcmp((char *)attr->name, "Tune"))
+                    {
+                        gtune = strtof((char *)ac,NULL);
+                        if(m->debug)post("Tune %s --> %f is used in the preset",ac,gtune);
+                    }
+                    xmlFree(ac);
+                    attr = attr->next;
+                }
+            }
+            if (!strcmp((char *)cur_node->name, "SamplePlayer"))
+            {
+                attr = cur_node->properties;
+                while(attr)
+                {
+                    ac = xmlGetProp(cur_node, attr->name);
+                    if(m->debug)
+                        post("[%d]<%s><%s>\n", m->machfiveVersion,attr->name, ac);
+                    if (m->machfiveVersion == 1)
+                    {
+                        if (!strcmp((char *)attr->name, "SampleName"))
+                        {
+                            // si le nom commence par "*" -> fichiers stereo
+                            if (strchr((char *)ac,'*'))
+                            {
+                                stereo_sample = 1;
+                                strcpy(sampleName, strtok((char *) ac,"*"));
+                                strcpy(sampleName2, strtok(NULL,"*"));
+                            }
+                            else
+                                strcpy(sampleName,(char *)ac);
+                        }
+                    }
+                    else if  (m->machfiveVersion == 3)
+                    {
+                        if (!strcmp((char *)attr->name, "SamplePath"))
+                        {
+                            // si le nom commence par "*" -> fichiers stereo
+                            if (strchr((char *)ac,'*'))
+                            {
+                                stereo_sample = 1;
+                                strcpy(sampleName, strtok((char *) ac,"*"));
+                                strcpy(sampleName2, strtok(NULL,"*"));
+                            }
+                            else
+                            {
+                                strcpy(sampleName,(char *)ac);
+                                char *pos ;
+                                pos = strrchr(sampleName,'/');
+                                if (pos)
+                                {
+                                    // post ("%s+%d-------------\n",pos+1,strlen(sampleName));
+                                    strcpy(sampleName,pos+1);
+                                }
+                            }
+                        }
+                    }
+                    if (!strcmp((char *)attr->name, "BaseNote"))
+                        pitch = (double) strtol((char *)ac,NULL,0);
+                    if (!strcmp((char *)attr->name, "CoarseTune"))
+                    { post ("coarse %f",(double) strtol((char *)ac,NULL,0));
+                        coarse = (double) strtol((char *)ac,NULL,0);
+                    }
+                    if (!strcmp((char *)attr->name, "FineTune"))
+                        fine = (double) strtol((char *)ac,NULL,0)/100.;
+                    xmlFree(ac);
+                    attr = attr->next;
+                }
+                if (gvelMax <= gvelMin)
+                    gvelMax = 127;
+                gtune = coarse + fine;
+                skg_set_keygroup(m,m->channel,sampleName, pitch, gpitchMin, gpitchMax, gvelMin, gvelMax,gpan,gtune);
+            }
+        }
+        parseM5m(m,cur_node->children);
     }
 }
 
@@ -704,7 +839,10 @@ void skg_doimport(Skg *m, char *file)
     root_element = xmlDocGetRootElement(doc);
     if (doc == NULL) {	post("error: can't open file");}
     
-    parseM5p(m,root_element);
+ // post("parse a program");
+ //   parseM5p(m,root_element);
+    post("falcon multi mode");
+    parseM5m(m,root_element);
     
     /*free the document */
     xmlFreeDoc(doc);
