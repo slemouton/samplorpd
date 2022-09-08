@@ -815,7 +815,7 @@ post ("not implemented yet in pure data");
 #endif
 }
 
-void skg_doimport(Skg *m, char *file)
+void skg_doimport(Skg *m, const char *file)
 {
     xmlDoc *doc = NULL;
     xmlNode *root_element = NULL;
@@ -840,9 +840,9 @@ void skg_doimport(Skg *m, char *file)
     if (doc == NULL) {	post("error: can't open file");}
     
  // post("parse a program");
- //   parseM5p(m,root_element);
+    parseM5p(m,root_element);
     post("falcon multi mode");
-    parseM5m(m,root_element);
+ //   parseM5m(m,root_element);
     
     /*free the document */
     xmlFreeDoc(doc);

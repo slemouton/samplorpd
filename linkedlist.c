@@ -60,8 +60,8 @@ t_samplor_entry
 t_samplor_entry
 *samplist_new_voice(t_samplor_list *x, long start, t_samplor_inputs inputs)
 {
-      long attack_dur,decay_dur,release_dur;
-      long dur;
+    long attack_dur,decay_dur,release_dur;
+    long dur;
     long b_msr = 44.1;
     long long b_frames = 0;
     t_samplor_entry *new = x->free;
@@ -200,9 +200,9 @@ t_samplor_entry
        
 #if 0
         post ("msr frames size %f %d %d",b_msr,b_frames,garray_npoints(inputs.buf));
-         post ("win st dur %d %d %d",new->win,new->start,new->dur);
-         post ("pos inc amp count %f %f %f %d",new->fposition,new->increment,new->amplitude,new->count);
-         post ("pan attack decay sustain dur     release %f %d %d %f %d %d",new->pan,new->attack,new->decay,new->sustain,new->dur,new->release);
+        post ("win st dur %d %d %d",new->win,new->start,new->dur);
+        post ("pos inc amp count %f %f %f %d",new->fposition,new->increment,new->amplitude,new->count);
+        post ("pan attack decay sustain dur     release %f %d %d %f %d %d",new->pan,new->attack,new->decay,new->sustain,new->dur,new->release);
         post ("loop %d %d %d",new->loop_flag,new->loop_end,new->loop_dur);
 #endif
         return(new);

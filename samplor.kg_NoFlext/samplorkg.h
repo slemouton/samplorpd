@@ -118,7 +118,7 @@ void skg_doread(Skg *x, t_symbol *s);
 void skg_read_hise(Skg *x, t_symbol *s);
 void skg_doread_hise(Skg *x, t_symbol *s);
 int skg_import(Skg *m, t_symbol *s, short ac, t_atom *av);
-void skg_doimport(Skg *m, char *file);
+void skg_doimport(Skg *m, const char *file);
 int skg_import_hise(Skg *m, t_symbol *s, short ac, t_atom *av);
 void skg_doimport_hise(Skg *m, char *file);
 void skg_set_keygroup(Skg *m,int id,char *sampleName,float pitch,int pitchMin,int pitchMax,int velMin,int velMax,float pan,float tune       );

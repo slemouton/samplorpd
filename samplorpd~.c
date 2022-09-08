@@ -1,9 +1,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <assert.h>
 #include "m_pd.h"
-#include "samplor2.h"
+#include "hashtable.h"
 #include "slm1.h"
+#include "samplor2.h"
 
 #ifdef NT
 #pragma warning( disable : 4244 )
@@ -2366,9 +2368,16 @@ void samplor_get_buffer_loop(t_samplorpd *x, t_symbol *buffer_s)
         error("samplor~: no buffer~ %s", buffer_s->s_name);
     }
 #endif
+    struct hash_table_entry *my_entry;
+    assert(!ht_find(x->ctlp->loops_table, buffer_s->s_name, &my_entry));
+    post("for key=");
+    post( my_entry->key);
+    post("value=");
+    post("%d,", my_entry->val1);  
+    post( "%d",my_entry->val2);  
 }
 
-void samplor_set_buffer_loop(t_samplorpd *x, t_symbol *buffer_s,long loopstart,long loopend)
+void samplor_set_buffer_loop(t_samplorpd *x, t_symbol *buffer_s,t_floatarg v1,t_floatarg v2)
 {
 #if 0
     t_buffer *b;
@@ -2385,6 +2394,26 @@ void samplor_set_buffer_loop(t_samplorpd *x, t_symbol *buffer_s,long loopstart,l
     }
     else object_error("samplor~: no buffer~ %s", buffer_s->s_name);
 #endif
+    long loopstart = v1;
+    long loopend = v2;
+    t_garray *a=0;
+    int npoints;
+    t_word *vec = 0;
+    t_samplorbuffer *samplor_buffer;
+  //  t_hashtab *buf_tab = x->ctlp->buf_tab;
+
+    
+    if (!(a = (t_garray *)pd_findbyclass(buffer_s, garray_class))){
+        error("%s: no such array", buffer_s->s_name);
+        return;
+    } else
+        if (!garray_getfloatwords(a, &npoints, &vec)){
+            error("%s: bad template for tabread4", buffer_s->s_name);
+            return;
+        }
+    post ("we store in a hashtab %s %d %d",buffer_s->s_name,(t_int64) loopstart,(t_int64)loopend);
+      assert(!ht_insert2(x->ctlp->loops_table, buffer_s->s_name,(t_int64) loopstart,(t_int64) loopend));
+ 
 }
 
 void samplor_modwheel(t_samplorpd *x, t_float transp)
@@ -2874,7 +2903,7 @@ void samplor_set_mac(t_samplorpd *x, t_symbol *s)
  */
 void samplor_play(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
 {
-#if 0
+#if 1
     int del = 0,i;
     float amp = 1.;
     samplor_amp(x,amp);
@@ -2884,22 +2913,22 @@ void samplor_play(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
     samplor_loop_points(x, 0, 0);
     if (ac > 1)
     {
-        if (av->a_type == A_SYM )
-            samplor_bufname(x, av->a_w.w_sym->s_name);
+        if (av->a_type == A_SYMBOL )
+            samplor_bufname(x, av->a_w.w_symbol->s_name);
         else
             samplor_buf(x, atom_getfloat(av));
     }
     if (ac > 2)
         for (i = 1 ; i<ac;i++) // syntax parsing
         {
-            if ((av + i)->a_type == A_SYM )
+            if ((av + i)->a_type == A_SYMBOL )
             {
-                if (!strcmp((av + i)->a_w.w_sym->s_name,"loop"))
+                if (!strcmp((av + i)->a_w.w_symbol->s_name,"loop"))
                 {
                     samplor_loop_points(x,atom_getfloat(av+i+1),atom_getfloat(av+i+2));
                     samplor_dur(x,-1); // implicitly turn loop on
                 }
-                else if (!strcmp((av + i)->a_w.w_sym->s_name,"adsr"))
+                else if (!strcmp((av + i)->a_w.w_symbol->s_name,"adsr"))
                 {
                     x->ctlp->inputs.adsr_mode = 0;
                     samplor_win(x,0);
@@ -2908,32 +2937,32 @@ void samplor_play(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
                     samplor_sustain(x, atom_getfloat(av+i+3));
                     samplor_release(x, atom_getfloat(av+i+4));
                 }
-                else if (!strcmp((av + i)->a_w.w_sym->s_name,"delay"))
+                else if (!strcmp((av + i)->a_w.w_symbol->s_name,"delay"))
                 {
                     del = atom_getfloat(av+i+1);
                 }
-                else if (!strcmp((av + i)->a_w.w_sym->s_name,"offset"))
+                else if (!strcmp((av + i)->a_w.w_symbol->s_name,"offset"))
                 {
                     samplor_offset(x,atom_getfloat(av+i+1));
                 }
-                else if (!strcmp((av + i)->a_w.w_sym->s_name,"dur"))
+                else if (!strcmp((av + i)->a_w.w_symbol->s_name,"dur"))
                 {
                     samplor_dur(x,atom_getfloat(av+i+1));
                 }
-                else if (!strcmp((av + i)->a_w.w_sym->s_name,"transp"))
+                else if (!strcmp((av + i)->a_w.w_symbol->s_name,"transp"))
                 {
                     samplor_transp(x,atom_getfloat(av+i+1));
                 }
-                else if (!strcmp((av + i)->a_w.w_sym->s_name,"amp"))
+                else if (!strcmp((av + i)->a_w.w_symbol->s_name,"amp"))
                 {
                     amp = atom_getfloat(av+i+1);
                     samplor_amp(x,amp);
                 }
-                else if (!strcmp((av + i)->a_w.w_sym->s_name,"pan"))
+                else if (!strcmp((av + i)->a_w.w_symbol->s_name,"pan"))
                 {
                     samplor_pan(x,atom_getfloat(av+i+1));
                 }
-                else if (!strcmp((av + i)->a_w.w_sym->s_name,"aux"))
+                else if (!strcmp((av + i)->a_w.w_symbol->s_name,"aux"))
                 {
                     samplor_rev(x,atom_getfloat(av+i+1));
                 }
@@ -2947,6 +2976,7 @@ void samplor_play(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
             samplor_stop_one_voice(x,x->ctlp->inputs.samplenumber,x->ctlp->inputs.transp);
         return;
     }
+    post("START");
     samplor_start(x, del);
 #endif
 }
@@ -3162,6 +3192,9 @@ static void *samplorpd_new(t_symbol *s, int argc, t_atom *argv)
         x->local_double_buffer = 1;
         x->buffer_mode = ARRAY;
         x->loop_release = 0;
+        post ("init hash table to store loop points");
+        x->ctlp->loops_table = init_hash_table (MAX_BUFFERS);
+
         
         for (i=0;i<=x->num_outputs;i++)
             x->vectors[i] = NULL;
@@ -3225,4 +3258,39 @@ void samplorpd_tilde_setup(void)
     class_addmethod(samplorpd_class, (t_method)samplorpd_dsp, gensym("dsp"), 0);
     post("%s",VERSION);
     post("compiled %s %s",__DATE__, __TIME__);
+
+   #if 1
+    post ("testing hash table");
+    
+    struct hash_table *my_hash_table = init_hash_table (10);
+    assert(!ht_insert(my_hash_table, "hello", "world"));           
+    assert(!ht_insert(my_hash_table, "second", "entry"));
+    assert(!ht_insert(my_hash_table, "Morty", "Smith"));
+    assert(!ht_insert(my_hash_table, "Rick", "Sanchez"));
+    assert(!ht_insert2(my_hash_table, "sample", 1000,222222));
+ 
+
+    struct hash_table_entry *my_entry;
+    assert(!ht_find(my_hash_table, "Morty", &my_entry));
+    post("for key=");
+    post( my_entry->key);
+    post("value=");
+    post( my_entry->value);
+  
+    assert(!ht_find(my_hash_table, "sample", &my_entry));
+    post("for key=");
+    post( my_entry->key);
+    post("value=");
+    post("%d,", my_entry->val1);  
+    post( "%d",my_entry->val2);  
+
+    assert(!ht_delete(my_hash_table, "Rick"));
+
+    if( !ht_find(my_hash_table, "Rick", &my_entry) )
+        post("key 'Rick' not deleted\n");
+    else
+        post("key 'Rick' deleted successfully\n");
+
+    ht_deleteTable(my_hash_table);
+    #endif
 }

@@ -72,12 +72,15 @@ pd_darwin: obj1.pd_darwin obj2.pd_darwin \
      obj3.pd_darwin obj4.pd_darwin obj5.pd_darwin dspobj~.pd_darwin
 
 dspobj : dspobj~.pd_darwin
-samplorpd : slm1.o linkedlist.o samplorpd~.pd_darwin
+samplorpd : slm1.o linkedlist.o hashtable.o samplorpd~.pd_darwin
 
 .SUFFIXES: .pd_darwin
 
 DARWINCFLAGS = -DPD -O2 -Wall -W -Wshadow -Wstrict-prototypes \
     -Wno-unused -Wno-unused-parameter -Wno-visibility
+
+hashtable.o:
+	cc $(DARWINCFLAGS) $(LINUXINCLUDE) -o hashtable.o -c hashtable.c
 
 linkedlist.o:
 	cc $(DARWINCFLAGS) $(LINUXINCLUDE) -o linkedlist.o -c linkedlist.c
@@ -86,8 +89,8 @@ slm1.o:
 
 .c.pd_darwin:
 	cc $(DARWINCFLAGS) $(LINUXINCLUDE) -o $*.o -c $*.c
-	cc -bundle -undefined suppress -flat_namespace -o $*.pd_darwin $*.o linkedlist.o slm1.o
+	cc -bundle -undefined suppress -flat_namespace -o $*.pd_darwin $*.o hashtable.o linkedlist.o slm1.o
 	rm -f $*.o
 
 install:
-	cp samplorpd~.pd_darwin /Applications/Pd-0.48-1.app/Contents/Resources/extra
+	cp samplorpd~.pd_darwin /Applications/Pd-0.51-4.app/Contents/Resources/extra

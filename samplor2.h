@@ -8,6 +8,7 @@
 #define DEFAULT_NOUTPUTS 2
 #define DEFAULT_MAXVOICES 12
 #define MAX_VOICES 1024             /* max # of voices */
+#define MAX_BUFFERS 2048             /* max # of buffers storing loop points */
 #define WAITINGNOTES 24             /* max waiting notes (voice stealing) */
 #define DEFAULT_VOICES 12           /* default number of voices */
 #define WIND_SIZE 512               /* taille des fenetres */
@@ -62,6 +63,8 @@ typedef struct _samplorbuffer
     long       b_sr;        ///< sampling rate of the buffer
     long       b_framesize;
     long       b_maxvalue;
+    t_int susloopstart;      /*loop points in samples (new in version 2.91)*/
+    t_int susloopend;
     t_float    one_over_b_maxvalue; /// for optimisation !!
 } t_samplorbuffer;
 
@@ -138,6 +141,7 @@ typedef struct _samplor {				/* samplor control structure */
     t_sample windows[NUM_WINS][WIND_SIZE];/* grain envelope */
     t_samplor_list list;				/* samplor list */
    	t_list waiting_notes;				/* notes en attente */
+    struct hash_table *loops_table;
 	long interpol;						/* special mode */
 	long voice_stealing;				/* special mode */
 	long loop_xfade;					/* special mode */
@@ -238,7 +242,7 @@ static t_int *samplor_perform64_N(t_int *w);
 void samplor_perform64_stereo(t_samplorpd *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam);
 void samplor_perform64StereoN(t_samplorpd *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam);
 void samplor_get_buffer_loop(t_samplorpd *x, t_symbol *buffer_name);
-void samplor_set_buffer_loop(t_samplorpd *x, t_symbol *buffer_name,long loopstart,long loopend);
+void samplor_set_buffer_loop(t_samplorpd *x, t_symbol *buffer_name,t_floatarg loopstart,t_floatarg loopend);
 void samplor_dsp(t_samplorpd *x, t_signal **sp, short *count);
 void samplor_free(t_samplorpd *x);
 void samplor_free_buffers(t_samplorpd *x);
