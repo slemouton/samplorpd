@@ -76,6 +76,7 @@ int ht_insert(struct hash_table *the_hash_table, char *key, char *value)
 //returns 0 on success
 int ht_insert2(struct hash_table *the_hash_table, char *key, t_int64 v1, t_int64 v2)
 {
+    char *value = "loop";
     size_t index = hashFunction(key, the_hash_table->size);
     struct hash_table_entry *new_hash_table_entry = malloc(sizeof(struct hash_table_entry));
     if(NULL == new_hash_table_entry)
@@ -86,10 +87,10 @@ int ht_insert2(struct hash_table *the_hash_table, char *key, t_int64 v1, t_int64
     if(NULL == new_hash_table_entry->key)
         return -1;
     strcpy(new_hash_table_entry->key, key);
-    // new_hash_table_entry->value=malloc(strlen(value)+1);
-    // if(NULL == new_hash_table_entry->value)
-    //     return -1;
-    // strcpy(new_hash_table_entry->value, value);
+    new_hash_table_entry->value=malloc(strlen(value)+1);
+    if(NULL == new_hash_table_entry->value)
+        return -1;
+    strcpy(new_hash_table_entry->value, value);
     new_hash_table_entry->val1 = v1;
     new_hash_table_entry->val2 = v2;
 
@@ -117,6 +118,41 @@ int ht_find(struct hash_table *the_hash_table, char *key, struct hash_table_entr
         head_ll=head_ll->next;
     }
     return -1;  
+}
+
+char *ht_value(struct hash_table *the_hash_table, char *key)
+{
+    //head to the current row
+    struct hash_table_entry *head_ll=the_hash_table->table[hashFunction(key, the_hash_table->size)];
+    
+    while(NULL != head_ll)
+    {
+        if(0==strcmp(head_ll->key,key))
+        {
+            //found match! return value
+            return (head_ll->key);
+        }
+        head_ll=head_ll->next;
+    }
+    return -1;
+}
+int ht_values(struct hash_table *the_hash_table, char *key, t_int64 *v1, t_int64 *v2)
+{
+    //head to the current row
+    struct hash_table_entry *head_ll=the_hash_table->table[hashFunction(key, the_hash_table->size)];
+    
+    while(NULL != head_ll)
+    {
+        if(0==strcmp(head_ll->key,key))
+        {
+            //found match! return value
+            *v1 = head_ll->val1;
+            *v2 = head_ll->val2;
+            return 0;
+        }
+        head_ll=head_ll->next;
+    }
+    return -1;
 }
 
 //returns 0 on success

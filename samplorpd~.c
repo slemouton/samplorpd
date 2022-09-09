@@ -2368,13 +2368,9 @@ void samplor_get_buffer_loop(t_samplorpd *x, t_symbol *buffer_s)
         error("samplor~: no buffer~ %s", buffer_s->s_name);
     }
 #endif
-    struct hash_table_entry *my_entry;
-    assert(!ht_find(x->ctlp->loops_table, buffer_s->s_name, &my_entry));
-    post("for key=");
-    post( my_entry->key);
-    post("value=");
-    post("%d,", my_entry->val1);  
-    post( "%d",my_entry->val2);  
+    t_int64 loopstart, loopend;
+    assert(!ht_values(x->ctlp->loops_table, buffer_s->s_name, &loopstart, &loopend));
+    post("loop from %d to %d",loopstart,loopend);
 }
 
 void samplor_set_buffer_loop(t_samplorpd *x, t_symbol *buffer_s,t_floatarg v1,t_floatarg v2)
@@ -2411,7 +2407,7 @@ void samplor_set_buffer_loop(t_samplorpd *x, t_symbol *buffer_s,t_floatarg v1,t_
             error("%s: bad template for tabread4", buffer_s->s_name);
             return;
         }
-    post ("we store in a hashtab %s %d %d",buffer_s->s_name,(t_int64) loopstart,(t_int64)loopend);
+ //   post ("we store in a hashtab %s %d %d",buffer_s->s_name,(t_int64) loopstart,(t_int64)loopend);
       assert(!ht_insert2(x->ctlp->loops_table, buffer_s->s_name,(t_int64) loopstart,(t_int64) loopend));
  
 }
@@ -2796,7 +2792,7 @@ void samplor_list(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
     }
     if (ac > 6) samplor_pan(x, atom_getfloat(av + 6));
     if (ac > 7) samplor_rev(x, atom_getfloat(av + 7));
-    samplor_loop_points(x, 0, 0);
+
 #if 0 //no defer in pureData ?
     if (x->thread_safe_mode == 1)
     {
@@ -2815,7 +2811,6 @@ void samplor_list(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
  */
 void samplor_set(t_samplorpd *x, t_symbol *s)
 {
-
  //   t_buffer *b;
     t_garray *a=0;
     int npoints;
@@ -2842,19 +2837,12 @@ void samplor_set(t_samplorpd *x, t_symbol *s)
     
     x->ctlp->inputs.samplor_mmap = NULL;
     x->ctlp->inputs.samplor_buf = NULL;
-#if 0
-    if (!hashtab_lookup(buf_tab, s,(t_object **) &samplor_buffer))
-    {
-        if (x->dtd) // streaming mode
-        {
-            x->ctlp->inputs.samplor_mmap = samplor_buffer;
-        }
-        else     //internal buffer
-        {
-            x->ctlp->inputs.samplor_buf = samplor_buffer;
-        }
-    }
-#endif
+    
+    t_int64 loopstart, loopend;
+    assert(!ht_values(x->ctlp->loops_table, s->s_name, &loopstart, &loopend));
+    x->ctlp->inputs.susloopstart = loopstart;
+    x->ctlp->inputs.susloopend = loopend;
+    
     if (!(x->ctlp->inputs.buf)&&!(x->ctlp->inputs.samplor_buf)&&!(x->ctlp->inputs.samplor_mmap))
         error("samplor~: no buf %s ", s->s_name);
 }
@@ -3192,10 +3180,9 @@ static void *samplorpd_new(t_symbol *s, int argc, t_atom *argv)
         x->local_double_buffer = 1;
         x->buffer_mode = ARRAY;
         x->loop_release = 0;
-        post ("init hash table to store loop points");
+        //post ("init hash table to store loop points");
         x->ctlp->loops_table = init_hash_table (MAX_BUFFERS);
 
-        
         for (i=0;i<=x->num_outputs;i++)
             x->vectors[i] = NULL;
     }
@@ -3259,8 +3246,8 @@ void samplorpd_tilde_setup(void)
     post("%s",VERSION);
     post("compiled %s %s",__DATE__, __TIME__);
 
-   #if 1
-    post ("testing hash table");
+   #if 0
+    post ("testing hash table in main");
     
     struct hash_table *my_hash_table = init_hash_table (10);
     assert(!ht_insert(my_hash_table, "hello", "world"));           

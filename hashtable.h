@@ -30,6 +30,8 @@ struct hash_table* init_hash_table(size_t number_of_rows);
 int ht_insert(struct hash_table *the_hash_table, char *key, char *value);
 int ht_insert2(struct hash_table *the_hash_table, char *key, t_int64 v1, t_int64 v2);
 int ht_find(struct hash_table *the_hash_table, char *key, struct hash_table_entry **ret_val);
+char *ht_value(struct hash_table *the_hash_table, char *key);
+int ht_values(struct hash_table *the_hash_table, char *key, t_int64 *v1, t_int64 *v2);
 int ht_delete(struct hash_table *the_hash_table, char *key);
 void ht_deleteTable(struct hash_table *my_table);
 

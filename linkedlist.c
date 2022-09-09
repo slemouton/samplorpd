@@ -112,11 +112,11 @@ t_samplor_entry
             }
             /* loop point no more supported since Max6.1 API !!!*/
             
-       //     else if (inputs.buf && inputs.buf->b_susloopstart && inputs.buf->b_susloopend)
-         //   {    //loop points in aiff
-           //     new->loop_beg = new->loop_beg_d = inputs.buf->b_susloopstart;
-            //    new->loop_end =new->loop_end_d = inputs.buf->b_susloopend;    
-           // }
+            else if (inputs.susloopstart && inputs.susloopend)
+            {    //loop points
+                new->loop_beg = new->loop_beg_d = inputs.susloopstart;
+                new->loop_end =new->loop_end_d = inputs.susloopend;
+            }
             else
             {    // si pas de loop dans le fichier : prendre tout le son (mars 2009  : changé pour la version 1.99 à la demande de Thomas Goepfer)
                 // new->loop_beg = new->loop_beg_d = 256;
