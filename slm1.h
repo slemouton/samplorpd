@@ -18,8 +18,8 @@ static inline uint16_t _af_byteswap_int16 (uint16_t x)
 }
 
 /**************************************************/
-float slm1_get_value(struct atom *a);
-t_symbol *slm1_get_symbol(struct atom *a);
+float slm1_get_value(t_atom *a);
+t_symbol *slm1_get_symbol(t_atom  *a);
 void vzero(double *f,int n);
 void vcopy(double *f, double *g, int n);
 void vzero_f(float *f,int n);

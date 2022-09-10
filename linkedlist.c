@@ -62,7 +62,7 @@ t_samplor_entry
 {
     long attack_dur,decay_dur,release_dur;
     long dur;
-    long b_msr = 44.1;
+    float b_msr = 44.1;
     long long b_frames = 0;
     t_samplor_entry *new = x->free;
     

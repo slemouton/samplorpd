@@ -20,20 +20,18 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		30675E822459D715008170A4 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = 30675E802459D715008170A4 /* hashtable.h */; };
-		30675E832459D715008170A4 /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = 30675E812459D715008170A4 /* hashtable.c */; };
 		30DCE27B244B466900FB0023 /* slm1.c in Sources */ = {isa = PBXBuildFile; fileRef = 30DCE275244B466900FB0023 /* slm1.c */; };
 		30DCE27C244B466900FB0023 /* samplor2.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DCE276244B466900FB0023 /* samplor2.h */; };
 		30DCE27D244B466900FB0023 /* slm1.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DCE277244B466900FB0023 /* slm1.h */; };
 		30DCE27E244B466900FB0023 /* samplorpd~.c in Sources */ = {isa = PBXBuildFile; fileRef = 30DCE278244B466900FB0023 /* samplorpd~.c */; };
 		30DCE27F244B466900FB0023 /* linkedlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 30DCE279244B466900FB0023 /* linkedlist.h */; };
 		30DCE280244B466900FB0023 /* linkedlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 30DCE27A244B466900FB0023 /* linkedlist.c */; };
+		30FB125128CCBD6600B56DEF /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = 30FB124F28CCBD6600B56DEF /* hashtable.h */; };
+		30FB125228CCBD6600B56DEF /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = 30FB125028CCBD6600B56DEF /* hashtable.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1E838EC71525672300C7E8BD /* info.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.c; lineEnding = 0; path = info.txt; sourceTree = "<group>"; };
-		30675E802459D715008170A4 /* hashtable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = hashtable.h; path = ../../../hashtable.h; sourceTree = "<group>"; };
-		30675E812459D715008170A4 /* hashtable.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = hashtable.c; path = ../../../hashtable.c; sourceTree = "<group>"; };
 		30DB76C9248D94FF00D0B86E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../../README.md; sourceTree = "<group>"; };
 		30DCE275244B466900FB0023 /* slm1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = slm1.c; path = ../../../slm1.c; sourceTree = "<group>"; };
 		30DCE276244B466900FB0023 /* samplor2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = samplor2.h; path = ../../../samplor2.h; sourceTree = "<group>"; };
@@ -42,6 +40,8 @@
 		30DCE279244B466900FB0023 /* linkedlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = linkedlist.h; path = ../../../linkedlist.h; sourceTree = "<group>"; };
 		30DCE27A244B466900FB0023 /* linkedlist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = linkedlist.c; path = ../../../linkedlist.c; sourceTree = "<group>"; };
 		30FA0C69244B433000BC5CD6 /* samplorpd~.pd_darwin */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "samplorpd~.pd_darwin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		30FB124F28CCBD6600B56DEF /* hashtable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hashtable.h; path = ../../../hashtable.h; sourceTree = "<group>"; };
+		30FB125028CCBD6600B56DEF /* hashtable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hashtable.c; path = ../../../hashtable.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +58,6 @@
 		1E8D73EF152411B5007DAE7C = {
 			isa = PBXGroup;
 			children = (
-				30675E802459D715008170A4 /* hashtable.h */,
-				30675E812459D715008170A4 /* hashtable.c */,
 				30DB76C9248D94FF00D0B86E /* README.md */,
 				1ED050D4153BD73D00277306 /* doc */,
 				1E97CC1416D35138000D20C4 /* source */,
@@ -79,6 +77,8 @@
 		1E97CC1416D35138000D20C4 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				30FB125028CCBD6600B56DEF /* hashtable.c */,
+				30FB124F28CCBD6600B56DEF /* hashtable.h */,
 				30DCE27A244B466900FB0023 /* linkedlist.c */,
 				30DCE279244B466900FB0023 /* linkedlist.h */,
 				30DCE276244B466900FB0023 /* samplor2.h */,
@@ -107,7 +107,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				30DCE27F244B466900FB0023 /* linkedlist.h in Headers */,
-				30675E822459D715008170A4 /* hashtable.h in Headers */,
+				30FB125128CCBD6600B56DEF /* hashtable.h in Headers */,
 				30DCE27C244B466900FB0023 /* samplor2.h in Headers */,
 				30DCE27D244B466900FB0023 /* slm1.h in Headers */,
 			);
@@ -147,6 +147,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 1E8D73EF152411B5007DAE7C;
@@ -165,7 +166,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				30675E832459D715008170A4 /* hashtable.c in Sources */,
+				30FB125228CCBD6600B56DEF /* hashtable.c in Sources */,
 				30DCE27B244B466900FB0023 /* slm1.c in Sources */,
 				30DCE27E244B466900FB0023 /* samplorpd~.c in Sources */,
 				30DCE280244B466900FB0023 /* linkedlist.c in Sources */,

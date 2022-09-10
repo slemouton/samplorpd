@@ -11,7 +11,7 @@
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #endif
-#define VERSION "samplor~: version v0.0.824 = MAX version 3.64"
+#define VERSION "samplor~: version v0.0.9 = MAX version 3.64"
 
 /* ------------------------ samplorpd~ ----------------------------- */
 
@@ -777,6 +777,7 @@ int samplor_run_one64_mmap_int(t_samplor_entry *x, t_sample **out, long n, const
  */
 int samplor_run_one_stereo64(t_samplor_entry *x, t_double **out, long n, t_float *windows, long num_outputs,long interpol,long loop_xfade,t_samplor_real modwheel)
 {
+#if 0
     t_double *out1 = out[0];
     t_double *out2 = out[1];
     t_float sampleL = 0,sampleR = 0;
@@ -789,7 +790,7 @@ int samplor_run_one_stereo64(t_samplor_entry *x, t_double **out, long n, t_float
     long in_xfadeflag = 0;
     long samplecount = 0;
     long m;
-#if 0
+
     tab = buffer_locksamples(x->buf_obj);
     if (!tab)
         goto zero;
@@ -999,6 +1000,7 @@ int samplor_run_one_stereo64(t_samplor_entry *x, t_double **out, long n, t_float
 
 int samplor_run_one_stereo64_mmap(t_samplor_entry *x, t_double **out, long n, t_float *windows, long num_outputs,long interpol,long loop_xfade,t_samplor_real modwheel)
 {
+#if 0
     t_double *out1 = out[0];
     t_double *out2 = out[1];
     t_float sampleL = 0,sampleR = 0;
@@ -1014,7 +1016,7 @@ int samplor_run_one_stereo64_mmap(t_samplor_entry *x, t_double **out, long n, t_
     register int samplecount = 0;
     register long m;
     float one_over_maxvalue;
-#if 0
+
     if (x->mmap_buf)  /* direct to disk */
     {
         tab = x->mmap_buf->addr + x->mmap_buf->offset - x->mmap_buf->pa_offset;
@@ -1328,14 +1330,15 @@ int samplor_run_one_lite64(t_samplor_entry *x, t_sample **out, int n,long interp
     t_float *tab_up = 0,w_f_index,amp_scale;
     t_word *tab;
     t_float f;
-    int index, frames, nc;
+    int frames;
+    long index, nc;
 
     //internal buffer :
     if (x->samplor_buf)
     {
-        tab = x->samplor_buf->f_samples ;
+        tab = (t_word *)x->samplor_buf->f_samples ;
         tab_up = x->samplor_buf->f_upsamples ;
-        frames = x->samplor_buf->b_frames;
+        frames = (int)x->samplor_buf->b_frames;
         nc = x->samplor_buf->b_nchans;
     }
     else if (garray_getfloatwords(x->buf, &frames, &tab))
@@ -1419,13 +1422,14 @@ int samplor_run_one_lite64_int(t_samplor_entry *x, t_sample **out, int n,long in
     float w_f_index;
     int16_t *tab;
     double f;
-    int index, frames, nc;
-    float one_over_maxvalue;
+    long index, nc;
+    int frames;
+    float one_over_maxvalue = 0.;
     
     if (x->samplor_buf)  /* est-ce necessaire (l'info est déja dans la structure "entry", non ? */
     {
         tab = x->samplor_buf->b_samples ;
-        frames = x->samplor_buf->b_frames;
+        frames = (int)x->samplor_buf->b_frames;
         nc = x->samplor_buf->b_nchans;
         one_over_maxvalue = x->samplor_buf->one_over_b_maxvalue;
     }
@@ -1494,6 +1498,7 @@ int samplor_run_one_lite64_int(t_samplor_entry *x, t_sample **out, int n,long in
 
 int samplor_run_one_lite64_mmap_int(t_samplor_entry *x, t_sample **out, int n,long interpol)
 {
+#if 0
     t_sample *out1 = out[0];
     t_float sample = 0.;
     float w_f_index;
@@ -1501,7 +1506,7 @@ int samplor_run_one_lite64_mmap_int(t_samplor_entry *x, t_sample **out, int n,lo
     double f;
     long index, frames, nc;
     float one_over_maxvalue;
-#if 0
+
     if (x->mmap_buf)  /* direct to disk */
     {
         tab = x->mmap_buf->addr + x->mmap_buf->offset - x->mmap_buf->pa_offset;
@@ -1882,6 +1887,14 @@ void samplor_window(t_samplorpd *x,t_floatarg d)
     samplor_win(x, (int) d);
 }
 
+ /// temps de cross fade pour boucle (in samples)
+
+void samplor_loopxfade(t_samplorpd *x, int loop_xfade)
+{
+    x->ctlp->loop_xfade = loop_xfade;
+ //   x->ctlp->loop_xfade = min(loop_xfade,x->ctlp->max_loop_xfade);
+}
+
 void samplor_voicestealing(t_samplorpd *x,t_floatarg d)
 {
     x->ctlp->voice_stealing = (long) d;
@@ -1925,7 +1938,7 @@ void samplor_count_active_voices(t_samplorpd *x,long d)
     else if (d == 2){
         count = samplist_count(&(x->ctlp->list));
         post("active %d %d",count,x->ctlp->active_voices);
-         outlet_float((t_object *)x->right_outlet,x->ctlp->active_voices);}
+         outlet_float(x->right_outlet,x->ctlp->active_voices);}
 }
 
 /*
@@ -2395,7 +2408,7 @@ void samplor_set_buffer_loop(t_samplorpd *x, t_symbol *buffer_s,t_floatarg v1,t_
     t_garray *a=0;
     int npoints;
     t_word *vec = 0;
-    t_samplorbuffer *samplor_buffer;
+   // t_samplorbuffer *samplor_buffer;
   //  t_hashtab *buf_tab = x->ctlp->buf_tab;
 
     
@@ -2811,13 +2824,9 @@ void samplor_list(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
  */
 void samplor_set(t_samplorpd *x, t_symbol *s)
 {
- //   t_buffer *b;
     t_garray *a=0;
     int npoints;
-    t_float *src=(0);
     t_word *vec = 0;
-    t_samplorbuffer *samplor_buffer;
-  //  t_hashtab *buf_tab = x->ctlp->buf_tab;
     
     x->ctlp->inputs.buf_name = s;
     x->ctlp->inputs.buf = NULL;
@@ -2839,9 +2848,11 @@ void samplor_set(t_samplorpd *x, t_symbol *s)
     x->ctlp->inputs.samplor_buf = NULL;
     
     t_int64 loopstart, loopend;
-    assert(!ht_values(x->ctlp->loops_table, s->s_name, &loopstart, &loopend));
-    x->ctlp->inputs.susloopstart = loopstart;
-    x->ctlp->inputs.susloopend = loopend;
+    if(!ht_values(x->ctlp->loops_table, s->s_name, &loopstart, &loopend))
+    {
+        x->ctlp->inputs.susloopstart = loopstart;
+        x->ctlp->inputs.susloopend = loopend;
+    }
     
     if (!(x->ctlp->inputs.buf)&&!(x->ctlp->inputs.samplor_buf)&&!(x->ctlp->inputs.samplor_mmap))
         error("samplor~: no buf %s ", s->s_name);
@@ -2969,10 +2980,10 @@ void samplor_play(t_samplorpd *x, t_symbol *s, short ac, t_atom *av)
 #endif
 }
 
-
+#if 0
 static t_int *samplor_perform64N(t_int *w)
 {
-#if 0
+
     t_samplorpd *x = (t_samplorpd *)(w[1]):
     long i,j;
     long n = sys_getblksize();
@@ -2988,9 +2999,9 @@ static t_int *samplor_perform64N(t_int *w)
             x->vectors64[j][i] = 0.;
     }
     (fun_ptr)(x_ctl, x->vectors64, n, x->num_outputs);
-#endif
     return (w+2);
 }
+#endif
 
 static t_int *samplor_perform64_3(t_int *w)
 {
@@ -3218,6 +3229,7 @@ void samplorpd_tilde_setup(void)
     class_addmethod(samplorpd_class,(t_method)samplor_count_active_voices,gensym("count"), A_DEFFLOAT, 0);
     
     class_addmethod(samplorpd_class, (t_method)samplor_window, gensym("window"), A_FLOAT, 0);
+    class_addmethod(samplorpd_class, (t_method)samplor_loopxfade, gensym("loop_xfade"), A_FLOAT, 0);
     class_addmethod(samplorpd_class, (t_method)samplor_voicestealing, gensym("voice_stealing"), A_FLOAT, 0);
     class_addmethod(samplorpd_class, (t_method)samplor_interpol, gensym("interpol"), A_FLOAT, 0);
     class_addmethod(samplorpd_class, (t_method)samplor_debug, gensym("debug"), A_FLOAT, 0);

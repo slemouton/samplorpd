@@ -139,7 +139,7 @@ inline t_float linear_interpol_i_big_endian (int16_t *buf, float alpha) /*NEWTON
 inline t_float get_24bit_sample (t_float *buf,long index)
 {
     unsigned char *bytes;
-    bytes = buf;
+    bytes = (unsigned char *)buf;
     signed char a = bytes[index*3];
     unsigned char b = bytes[(index+1)*3];
     unsigned char c = bytes[(index+2)*3];

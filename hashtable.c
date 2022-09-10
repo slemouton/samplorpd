@@ -134,7 +134,7 @@ char *ht_value(struct hash_table *the_hash_table, char *key)
         }
         head_ll=head_ll->next;
     }
-    return -1;
+    return NULL;
 }
 int ht_values(struct hash_table *the_hash_table, char *key, t_int64 *v1, t_int64 *v2)
 {
