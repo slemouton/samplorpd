@@ -5969,20 +5969,20 @@
 #X obj 164 178 soundfiler;
 #X msg 164 62 read Bkl-e1-loop sample1;
 #X obj 36 522 dac~;
-#X floatatom 146 347 0 0 0 0 - - - 0;
+#X floatatom 146 347 0 0 0 0 - - -;
 #X msg 145 370 interpol \$1;
 #X msg 64 271 0 sample1 0 1000 1.75 1;
 #X msg 39 217 0 sample1 0 1000 1 1;
 #X msg 174 104 read sinus-440.aif sample1;
 #X msg 102 325 1;
-#X obj 144 394 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
-#000000 0 1;
+#X obj 144 394 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
 #X msg 144 413 debug \$1;
-#X obj 104 296 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
-#000000 #000000;
+#X obj 104 296 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
 #X obj 208 479 print~;
-#X obj 214 203 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
-#000000 #000000;
+#X obj 214 203 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
 #N canvas 0 22 450 278 (subpatch) 0;
 #X array scope 4410 float 3;
 #A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -6122,23 +6122,24 @@
 #X restore 31 562 graph;
 #X obj 222 520 tabwrite~ scope;
 #X obj 258 497 metro 100;
-#X obj 258 475 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
-#000000 0 1;
+#X obj 258 475 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
 #X obj 257 429 loadbang;
 #X msg 258 452 1;
 #X obj 147 306 loadbang;
 #X msg 48 239 0 sample1 0 1000 0.35 1;
 #X obj 12 359 r s_;
 #X msg 147 327 1;
-#N canvas 0 734 419 307 loop 0;
+#N canvas 0 734 554 306 loop 1;
 #X msg 54 128 \; s_ loop 1;
 #X msg 49 53 \; s_ get_buffer_loop sample1;
-#X msg 47 15 \; s_ buffer_loop sample1 10000 20000;
 #X msg 54 169 \; s_ 0 sample1 0 -1 1 1;
 #X msg 52 204 \; s_ 0 sample1 0 -1 0 0;
-#X floatatom 261 119 5 0 0 0 - - - 0;
+#X floatatom 261 119 5 0 0 0 - - -;
 #X msg 262 141 \; s_ loop_xfade \$1;
-#X connect 5 0 6 0;
+#X msg 47 15 \; s_ buffer_loop sample1 1000 2017;
+#X msg 255 15 \; s_ buffer_loop sample1 1000 2000;
+#X connect 4 0 5 0;
 #X restore 32 807 pd loop;
 #X obj 122 508 print;
 #X msg 163 36 read test-1ch-16.aif sample1;

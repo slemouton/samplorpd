@@ -1944,9 +1944,10 @@ void samplor_count_active_voices(t_samplorpd *x,long d)
 /*
  * samplor_maxvoices sets the maximum number of voices
 */
-void samplor_maxvoices(t_samplorpd *x, long v)
+void samplor_maxvoices(t_samplorpd *x, t_floatarg a)
 {
-   if (v > MAX_VOICES) {
+    long v = (long) a;
+    if (v > MAX_VOICES) {
         post("samplor~: maxvoices out of range (%d), set to %d", v, MAX_VOICES);
         v = MAX_VOICES;
     }
@@ -2595,18 +2596,6 @@ void samplor_stop_one_voice_str(t_samplorpd *x, t_symbol *buf_name,float transp)
             time = curr->end - curr->release;
             if(curr->loop_flag)
             {
-                //curr->loop_flag = FINISHING_LOOP;
-                curr->loop_flag = 0;
-                if (time)
-                {
-                    curr->fade_out_time = time * transp;
-                    curr->fade_out_counter = curr->fade_out_time;
-                }
-                else // instant stop
-                {
-                    curr->fade_out_time = 1;
-                    curr->fade_out_counter = 0;
-                }
                 if (x->loop_release)
                 {
                     float start2 = 1000. * (float)curr->loop_end / 44100.;
@@ -2621,6 +2610,22 @@ void samplor_stop_one_voice_str(t_samplorpd *x, t_symbol *buf_name,float transp)
                     SETFLOAT(av+5,curr->amplitude);  //amp
                     samplor_list(x,curr->buf_name,6,av);
                 }
+                else
+                {
+                    curr->loop_flag = FINISHING_LOOP;
+                    // curr->loop_flag = 0;
+                    if (time)
+                    {
+                        curr->fade_out_time = time * transp;
+                        curr->fade_out_counter = curr->fade_out_time;
+                    }
+                    else // instant stop
+                    {
+                        curr->fade_out_time = 1;
+                        curr->fade_out_counter = 0;
+                    }
+                }
+              
                 break;
             }
             
@@ -3134,7 +3139,6 @@ static void *samplorpd_new(t_symbol *s, int argc, t_atom *argv)
         //process the arguments :
         if ((argc >= 1) && (argv[0].a_type==A_FLOAT))
         {
-            post("float: %f", argv[0].a_w.w_float);
             numoutputs = (long)argv[0].a_w.w_float;
         }
         else
