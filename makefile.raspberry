@@ -9,7 +9,7 @@ clean: ; rm -f *.pd_linux *.pd_darwin *.o
 pd_linux: obj1.pd_linux obj2.pd_linux obj3.pd_linux obj4.pd_linux \
     obj5.pd_linux dspobj~.pd_linux
 
-samplorpd : slm1.o linkedlist.o samplorpd~.pd_linux
+samplorpd : slm1.o linkedlist.o hashtable.o samplorpd~.pd_linux
 
 .SUFFIXES: .pd_linux
 
@@ -22,7 +22,7 @@ LINUXINCLUDE =  -I../pd-0.51-1/src
 
 .c.pd_linux:
 	gcc $(LINUXCFLAGS) $(LINUXINCLUDE) -o $*.o -c $*.c
-	ld -export_dynamic  -shared -o $*.pd_linux $*.o linkedlist.o slm1.o -L /usr/lib/gcc/arm-linux-gnueabihf/4.9.2 -lgcc -lc -lm 
+	ld -export_dynamic  -shared -o $*.pd_linux $*.o linkedlist.o hashtable.o slm1.o -L /usr/lib/gcc/arm-linux-gnueabihf/4.9.2 -lgcc -lc -lm 
 #	strip --strip-unneeded $*.pd_linux
 	rm $*.o
 
