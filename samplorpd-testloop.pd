@@ -6159,6 +6159,7 @@ args) delay (1) offset (1) dur (1) transp (1) amp (1) pan (1) rev (1)
 #X connect 4 0 1 0;
 #X connect 5 0 1 0;
 #X restore 183 752 pd play_syntax;
+#X msg 324 309 stopall;
 #X connect 3 0 2 0;
 #X connect 5 0 6 0;
 #X connect 6 0 29 0;
@@ -6183,3 +6184,4 @@ args) delay (1) offset (1) dur (1) transp (1) amp (1) pan (1) rev (1)
 #X connect 29 0 14 0;
 #X connect 29 0 17 0;
 #X connect 29 0 4 0;
+#X connect 31 0 29 0;

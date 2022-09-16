@@ -2447,8 +2447,9 @@ void samplor_stop2(t_samplorpd *x, long time)
  * to stop all samples (arret rapide)
  * stopall is deprecated, use stop message instead
  */
-void samplor_stopall(t_samplorpd *x, long time)
+void samplor_stopall(t_samplorpd *x, t_floatarg t)
 {
+    long time = (long)t;
     t_samplor_entry *prev = x->ctlp->list.used;
     t_samplor_entry *curr = prev;
     

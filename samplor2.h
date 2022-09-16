@@ -222,7 +222,7 @@ void samplor_stop(t_samplorpd *x, t_symbol *s, short ac, t_atom *av);
 void samplor_stop2(t_samplorpd *x, long time);
 void samplor_stop_one_voice(t_samplorpd *x, int sample,float transp);
 void samplor_stop_play(t_samplorpd *x, t_symbol *s, short ac, t_atom *av);
-void samplor_stopall(t_samplorpd *x, long time);
+void samplor_stopall(t_samplorpd *x, t_floatarg time);
 void samplor_compute_loop(t_samplor_entry *x,long m, long loop_xfade, unsigned int *in_xfadeflag,t_float *xfade_amp);
 void samplor_loop(t_samplorpd *x, t_symbol *s, short ac, t_atom *av);
 void samplor_set(t_samplorpd *x, t_symbol *s);
