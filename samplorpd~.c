@@ -1889,8 +1889,9 @@ void samplor_window(t_samplorpd *x,t_floatarg d)
 
  /// temps de cross fade pour boucle (in samples)
 
-void samplor_loopxfade(t_samplorpd *x, int loop_xfade)
+void samplor_loopxfade(t_samplorpd *x, t_floatarg lx)
 {
+    int loop_xfade = lx;
     x->ctlp->loop_xfade = loop_xfade;
  //   x->ctlp->loop_xfade = min(loop_xfade,x->ctlp->max_loop_xfade);
 }
@@ -2178,8 +2179,9 @@ void samplor_rev(t_samplorpd *x, double rev)
 /*
  * samplor_win
  */
-void samplor_win(t_samplorpd *x, int win)
+void samplor_win(t_samplorpd *x, t_floatarg w)
 {
+    int win = (int) w;
     if ((win < 0) || (win > NUM_WINS))
         win = 0;
     x->ctlp->inputs.env = win;
@@ -2435,8 +2437,9 @@ void samplor_modwheel(t_samplorpd *x, t_float transp)
 /*
  * to  stop  one sample (arret rapide)
  */
-void samplor_stop2(t_samplorpd *x, long time)
+void samplor_stop2(t_samplorpd *x, t_floatarg t)
 {
+    long time = (long)t;
     if (time > 0)
         samplor_urgent_stop(x->ctlp,time);
     else
