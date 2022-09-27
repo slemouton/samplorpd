@@ -11,7 +11,7 @@
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #endif
-#define VERSION "samplor~: version v0.0.9 = MAX version 3.64"
+#define VERSION "samplor~: version v0.0.915 = MAX version 3.64"
 
 /* ------------------------ samplorpd~ ----------------------------- */
 
@@ -78,7 +78,7 @@ int samplor_run_one64(t_samplor_entry *x, t_sample **out, long n, const t_float 
             index = (int)f;
             index2 = (int)x->fposition2;
             x->fposition += x->increment * modwheel ;
-            x->fposition2 += x->increment * modwheel;
+            x->fposition2 += x->increment;
             
             //////////////////
             /* 2.ECHANTILLON*/
@@ -161,19 +161,19 @@ int samplor_run_one64(t_samplor_entry *x, t_sample **out, long n, const t_float 
             
             /* attack-release stuff */
             
-            if (index < x->attack)
+            if (index2 < x->attack)
             {
-                w_f_index = (float)(index - x->begin) * x->attack_ratio;
+                w_f_index = (float)(index2 - x->begin) * x->attack_ratio;
             }
-            else if ((index > x->release) && (x->loop_flag != LOOP)&& (!x->fade_out_time))
+            else if ((index2 > x->release) && (x->loop_flag != LOOP)&& (!x->fade_out_time))
             {
-                w_f_index = (float)( x->end - index) * x->release_ratio;
-                //    w_f_index = (float)((long)x->fposition - x->end)* x->release_ratio;
+                w_f_index = (float)( x->end - index2) * x->release_ratio;
+                // w_f_index = (float)((long)x->fposition - x->end)* x->release_ratio;
                 w_f_index = powf(w_f_index , x->release_curve);
             }
-            else if (index < x->decay)
+            else if (index2 < x->decay)
             {
-                w_f_index = 1. + (float)(index - x->attack ) * x->decay_ratio;
+                w_f_index = 1. + (float)(index2 - x->attack ) * x->decay_ratio;
             }
             else w_f_index = x->sustain;
             
