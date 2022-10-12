@@ -11,7 +11,7 @@
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #endif
-#define VERSION "samplor~: version v0.0.915 = MAX version 3.64"
+#define VERSION "samplor~: version v0.0.916 = MAX version 3.64"
 
 /* ------------------------ samplorpd~ ----------------------------- */
 
@@ -193,6 +193,17 @@ int samplor_run_one64(t_samplor_entry *x, t_sample **out, long n, const t_float 
                 //amp_scale = MAX(0.,amp_scale);
                 // or (to instantly free the voice )
                 if (amp_scale < 0)
+                    goto zero;
+                sample *= amp_scale;
+            }
+            
+            if(x->fast_fade_out_time) //for clean voice_stealing
+            {
+               
+                amp_scale = (float)(x->fade_out_counter) / x->fast_fade_out_time;
+                //amp_scale = powf(amp_scale,x->release_curve);
+                //(to instantly free the voice )
+                if (x->fade_out_counter-- < 0)
                     goto zero;
                 sample *= amp_scale;
             }
@@ -2450,6 +2461,7 @@ void samplor_stop2(t_samplorpd *x, t_floatarg t)
  * to stop all samples (arret rapide)
  * stopall is deprecated, use stop message instead
  */
+#if 0
 void samplor_stopall(t_samplorpd *x, t_floatarg t)
 {
     long time = (long)t;
@@ -2466,6 +2478,29 @@ void samplor_stopall(t_samplorpd *x, t_floatarg t)
                 curr->fade_out_time = time;
                 //curr->fade_out_time = time / curr->increment;
                 //curr->count = time;
+            }
+        }
+        prev = curr;
+        curr = curr->next;
+    }
+}
+#endif
+
+void samplor_stopall(t_samplorpd *x, t_floatarg t)
+{
+    long time = (long)t;
+    t_samplor_entry *prev = x->ctlp->list.used;
+    t_samplor_entry *curr = prev;
+    
+    //   time *= x->ctlp->params.sr / 1000.;
+    while (curr != LIST_END)
+    {
+        if(curr->loop_flag)
+            curr->loop_flag = 0;
+        {
+            {
+                curr->fast_fade_out_time = time;
+                curr->fade_out_counter = time;
             }
         }
         prev = curr;

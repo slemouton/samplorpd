@@ -49,8 +49,8 @@
             timestampString = "622830149.8873301"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3087"
-            endingLineNumber = "3087"
+            startingLineNumber = "3122"
+            endingLineNumber = "3122"
             landmarkName = "samplor_perform64_1(w)"
             landmarkType = "9">
          </BreakpointContent>
@@ -66,8 +66,8 @@
             timestampString = "622830149.887702"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1987"
-            endingLineNumber = "1987"
+            startingLineNumber = "1998"
+            endingLineNumber = "1998"
             landmarkName = "samplor_start(x, p)"
             landmarkType = "9">
          </BreakpointContent>
@@ -83,8 +83,8 @@
             timestampString = "622830149.887835"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1989"
-            endingLineNumber = "1989"
+            startingLineNumber = "2000"
+            endingLineNumber = "2000"
             landmarkName = "samplor_start(x, p)"
             landmarkType = "9">
          </BreakpointContent>
@@ -100,8 +100,8 @@
             timestampString = "622830149.887906"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1342"
-            endingLineNumber = "1342"
+            startingLineNumber = "1353"
+            endingLineNumber = "1353"
             landmarkName = "samplor_run_one_lite64(x, out, n, interpol)"
             landmarkType = "9">
          </BreakpointContent>
@@ -117,8 +117,8 @@
             timestampString = "622830149.8879761"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1792"
-            endingLineNumber = "1792"
+            startingLineNumber = "1803"
+            endingLineNumber = "1803"
             landmarkName = "samplor_run_all_lite64(x, outs, n, num_outputs)"
             landmarkType = "9">
          </BreakpointContent>
@@ -127,7 +127,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "C6EBACB4-97F2-443E-A345-45D8D10A00FC"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../linkedlist.c"
@@ -138,45 +138,13 @@
             endingLineNumber = "164"
             landmarkName = "samplist_new_voice(x, start, inputs)"
             landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "C6EBACB4-97F2-443E-A345-45D8D10A00FC - 49de7f6700311fb3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplist_new_voice"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/linkedlist.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "164"
-                  endingLineNumber = "164"
-                  offsetFromSymbolStart = "634">
-               </Location>
-               <Location
-                  uuid = "C6EBACB4-97F2-443E-A345-45D8D10A00FC - 49de7f6700311fb3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplist_new_voice"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/linkedlist.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "164"
-                  endingLineNumber = "164"
-                  offsetFromSymbolStart = "664">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "AE430DDD-19FF-473E-B982-34FDB8460571"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../linkedlist.c"
@@ -187,45 +155,13 @@
             endingLineNumber = "165"
             landmarkName = "samplist_new_voice(x, start, inputs)"
             landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "AE430DDD-19FF-473E-B982-34FDB8460571 - 49de7f6700311f52"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplist_new_voice"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/linkedlist.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "165"
-                  endingLineNumber = "165"
-                  offsetFromSymbolStart = "664">
-               </Location>
-               <Location
-                  uuid = "AE430DDD-19FF-473E-B982-34FDB8460571 - 49de7f6700311f52"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplist_new_voice"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/linkedlist.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "165"
-                  endingLineNumber = "165"
-                  offsetFromSymbolStart = "695">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "3717ACD0-B6AE-4048-AFE6-5CF1A7A54E41"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../linkedlist.c"
@@ -236,38 +172,6 @@
             endingLineNumber = "166"
             landmarkName = "samplist_new_voice(x, start, inputs)"
             landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "3717ACD0-B6AE-4048-AFE6-5CF1A7A54E41 - 49de7f6700311f71"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplist_new_voice"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/linkedlist.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "166"
-                  endingLineNumber = "166"
-                  offsetFromSymbolStart = "669">
-               </Location>
-               <Location
-                  uuid = "3717ACD0-B6AE-4048-AFE6-5CF1A7A54E41 - 49de7f6700311f71"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplist_new_voice"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/linkedlist.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "166"
-                  endingLineNumber = "166"
-                  offsetFromSymbolStart = "700">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -298,8 +202,8 @@
             timestampString = "622830149.889357"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1362"
-            endingLineNumber = "1362"
+            startingLineNumber = "1373"
+            endingLineNumber = "1373"
             landmarkName = "samplor_run_one_lite64(x, out, n, interpol)"
             landmarkType = "9">
          </BreakpointContent>
@@ -315,8 +219,8 @@
             timestampString = "622830149.889434"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1997"
-            endingLineNumber = "1997"
+            startingLineNumber = "2008"
+            endingLineNumber = "2008"
             landmarkName = "samplor_start(x, p)"
             landmarkType = "9">
          </BreakpointContent>
@@ -332,8 +236,8 @@
             timestampString = "622830149.889523"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2048"
-            endingLineNumber = "2048"
+            startingLineNumber = "2059"
+            endingLineNumber = "2059"
             landmarkName = "samplor_start(x, p)"
             landmarkType = "9">
          </BreakpointContent>
@@ -349,8 +253,8 @@
             timestampString = "622830149.889596"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1365"
-            endingLineNumber = "1365"
+            startingLineNumber = "1376"
+            endingLineNumber = "1376"
             landmarkName = "samplor_run_one_lite64(x, out, n, interpol)"
             landmarkType = "9">
          </BreakpointContent>
@@ -366,8 +270,8 @@
             timestampString = "622830149.889665"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1357"
-            endingLineNumber = "1357"
+            startingLineNumber = "1368"
+            endingLineNumber = "1368"
             landmarkName = "samplor_run_one_lite64(x, out, n, interpol)"
             landmarkType = "9">
          </BreakpointContent>
@@ -383,8 +287,8 @@
             timestampString = "622830149.889733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1358"
-            endingLineNumber = "1358"
+            startingLineNumber = "1369"
+            endingLineNumber = "1369"
             landmarkName = "samplor_run_one_lite64(x, out, n, interpol)"
             landmarkType = "9">
          </BreakpointContent>
@@ -400,8 +304,8 @@
             timestampString = "622830149.889828"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1359"
-            endingLineNumber = "1359"
+            startingLineNumber = "1370"
+            endingLineNumber = "1370"
             landmarkName = "samplor_run_one_lite64(x, out, n, interpol)"
             landmarkType = "9">
          </BreakpointContent>
@@ -417,8 +321,8 @@
             timestampString = "622830149.8898979"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1360"
-            endingLineNumber = "1360"
+            startingLineNumber = "1371"
+            endingLineNumber = "1371"
             landmarkName = "samplor_run_one_lite64(x, out, n, interpol)"
             landmarkType = "9">
          </BreakpointContent>
@@ -434,8 +338,8 @@
             timestampString = "622830149.889968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1361"
-            endingLineNumber = "1361"
+            startingLineNumber = "1372"
+            endingLineNumber = "1372"
             landmarkName = "samplor_run_one_lite64(x, out, n, interpol)"
             landmarkType = "9">
          </BreakpointContent>
@@ -468,8 +372,8 @@
             timestampString = "622830149.890185"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
             landmarkName = "samplor_run_one64(x, out, n, windows, num_outputs, interpol, loop_xfade, modwheel)"
             landmarkType = "9">
          </BreakpointContent>
@@ -485,8 +389,8 @@
             timestampString = "622830149.8902611"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
             landmarkName = "samplor_run_one64(x, out, n, windows, num_outputs, interpol, loop_xfade, modwheel)"
             landmarkType = "9">
          </BreakpointContent>
@@ -502,8 +406,8 @@
             timestampString = "622830149.8903331"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2087"
-            endingLineNumber = "2087"
+            startingLineNumber = "2098"
+            endingLineNumber = "2098"
             landmarkName = "samplor_buf(x, buf)"
             landmarkType = "9">
          </BreakpointContent>
@@ -519,13 +423,13 @@
             timestampString = "622830149.890404"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2088"
-            endingLineNumber = "2088"
+            startingLineNumber = "2099"
+            endingLineNumber = "2099"
             landmarkName = "samplor_buf(x, buf)"
             landmarkType = "9">
             <Locations>
                <Location
-                  uuid = "BD0E8718-FDAB-4395-8B57-F7B348A0C481 - 7d5a22d8546e7849"
+                  uuid = "BD0E8718-FDAB-4395-8B57-F7B348A0C481 - 7d5a22d8546e04ef"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -535,12 +439,12 @@
                   urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2073"
-                  endingLineNumber = "2073"
+                  startingLineNumber = "2099"
+                  endingLineNumber = "2099"
                   offsetFromSymbolStart = "40">
                </Location>
                <Location
-                  uuid = "BD0E8718-FDAB-4395-8B57-F7B348A0C481 - f86f02011fa76fc9"
+                  uuid = "BD0E8718-FDAB-4395-8B57-F7B348A0C481 - f86f02011fa7136f"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -550,12 +454,12 @@
                   urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2073"
-                  endingLineNumber = "2073"
-                  offsetFromSymbolStart = "103">
+                  startingLineNumber = "2099"
+                  endingLineNumber = "2099"
+                  offsetFromSymbolStart = "102">
                </Location>
                <Location
-                  uuid = "BD0E8718-FDAB-4395-8B57-F7B348A0C481 - dff7798379a94da5"
+                  uuid = "BD0E8718-FDAB-4395-8B57-F7B348A0C481 - dff7798379a93103"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -565,12 +469,12 @@
                   urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2073"
-                  endingLineNumber = "2073"
+                  startingLineNumber = "2099"
+                  endingLineNumber = "2099"
                   offsetFromSymbolStart = "384">
                </Location>
                <Location
-                  uuid = "BD0E8718-FDAB-4395-8B57-F7B348A0C481 - f86f02c013b0cff3"
+                  uuid = "BD0E8718-FDAB-4395-8B57-F7B348A0C481 - f86f02c013b0b355"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -580,24 +484,9 @@
                   urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2073"
-                  endingLineNumber = "2073"
+                  startingLineNumber = "2099"
+                  endingLineNumber = "2099"
                   offsetFromSymbolStart = "139">
-               </Location>
-               <Location
-                  uuid = "BD0E8718-FDAB-4395-8B57-F7B348A0C481 - f86f02011fa76fc9"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_list"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2073"
-                  endingLineNumber = "2073"
-                  offsetFromSymbolStart = "102">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -613,8 +502,8 @@
             timestampString = "622830149.890476"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2761"
-            endingLineNumber = "2761"
+            startingLineNumber = "2796"
+            endingLineNumber = "2796"
             landmarkName = "samplor_loop(x, s, ac, av)"
             landmarkType = "9">
          </BreakpointContent>
@@ -630,8 +519,8 @@
             timestampString = "622830149.890547"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2762"
-            endingLineNumber = "2762"
+            startingLineNumber = "2797"
+            endingLineNumber = "2797"
             landmarkName = "samplor_loop(x, s, ac, av)"
             landmarkType = "9">
          </BreakpointContent>
@@ -647,8 +536,8 @@
             timestampString = "622830149.890674"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2763"
-            endingLineNumber = "2763"
+            startingLineNumber = "2798"
+            endingLineNumber = "2798"
             landmarkName = "samplor_loop(x, s, ac, av)"
             landmarkType = "9">
          </BreakpointContent>
@@ -664,8 +553,8 @@
             timestampString = "622830149.890759"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2764"
-            endingLineNumber = "2764"
+            startingLineNumber = "2799"
+            endingLineNumber = "2799"
             landmarkName = "samplor_loop(x, s, ac, av)"
             landmarkType = "9">
          </BreakpointContent>
@@ -681,8 +570,8 @@
             timestampString = "622830149.890847"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2096"
-            endingLineNumber = "2096"
+            startingLineNumber = "2107"
+            endingLineNumber = "2107"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -698,8 +587,8 @@
             timestampString = "622830149.890923"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2097"
-            endingLineNumber = "2097"
+            startingLineNumber = "2108"
+            endingLineNumber = "2108"
             landmarkName = "unknown"
             landmarkType = "0">
             <Locations>
@@ -765,8 +654,8 @@
             timestampString = "622830149.8909971"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2098"
-            endingLineNumber = "2098"
+            startingLineNumber = "2109"
+            endingLineNumber = "2109"
             landmarkName = "samplor_bufname(x, name)"
             landmarkType = "9">
             <Locations>
@@ -832,8 +721,8 @@
             timestampString = "622830149.891071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2099"
-            endingLineNumber = "2099"
+            startingLineNumber = "2110"
+            endingLineNumber = "2110"
             landmarkName = "samplor_bufname(x, name)"
             landmarkType = "9">
             <Locations>
@@ -899,8 +788,8 @@
             timestampString = "622830149.891144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2084"
-            endingLineNumber = "2084"
+            startingLineNumber = "2095"
+            endingLineNumber = "2095"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -916,8 +805,8 @@
             timestampString = "622830149.891242"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2085"
-            endingLineNumber = "2085"
+            startingLineNumber = "2096"
+            endingLineNumber = "2096"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -933,8 +822,8 @@
             timestampString = "622830149.891314"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2086"
-            endingLineNumber = "2086"
+            startingLineNumber = "2097"
+            endingLineNumber = "2097"
             landmarkName = "samplor_buf(x, buf)"
             landmarkType = "9">
          </BreakpointContent>
@@ -950,8 +839,8 @@
             timestampString = "622830149.89139"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
             landmarkName = "samplist_new_voice(x, start, inputs)"
             landmarkType = "9">
          </BreakpointContent>
@@ -967,8 +856,8 @@
             timestampString = "622830149.891679"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "283"
-            endingLineNumber = "283"
+            startingLineNumber = "294"
+            endingLineNumber = "294"
             landmarkName = "samplor_run_one64_int(x, out, n, windows, num_outputs, interpol, loop_xfade, modwheel)"
             landmarkType = "9">
          </BreakpointContent>
@@ -984,8 +873,8 @@
             timestampString = "622830149.891801"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "284"
-            endingLineNumber = "284"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
             landmarkName = "samplor_run_one64_int(x, out, n, windows, num_outputs, interpol, loop_xfade, modwheel)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1035,57 +924,10 @@
             timestampString = "622830149.89203"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2403"
-            endingLineNumber = "2403"
+            startingLineNumber = "2414"
+            endingLineNumber = "2414"
             landmarkName = "samplor_set_buffer_loop(x, buffer_s, v1, v2)"
             landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "865F8BCE-BFEE-48D0-B269-BD1035FA92A1 - 7806887912551a16"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_set_buffer_loop"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2401"
-                  endingLineNumber = "2401"
-                  offsetFromSymbolStart = "31">
-               </Location>
-               <Location
-                  uuid = "865F8BCE-BFEE-48D0-B269-BD1035FA92A1 - 7806887912551a92"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_set_buffer_loop"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2397"
-                  endingLineNumber = "2397"
-                  offsetFromSymbolStart = "31">
-               </Location>
-               <Location
-                  uuid = "865F8BCE-BFEE-48D0-B269-BD1035FA92A1 - 7806887912551a54"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_set_buffer_loop"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2399"
-                  endingLineNumber = "2399"
-                  offsetFromSymbolStart = "31">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1099,57 +941,10 @@
             timestampString = "622830149.892104"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2404"
-            endingLineNumber = "2404"
+            startingLineNumber = "2415"
+            endingLineNumber = "2415"
             landmarkName = "samplor_set_buffer_loop(x, buffer_s, v1, v2)"
             landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "4D4A4FE4-335E-4139-9392-912E7C7B8434 - 7806887912551a16"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_set_buffer_loop"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2401"
-                  endingLineNumber = "2401"
-                  offsetFromSymbolStart = "31">
-               </Location>
-               <Location
-                  uuid = "4D4A4FE4-335E-4139-9392-912E7C7B8434 - 7806887912551a92"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_set_buffer_loop"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2397"
-                  endingLineNumber = "2397"
-                  offsetFromSymbolStart = "31">
-               </Location>
-               <Location
-                  uuid = "4D4A4FE4-335E-4139-9392-912E7C7B8434 - 7806887912551a54"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_set_buffer_loop"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2399"
-                  endingLineNumber = "2399"
-                  offsetFromSymbolStart = "31">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1163,8 +958,8 @@
             timestampString = "622830149.892177"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2134"
-            endingLineNumber = "2134"
+            startingLineNumber = "2145"
+            endingLineNumber = "2145"
             landmarkName = "unknown"
             landmarkType = "0">
             <Locations>
@@ -1214,10 +1009,42 @@
             timestampString = "622830149.892252"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2892"
-            endingLineNumber = "2892"
+            startingLineNumber = "2927"
+            endingLineNumber = "2927"
             landmarkName = "samplor_set_mac(x, s)"
             landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "44360F21-7274-4331-BBF3-95E5FE65613F - 9292c278b79f186b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "samplor_set_mac"
+                  moduleName = "samplorpd~.pd_darwin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2940"
+                  endingLineNumber = "2940"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  uuid = "44360F21-7274-4331-BBF3-95E5FE65613F - 9292c278b79f184a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "samplor_set_mac"
+                  moduleName = "samplorpd~.pd_darwin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2939"
+                  endingLineNumber = "2939"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1231,8 +1058,8 @@
             timestampString = "622830149.89235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2760"
-            endingLineNumber = "2760"
+            startingLineNumber = "2795"
+            endingLineNumber = "2795"
             landmarkName = "samplor_loop(x, s, ac, av)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1248,13 +1075,13 @@
             timestampString = "622830149.8924299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2566"
-            endingLineNumber = "2566"
+            startingLineNumber = "2601"
+            endingLineNumber = "2601"
             landmarkName = "samplor_stop_one_voice(x, sample, transp)"
             landmarkType = "9">
             <Locations>
                <Location
-                  uuid = "AA5C6DCA-155C-4853-B592-14A3D162FA5D - 6b3f4bd8a3d85f3e"
+                  uuid = "AA5C6DCA-155C-4853-B592-14A3D162FA5D - 6b3f4bd8a3d9a1a8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1264,12 +1091,12 @@
                   urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2574"
-                  endingLineNumber = "2574"
+                  startingLineNumber = "2624"
+                  endingLineNumber = "2624"
                   offsetFromSymbolStart = "4">
                </Location>
                <Location
-                  uuid = "AA5C6DCA-155C-4853-B592-14A3D162FA5D - 6b3f4bd8a3d85eb2"
+                  uuid = "AA5C6DCA-155C-4853-B592-14A3D162FA5D - 6b3f4bd8a3d9a189"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1279,23 +1106,8 @@
                   urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2570"
-                  endingLineNumber = "2570"
-                  offsetFromSymbolStart = "4">
-               </Location>
-               <Location
-                  uuid = "AA5C6DCA-155C-4853-B592-14A3D162FA5D - 6b3f4bd8a3d85efc"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_stop_one_voice"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2572"
-                  endingLineNumber = "2572"
+                  startingLineNumber = "2623"
+                  endingLineNumber = "2623"
                   offsetFromSymbolStart = "4">
                </Location>
             </Locations>
@@ -1312,13 +1124,13 @@
             timestampString = "622830149.892514"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2564"
-            endingLineNumber = "2564"
+            startingLineNumber = "2599"
+            endingLineNumber = "2599"
             landmarkName = "samplor_stop_one_voice(x, sample, transp)"
             landmarkType = "9">
             <Locations>
                <Location
-                  uuid = "DB6DF12B-E2BA-4681-B512-3C9697EC8651 - 6b3f4bd8a3d85f3e"
+                  uuid = "DB6DF12B-E2BA-4681-B512-3C9697EC8651 - 6b3f4bd8a3d9a1a8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1328,12 +1140,12 @@
                   urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2574"
-                  endingLineNumber = "2574"
+                  startingLineNumber = "2624"
+                  endingLineNumber = "2624"
                   offsetFromSymbolStart = "4">
                </Location>
                <Location
-                  uuid = "DB6DF12B-E2BA-4681-B512-3C9697EC8651 - 6b3f4bd8a3d85eb2"
+                  uuid = "DB6DF12B-E2BA-4681-B512-3C9697EC8651 - 6b3f4bd8a3d9a189"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1343,23 +1155,8 @@
                   urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2570"
-                  endingLineNumber = "2570"
-                  offsetFromSymbolStart = "4">
-               </Location>
-               <Location
-                  uuid = "DB6DF12B-E2BA-4681-B512-3C9697EC8651 - 6b3f4bd8a3d85efc"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_stop_one_voice"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2572"
-                  endingLineNumber = "2572"
+                  startingLineNumber = "2623"
+                  endingLineNumber = "2623"
                   offsetFromSymbolStart = "4">
                </Location>
             </Locations>
@@ -1376,13 +1173,13 @@
             timestampString = "622830149.892596"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2570"
-            endingLineNumber = "2570"
+            startingLineNumber = "2605"
+            endingLineNumber = "2605"
             landmarkName = "samplor_stop_one_voice(x, sample, transp)"
             landmarkType = "9">
             <Locations>
                <Location
-                  uuid = "7BFE85FF-E8B9-43D5-89B3-DF86ACAA23B4 - 6b3f4bd8a3d85f3e"
+                  uuid = "7BFE85FF-E8B9-43D5-89B3-DF86ACAA23B4 - 6b3f4bd8a3d9a1a8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1392,12 +1189,12 @@
                   urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2574"
-                  endingLineNumber = "2574"
+                  startingLineNumber = "2624"
+                  endingLineNumber = "2624"
                   offsetFromSymbolStart = "4">
                </Location>
                <Location
-                  uuid = "7BFE85FF-E8B9-43D5-89B3-DF86ACAA23B4 - 6b3f4bd8a3d85eb2"
+                  uuid = "7BFE85FF-E8B9-43D5-89B3-DF86ACAA23B4 - 6b3f4bd8a3d9a189"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -1407,23 +1204,8 @@
                   urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2570"
-                  endingLineNumber = "2570"
-                  offsetFromSymbolStart = "4">
-               </Location>
-               <Location
-                  uuid = "7BFE85FF-E8B9-43D5-89B3-DF86ACAA23B4 - 6b3f4bd8a3d85efc"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplor_stop_one_voice"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2572"
-                  endingLineNumber = "2572"
+                  startingLineNumber = "2623"
+                  endingLineNumber = "2623"
                   offsetFromSymbolStart = "4">
                </Location>
             </Locations>
@@ -1440,8 +1222,8 @@
             timestampString = "622830149.892683"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2568"
-            endingLineNumber = "2568"
+            startingLineNumber = "2603"
+            endingLineNumber = "2603"
             landmarkName = "samplor_stop_one_voice(x, sample, transp)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1456,8 +1238,8 @@
             filePath = "../../../samplorpd~.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3139"
-            endingLineNumber = "3139"
+            startingLineNumber = "3174"
+            endingLineNumber = "3174"
             landmarkName = "samplorpd_new(s, argc, argv)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1472,8 +1254,8 @@
             filePath = "../../../samplorpd~.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3140"
-            endingLineNumber = "3140"
+            startingLineNumber = "3175"
+            endingLineNumber = "3175"
             landmarkName = "samplorpd_new(s, argc, argv)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1492,38 +1274,6 @@
             endingLineNumber = "115"
             landmarkName = "ht_find(the_hash_table, key, ret_val)"
             landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "18AFE4E3-A3D0-4358-BDC0-A34D7E641574 - 19df3bfdb1e8306d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ht_find"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/hashtable.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "114"
-                  endingLineNumber = "114"
-                  offsetFromSymbolStart = "122">
-               </Location>
-               <Location
-                  uuid = "18AFE4E3-A3D0-4358-BDC0-A34D7E641574 - 19df3bfdb1e8304c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ht_find"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/hashtable.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "115"
-                  endingLineNumber = "115"
-                  offsetFromSymbolStart = "122">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1540,38 +1290,6 @@
             endingLineNumber = "112"
             landmarkName = "ht_find(the_hash_table, key, ret_val)"
             landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "4915B40E-8E06-4099-98E2-BB390F3A41A7 - 19df3bfdb1e833c8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ht_find"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/hashtable.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "111"
-                  endingLineNumber = "111"
-                  offsetFromSymbolStart = "96">
-               </Location>
-               <Location
-                  uuid = "4915B40E-8E06-4099-98E2-BB390F3A41A7 - 19df3bfdb1e8302b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ht_find"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/hashtable.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "112"
-                  endingLineNumber = "112"
-                  offsetFromSymbolStart = "96">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1636,38 +1354,6 @@
             endingLineNumber = "133"
             landmarkName = "ht_value(the_hash_table, key)"
             landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "23297FEF-74EC-4A29-8C48-E97F5C119E6B - 7100e6f07facae76"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ht_value"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/hashtable.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "138"
-                  endingLineNumber = "138"
-                  offsetFromSymbolStart = "125">
-               </Location>
-               <Location
-                  uuid = "23297FEF-74EC-4A29-8C48-E97F5C119E6B - 7100e6f07facae76"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ht_value"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/hashtable.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "138"
-                  endingLineNumber = "138"
-                  offsetFromSymbolStart = "114">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1684,45 +1370,13 @@
             endingLineNumber = "135"
             landmarkName = "ht_value(the_hash_table, key)"
             landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "18A8CD5E-D9E4-4C5A-A887-409E07A6D832 - 7100e6f07facae76"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ht_value"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/hashtable.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "138"
-                  endingLineNumber = "138"
-                  offsetFromSymbolStart = "125">
-               </Location>
-               <Location
-                  uuid = "18A8CD5E-D9E4-4C5A-A887-409E07A6D832 - 7100e6f07facae76"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ht_value"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/hashtable.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "138"
-                  endingLineNumber = "138"
-                  offsetFromSymbolStart = "114">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "60FE63FD-5D5A-4F46-B52B-2A08D4266663"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../linkedlist.c"
@@ -1732,38 +1386,6 @@
             endingLineNumber = "74"
             landmarkName = "samplist_new_voice(x, start, inputs)"
             landmarkType = "9">
-            <Locations>
-               <Location
-                  uuid = "60FE63FD-5D5A-4F46-B52B-2A08D4266663 - 49de7f670031231d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplist_new_voice"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/linkedlist.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "74"
-                  endingLineNumber = "74"
-                  offsetFromSymbolStart = "29">
-               </Location>
-               <Location
-                  uuid = "60FE63FD-5D5A-4F46-B52B-2A08D4266663 - 49de7f670031231d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "samplist_new_voice"
-                  moduleName = "samplorpd~.pd_darwin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/linkedlist.c"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "74"
-                  endingLineNumber = "74"
-                  offsetFromSymbolStart = "33">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1776,8 +1398,8 @@
             filePath = "../../../samplorpd~.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2840"
-            endingLineNumber = "2840"
+            startingLineNumber = "2875"
+            endingLineNumber = "2875"
             landmarkName = "samplor_set(x, s)"
             landmarkType = "9">
             <Locations>
@@ -1854,8 +1476,8 @@
             filePath = "../../../samplorpd~.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2859"
-            endingLineNumber = "2859"
+            startingLineNumber = "2894"
+            endingLineNumber = "2894"
             landmarkName = "samplor_set(x, s)"
             landmarkType = "9">
             <Locations>
@@ -2030,10 +1652,42 @@
             filePath = "../../../samplorpd~.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2862"
-            endingLineNumber = "2862"
+            startingLineNumber = "2897"
+            endingLineNumber = "2897"
             landmarkName = "samplor_set(x, s)"
             landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "8B69D75E-3415-407A-B83E-CFE6821AF6E4 - 7d5a22d8df8d6801"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "samplor_set"
+                  moduleName = "samplorpd~.pd_darwin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2898"
+                  endingLineNumber = "2898"
+                  offsetFromSymbolStart = "195">
+               </Location>
+               <Location
+                  uuid = "8B69D75E-3415-407A-B83E-CFE6821AF6E4 - 7d5a22d8df8d6820"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "samplor_set"
+                  moduleName = "samplorpd~.pd_darwin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2897"
+                  endingLineNumber = "2897"
+                  offsetFromSymbolStart = "195">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2046,10 +1700,154 @@
             filePath = "../../../samplorpd~.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2863"
-            endingLineNumber = "2863"
+            startingLineNumber = "2898"
+            endingLineNumber = "2898"
             landmarkName = "samplor_set(x, s)"
             landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "D14F01B7-2A80-4132-B4F2-B5E7AF762592 - 7d5a22d8df8d6801"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "samplor_set"
+                  moduleName = "samplorpd~.pd_darwin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2898"
+                  endingLineNumber = "2898"
+                  offsetFromSymbolStart = "195">
+               </Location>
+               <Location
+                  uuid = "D14F01B7-2A80-4132-B4F2-B5E7AF762592 - 7d5a22d8df8d6801"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "samplor_set"
+                  moduleName = "samplorpd~.pd_darwin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2898"
+                  endingLineNumber = "2898"
+                  offsetFromSymbolStart = "207">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "22E9FF63-DA4E-417D-8E6E-D2723234D325"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
+            landmarkName = "samplor_run_one64(x, out, n, windows, num_outputs, interpol, loop_xfade, modwheel)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E0DAEF7A-15D3-423C-A647-96C45E0CFDAF"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
+            landmarkName = "samplor_run_one64(x, out, n, windows, num_outputs, interpol, loop_xfade, modwheel)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "E0DAEF7A-15D3-423C-A647-96C45E0CFDAF - 2f09c8c4adc75e7f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "samplor_run_one64"
+                  moduleName = "samplorpd~.pd_darwin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "206"
+                  endingLineNumber = "206"
+                  offsetFromSymbolStart = "1685">
+               </Location>
+               <Location
+                  uuid = "E0DAEF7A-15D3-423C-A647-96C45E0CFDAF - 2f09c8c4adc75e7f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "samplor_run_one64"
+                  moduleName = "samplorpd~.pd_darwin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "206"
+                  endingLineNumber = "206"
+                  offsetFromSymbolStart = "1668">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "843154EE-0181-4DEA-B2FB-2D83F8D5F7E3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../samplorpd~.c"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "208"
+            endingLineNumber = "208"
+            landmarkName = "samplor_run_one64(x, out, n, windows, num_outputs, interpol, loop_xfade, modwheel)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "843154EE-0181-4DEA-B2FB-2D83F8D5F7E3 - 2f09c8c4adc759b9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "samplor_run_one64"
+                  moduleName = "samplorpd~.pd_darwin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "208"
+                  endingLineNumber = "208"
+                  offsetFromSymbolStart = "1697">
+               </Location>
+               <Location
+                  uuid = "843154EE-0181-4DEA-B2FB-2D83F8D5F7E3 - 2f09c8c4adc759b9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "samplor_run_one64"
+                  moduleName = "samplorpd~.pd_darwin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd~.c"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "208"
+                  endingLineNumber = "208"
+                  offsetFromSymbolStart = "1708">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

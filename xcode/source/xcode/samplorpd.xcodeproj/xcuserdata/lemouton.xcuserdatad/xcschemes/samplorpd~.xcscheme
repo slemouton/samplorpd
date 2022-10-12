@@ -55,7 +55,7 @@
       </MacroExpansion>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "/Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/samplorpd-testloop.pd"
+            argument = "/Users/lemouton/Projets/MAXMSPStuff/slm.externs/samplor~puredata/samplor-noflext/_TEST_STOPALL.pd"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

@@ -174,6 +174,7 @@ t_samplor_entry
         new->win = inputs.env;
         new->sustain = inputs.sustain * 0.01;
         new->fade_out_time = 0;
+        new->fast_fade_out_time = 0;
         new->fade_out_end = 0;
         new->release_curve = inputs.release_curve;
         attack_dur = inputs.attack * b_msr;
