@@ -11,7 +11,7 @@
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4305 )
 #endif
-#define VERSION "samplor~: version v0.0.916 = MAX version 3.64"
+#define VERSION "samplor~: version v0.0.917 = MAX version 3.64"
 
 /* ------------------------ samplorpd~ ----------------------------- */
 
@@ -196,18 +196,18 @@ int samplor_run_one64(t_samplor_entry *x, t_sample **out, long n, const t_float 
                     goto zero;
                 sample *= amp_scale;
             }
-            
             if(x->fast_fade_out_time) //for clean voice_stealing
             {
-               
                 amp_scale = (float)(x->fade_out_counter) / x->fast_fade_out_time;
                 //amp_scale = powf(amp_scale,x->release_curve);
                 //(to instantly free the voice )
                 if (x->fade_out_counter-- < 0)
-                    goto zero;
+            {
+		//post("fast fade out %d",x->fast_fade_out_time);
+                goto zero;
+            }
                 sample *= amp_scale;
             }
-            
             /*PAN & AUX :*/
             if(num_outputs > 3)
             {
