@@ -1,4 +1,4 @@
-#N canvas 367 183 863 480 12;
+#N canvas 677 85 863 512 12;
 #X declare -path lib -path lib/snd;
 #X obj 259 310 vu 15 120 empty empty -1 -8 0 10 -66577 -1 1 0;
 #X obj 40 275 dac~;
@@ -17,7 +17,7 @@
 #X msg 409 62 adsr 10 80 100 2000 \, voice_stealing 20;
 #X obj 16 389 declare -path lib -path lib/snd;
 #X msg 36 144 maxvoices 32;
-#X obj 32 199 samplorpd~ 1 32;
+#X obj 32 199 samplorpd~ 2 32;
 #X connect 2 0 3 0;
 #X connect 3 0 0 0;
 #X connect 5 0 4 0;
