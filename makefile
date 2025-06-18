@@ -58,7 +58,7 @@ LINUXCFLAGS = -DPD -O2 -funroll-loops -fomit-frame-pointer \
     -Wno-unused -Wno-parentheses -Wno-switch
 
 #LINUXINCLUDE =  -I../../src
-LINUXINCLUDE = -I/Applications/Pd-0.48-1.app/Contents/Resources/src
+LINUXINCLUDE = -I/Applications/Pd.app/Contents/Resources/src
 
 .c.pd_linux:
 	cc $(LINUXCFLAGS) $(LINUXINCLUDE) -o $*.o -c $*.c

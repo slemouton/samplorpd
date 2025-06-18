@@ -1,5 +1,5 @@
 #N canvas 779 258 738 415 12;
-#X declare -path lib -path lib/snd;
+#X declare -path ../lib -path ../lib/snd;
 #X obj 245 207 vu 15 120 empty empty -1 -8 0 10 #404040 #000000 1 0
 ;
 #X obj 40 275 dac~;
@@ -21,23 +21,23 @@
 #000000 #000000;
 #X text 358 142 3 ok;
 #X text 337 224 5 pas ok;
-#X obj 16 389 declare -path lib -path lib/snd;
-#X obj 15 362 skg.buffer~ YTFLUTEA3X01.wav;
+#X obj 16 357 skg.buffer~ YTFLUTEA3X01.wav;
 #X msg 409 62 adsr 100 80 100 1000 \, voice_stealing 20;
 #X msg 25 98 0 YTFLUTEA3X01.wav 0 1200 1 1;
 #X msg 35 137 0 YTFLUTEA3X01.wav 0 1200 1 0;
+#X obj 16 390 declare -path ../lib -path ../lib/snd;
 #X connect 2 0 3 0;
 #X connect 3 0 0 0;
 #X connect 5 0 4 0;
 #X connect 6 0 1 0;
 #X connect 6 0 2 0;
 #X connect 8 0 6 0;
-#X connect 9 0 21 0;
+#X connect 9 0 20 0;
 #X connect 9 1 10 0;
-#X connect 10 0 22 0;
+#X connect 10 0 21 0;
 #X connect 11 0 9 0;
 #X connect 12 0 6 0;
 #X connect 15 0 9 0;
+#X connect 19 0 6 0;
 #X connect 20 0 6 0;
 #X connect 21 0 6 0;
-#X connect 22 0 6 0;

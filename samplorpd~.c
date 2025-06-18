@@ -1968,7 +1968,7 @@ void samplor_maxvoices(t_samplorpd *x, t_floatarg a)
     // allocate space for the list
     x->ctlp->list.samplors = (t_samplor_entry *)realloc(x->ctlp->list.samplors,(2 + (2 * v)) * sizeof(t_samplor_entry));
     if (x->ctlp->list.samplors == NULL)
-        error("problem allocating voices");
+        pd_error((t_object *) x,"problem allocating voices");
      x->ctlp->list.maxvoices = 2 + (2 * v);
     x->ctlp->polyphony = v;
    samplist_init(&(x->ctlp->list));
@@ -2427,11 +2427,11 @@ void samplor_set_buffer_loop(t_samplorpd *x, t_symbol *buffer_s,t_floatarg v1,t_
 
     
     if (!(a = (t_garray *)pd_findbyclass(buffer_s, garray_class))){
-        error("%s: no such array", buffer_s->s_name);
+        pd_error("%s: no such array", buffer_s->s_name);
         return;
     } else
         if (!garray_getfloatwords(a, &npoints, &vec)){
-            error("%s: bad template for tabread4", buffer_s->s_name);
+            pd_error("%s: bad template for tabread4", buffer_s->s_name);
             return;
         }
  //   post ("we store in a hashtab %s %d %d",buffer_s->s_name,(t_int64) loopstart,(t_int64)loopend);
@@ -2876,12 +2876,12 @@ void samplor_set(t_samplorpd *x, t_symbol *s)
     x->ctlp->inputs.buf = NULL;
     
     if (!(a = (t_garray *)pd_findbyclass(s, garray_class))){
-        error("%s: no such array", s->s_name);
+        pd_error("%s: no such array", s->s_name);
         x->ctlp->inputs.buf = NULL;
         return;
     } else
         if (!garray_getfloatwords(a, &npoints, &vec)){
-            error("%s: bad template for tabread4", s->s_name);
+            pd_error("%s: bad template for tabread4", s->s_name);
             x->ctlp->inputs.buf = NULL;
             return;
         }
@@ -2899,7 +2899,7 @@ void samplor_set(t_samplorpd *x, t_symbol *s)
     }
     
     if (!(x->ctlp->inputs.buf)&&!(x->ctlp->inputs.samplor_buf)&&!(x->ctlp->inputs.samplor_mmap))
-        error("samplor~: no buf %s ", s->s_name);
+        pd_error("samplor~: no buf %s ", s->s_name);
 }
 
 void samplor_set_mac(t_samplorpd *x, t_symbol *s)
