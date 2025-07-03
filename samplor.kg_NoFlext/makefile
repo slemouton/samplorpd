@@ -16,7 +16,7 @@ LINUXCFLAGS = -DPD -O2 -funroll-loops -fomit-frame-pointer \
     -Wno-unused -Wno-parentheses -Wno-switch
 
 #LINUXINCLUDE =  -I../../src
-LINUXINCLUDE = -I/Applications/Pd-0.51-4.app/Contents/Resources/src -I/usr/include/libxml2 \
+LINUXINCLUDE = -I/Applications/Pd-0.55-2.app/Contents/Resources/src -I/usr/include/libxml2 \
 	-I/usr/local/opt/libxml2/include
 
   

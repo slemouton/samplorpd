@@ -343,7 +343,7 @@ void skg_set(Skg *m, t_symbol *s, short ac, t_atom *av)
     int i = m->tableSize;
     if (i>= DIM)
     {
-        error ("TOO MUCH GROUPS, max = %d", DIM);
+        pd_error ("TOO MUCH GROUPS, max = %d", DIM);
         return;
     }
 
@@ -374,7 +374,7 @@ void skg_set(Skg *m, t_symbol *s, short ac, t_atom *av)
         m->table[i].id = (unsigned char)slm1_get_value(av);
         if ( m->table[i].id >= NCHANS)
         {
-            error ("TOO MUCH CHNNNELS, max = %d", NCHANS);
+            pd_error ("TOO MUCH CHNNNELS, max = %d", NCHANS);
             return;
         }
         strcpy(m->table[i].samplename,(av+1)->a_w.w_symbol->s_name) ;
@@ -419,7 +419,7 @@ void skg_set(Skg *m, t_symbol *s, short ac, t_atom *av)
     }
     else
     {
-        error("key group syntax problem");
+        pd_error("key group syntax problem",0);
     }
 }
 
@@ -1229,7 +1229,7 @@ float slm1_get_value(t_atom *a)
     {
         case A_FLOAT: return a->a_w.w_float;
         case A_SYMBOL:   if (*a->a_w.w_symbol->s_name == '#') break;
-        default:      error("slm-1: illegal init argument");
+        default:      pd_error("slm-1: illegal init argument",0);
     }
     return 0;
 }
