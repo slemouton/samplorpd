@@ -24,6 +24,13 @@ pd test-samplorpd~.pd
 tested with a Kork nanoKeys midikeyboard and alsa driver, you may have to :
 aconnect 12:0128:0
 
+#### Xylosynth project
+
+- runs on raspbian8 (jessie)
+- with Hifiberry
+- under puredata 0.56 (compiled from sources)
+- with cyclone 0.6
+
 ### Build with Sublime Text
 /Users/lemouton/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/pd.sublime-build
 
